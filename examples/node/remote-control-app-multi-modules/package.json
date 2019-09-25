@@ -1,0 +1,29 @@
+{
+  "name": "remote-control-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "arraybuffer-to-string": "^1.0.2",
+    "express": "^4.17.1",
+    "express-ip": "^1.0.3",
+    "express-ws": "^4.0.0",
+    "request": "^2.88.0",
+    "request-ip": "^2.1.3",
+    "sdl-node": "file:./../../../",
+    "string-to-arraybuffer": "^1.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
+}

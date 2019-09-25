@@ -1,6 +1,6 @@
 // const SdlPsm = require('./lib/SdlPsm');
 
-const { SdlManagerNode, SdlPsm } = require('sdl-node');
+const { SdlManagerNode } = require('sdl-node');
 
 /**
  * Proxy session.
