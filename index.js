@@ -17,7 +17,7 @@ console.log(pjson.version);
 
 require = require("esm")(module/*, options*/);
 
-const SdlPsm = require('./lib/js/dev-only/SdlPsm');
+const SdlPsm = require('./lib/js/transport/SdlPsm');
 const SdlManager = require('./lib/js/manager/SdlManager');
 const RpcStruct = require('./lib/js/rpc/RpcStruct.js');
 const SdlManagerNode = require('./lib/node/manager/SdlManagerNode');
