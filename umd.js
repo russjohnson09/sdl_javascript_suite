@@ -4768,8 +4768,8 @@
         util: {
             BitConverter,
             Bson,
-            // BsonBundle,
-            // BsonESM,
+            BsonBundle,
+            BsonESM,
             Enum,
             JsonRpcMarshaller,
             Version

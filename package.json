@@ -11,6 +11,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "rollup": "rollup -c",
     "build": "node lib/js/generate.js && rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "node_modules/.bin/eslint \"./lib/js/**\" \"./lib/node/**\"",
