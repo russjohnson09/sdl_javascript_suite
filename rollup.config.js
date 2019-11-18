@@ -26,12 +26,26 @@
 //https://risanb.com/posts/bundling-your-javascript-library-with-rollup/
 
 //rollup -c
+//tested and working in browser.
+//common working in node, but missing node classes.
+// export default {
+//   input: 'lib/js/app.js',
+//   output: [
+//       {
+//           file: 'lib/js/dist/SDL.js',
+//           format: 'umd',
+//           name: 'sdl-js'
+//       }]
+// };
+
+
 export default {
   input: 'lib/js/app.js',
   output: [
       {
-          file: 'lib/js/dist/SDL.js',
-          format: 'umd',
-          name: 'sdl-js'
+      file: 'lib/js/dist/SDL.js',
+      format: 'umd',
+      sourcemap: 'inline',
+      name: 'SDL'
       }]
 };
