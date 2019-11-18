@@ -2,7 +2,7 @@
   "name": "sdl_javascript_suite",
   "version": "0.1.0",
   "description": "The official JavaScript SDK for SmartDeviceLink.",
-  "main": "index.js",
+  "main": "/lib/js/dist/SDL.js",
   "engines": {
     "node": ">= 9.11.2"
   },
@@ -39,5 +39,8 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-babel-minify": "^9.1.1",
     "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "bson": "^4.0.2"
   }
 }
