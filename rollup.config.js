@@ -1,8 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
-import minify from 'rollup-plugin-babel-minify';
 import commonjs from 'rollup-plugin-commonjs';
-import { uglify } from "rollup-plugin-uglify";
+import { uglify } from 'rollup-plugin-uglify';
 
 export default {
     input: 'lib/js/app.js',
@@ -17,15 +16,11 @@ export default {
     plugins: [
         resolve({
             preferBuiltins: false,
-          }),
+        }),
         commonjs(),
         babel({
             exclude: 'node_modules/**', // only transpile our source code
         }),
-        // minify({
-            // sourceMap: false,
-            // comments: false,
-        // }),
         uglify(),
     ],
 };
