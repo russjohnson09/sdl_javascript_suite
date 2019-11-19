@@ -1,4 +1,6 @@
 const path = require('path');
+const minify = require("babel-minify-webpack-plugin");
+
 module.exports = {
     entry: './node_modules/bson/lib/bson.js',
     output: {
@@ -24,5 +26,6 @@ module.exports = {
         ],
     },
     plugins: [
+        minify(),
     ],
 };
