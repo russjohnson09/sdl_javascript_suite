@@ -14,9 +14,9 @@ export default {
     ],
     plugins: [
         // resolve(),
-        babel({
-            exclude: 'node_modules/**', // only transpile our source code
-        }),
-        minify({}),
+        // babel({
+        //     exclude: 'node_modules/**', // only transpile our source code
+        // }),
+        // minify({}),
     ],
 };
