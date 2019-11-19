@@ -1,6 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import minify from 'rollup-plugin-babel-minify';
+import commonjs from 'rollup-plugin-commonjs';
 
 export default {
     input: 'lib/js/app.js',
@@ -13,10 +14,13 @@ export default {
         },
     ],
     plugins: [
-        // resolve(),
-        // babel({
-        //     exclude: 'node_modules/**', // only transpile our source code
-        // }),
+        resolve({
+            preferBuiltins: false,
+          }),
+        commonjs(),
+        babel({
+            exclude: 'node_modules/**', // only transpile our source code
+        }),
         // minify({}),
     ],
 };
