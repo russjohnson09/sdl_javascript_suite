@@ -1,4 +1,5 @@
-let PORT = process.env.PORT || 4040;
+//https://github.com/inconshreveable/ngrok/issues/465
+let PORT = process.env.PORT || 9090;
 require = require("esm")(module/*, options*/);
 
 const express = require('express');
@@ -38,14 +39,25 @@ server = app.listen(PORT, async function() {
 async function tcpProxy() {
     console.log(`connect using tcp proxy`);
 
-    await (async function() {
-        let wsUrl = `ws://localhost:4040/app1`;
+    // await (async function() {
+    //     let wsUrl = `ws://127.0.0.1:9090/app1`;
 
-        await TcpProxy.create({wsUrl});
-    })();
+    //     await TcpProxy.create({wsUrl});
+    // })();
 
+    // await (async function() {
+    //     let wsUrl = `ws://127.0.0.1:9090/app2`;
+
+    //     await TcpProxy.create({wsUrl});
+    // })();
+
+
+    //./ngrok http 9090
     await (async function() {
-        let wsUrl = `ws://localhost:4040/app2`;
+        // let wsUrl = `ws://10f7d549.ngrok.io/app1`;
+        // let wsUrl = `ws://localhost:4040/app1`;
+        let wsUrl = `ws://5f609201.ngrok.io/app2`;
+
 
         await TcpProxy.create({wsUrl});
     })();

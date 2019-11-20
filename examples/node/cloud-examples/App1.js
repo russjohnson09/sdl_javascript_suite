@@ -83,9 +83,9 @@ class App1 {
 
 let now = Date.now();
 App1.appConfig = {
-    "appName": 'App1' + now,
-    "appID": "111111" + now,
-    "fullAppID": "111111" + now,
+    "appName": '1',
+    "appID": "9991",
+    "fullAppID": "9991",
     "appHMIType": [
         "DEFAULT",
         "MEDIA"

@@ -10,7 +10,7 @@ class TcpProxyOnly {
         this.coreHost = opts.coreHost || `192.168.1.57`;
         this.corePort = opts.corePort || `12346`;
 
-        this.wsUrl = opts.wsUrl || `ws://localhost:4040/app1`;
+        this.wsUrl = opts.wsUrl || `ws://127.0.0.1:9090/app1`;
     }
 
 
@@ -61,6 +61,14 @@ class TcpProxyOnly {
         self.ws.addEventListener('message', async (evt) => {
             self.sdlCoreConnection.write(new Buffer(evt.data));
         });
+
+        client.onclose = function(e) {
+            console.log('WsAppManager WebSocket Client disconnect',e.reason,self.wsUrl);
+        };
+
+        client.onerror = function(e) {
+            console.error('error',e,e.message);
+        };
     }
 
 

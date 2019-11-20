@@ -20,9 +20,9 @@ class App2 extends App1 {
 
 let now = Date.now();
 App1.appConfig = {
-    "appName": 'App2' + now,
-    "appID": "111111" + now,
-    "fullAppID": "111111" + now,
+    "appName": '2',
+    "appID": "9992",
+    "fullAppID": "9992",
     "appHMIType": [
         "DEFAULT",
         "MEDIA"
