@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sdl-node": "file:../../../lib/node/src"
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "sdl-node": "file:../../../lib/node/src",
+    "websocket": "^1.0.30"
   }
 }

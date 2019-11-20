@@ -1,12 +1,12 @@
 const path = require('path');
 
 module.exports = {
-    entry: path.resolve(__dirname, 'lib/js/app.js'),
+    entry: './node_modules/bson/lib/bson.js',
     output: {
-        filename: 'SDL.js',
-        path: path.resolve(__dirname, 'lib/js/dist/'),
-        library: 'SDL',
-        libraryTarget: 'umd',
+        filename: 'bson.common.js',
+        path: path.resolve(__dirname, 'lib/third_party'),
+        library: 'bson',
+        libraryTarget: 'commonjs'
     },
     module: {
         rules: [
@@ -17,7 +17,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: { 
                         presets: [
-                            '@babel/preset-env',
+                            'env',
                         ], 
                     },
                 },
