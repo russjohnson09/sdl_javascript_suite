@@ -35,7 +35,7 @@ class TcpProxyOnly {
 
 
         this.sdlCoreConnection.on('data', async chunk => {
-
+            console.log(`TcpProxy from core`,chunk)
             if (self.ws) {
                 self.ws.send(chunk);
             }
@@ -55,11 +55,14 @@ class TcpProxyOnly {
 
         await self.initIncomingDataHandler();
 
-        self.ws = await self.initWsConnection();
+        // self.ws = await self.initWsConnection();
+        let client = new W3CWebSocket(this.wsUrl);
+        self.ws = client;
 
-
-        this.ws.on('message', async (msg) => {
-            self.sdlCoreConnection.write(msg);
+        console.log(`TcpProxy initialize listener`)
+        self.ws.addEventListener('message', async (evt) => {
+            console.log(`TcpProxy from app`,evt.data);
+            self.sdlCoreConnection.write(new Buffer(evt.data));
         });
     }
 
@@ -68,21 +71,21 @@ class TcpProxyOnly {
     /**
      * TODO on disconnect send unregister and disconnect to core.
      */
-    async initWsConnection() {
-        let self = this;
-        let client = new W3CWebSocket(this.wsUrl);
+    // async initWsConnection() {
+    //     let self = this;
+    //     let client = new W3CWebSocket(this.wsUrl);
 
-        return new Promise(function (resolve) {
-            client.onopen = function () {
-                console.log('WsAppManager WebSocket Client Connected');
-                resolve(client);
-            };
+    //     return new Promise(function (resolve) {
+    //         client.onopen = function () {
+    //             console.log('WsAppManager WebSocket Client Connected');
+    //             resolve(client);
+    //         };
 
-            client.onclose = function() {
-                console.log('WsAppManager WebSocket Client disconnect');
-            }
-        });
-    }
+    //         client.onclose = function() {
+    //             console.log('WsAppManager WebSocket Client disconnect');
+    //         }
+    //     });
+    // }
 
 
 

@@ -2,7 +2,13 @@ const SDL = require('sdl-node');
 console.log('SDL', SDL);
 
 
-const SdlManager = SDL.manager.SdlManager;
+import {SdlManager} from './../../../lib/js/src/manager/SdlManager';
+import {WsConnection} from './../../../lib/js/src/transport/WsConnection';
+
+// const SdlManager = SDL.manager.SdlManager;
+// const WsConnection = SDL.transport.WsConnection;
+
+
 
 /**
  * 
@@ -13,7 +19,7 @@ class App1 {
     constructor({wsConnection,appConfig}) {
         let staticInsance = this.constructor;
         this.appConfig = appConfig || staticInsance.appConfig;
-        this.wsConnection = wsConnection;
+        this.wsConnection = new WsConnection(wsConnection);
     }
 
     static async create(opts) {
@@ -30,24 +36,32 @@ class App1 {
 
     async init() {
 
-
-        let sdlManager = await SdlManager.create({
+        let sdlManagerOpts = {
             sdlConnectionPrimary: this.wsConnection
             ,appConfig: this.appConfig
-        });
+        };
+        console.log(`init manager`,{sdlManagerOpts});
+
+        let sdlManager = await SdlManager.create(sdlManagerOpts);
 
         sdlManager.on(SdlManager.EVENTS.APP_REGISTERED, (data) => {
             console.log(SdlManager.EVENTS.APP_REGISTERED,data);
-        })
+        });
 
-        await sdlManager.initApp();
+        console.log(`start app`);
+        await sdlManager.startApp();
+    }
+
+    async startApp() {
+        
     }
 }
 
+let now = Date.now();
 App1.appConfig = {
-    "appName": 'App1',
-    "appID": "111111",
-    "fullAppID": "111111",
+    "appName": 'App1' + now,
+    "appID": "111111" + now,
+    "fullAppID": "111111" + now,
     "appHMIType": [
         "DEFAULT",
         "MEDIA"

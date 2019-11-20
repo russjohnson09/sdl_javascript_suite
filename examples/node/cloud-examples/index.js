@@ -1,4 +1,5 @@
 let PORT = process.env.PORT || 4040;
+require = require("esm")(module/*, options*/);
 
 const express = require('express');
 const app = express();
