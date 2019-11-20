@@ -5,6 +5,8 @@ const express = require('express');
 const app = express();
 const enableWs = require('express-ws');
 const App1 = require('./App1');
+const App2 = require('./App2');
+
 const TcpProxy = require('./TcpProxy');
 
 let server;
@@ -19,9 +21,9 @@ app.ws('/app1', (connection, req) => {
 
 
 
-// app.ws('/app2', (connection, req) => {
-//     App2.create();
-// });
+app.ws('/app2', (connection, req) => {
+    App2.create({wsConnection: connection});
+});
 
 
 
@@ -35,5 +37,17 @@ server = app.listen(PORT, async function() {
 
 async function tcpProxy() {
     console.log(`connect using tcp proxy`);
-    await TcpProxy.create({});
+
+    await (async function() {
+        let wsUrl = `ws://localhost:4040/app1`;
+
+        await TcpProxy.create({wsUrl});
+    })();
+
+    await (async function() {
+        let wsUrl = `ws://localhost:4040/app2`;
+
+        await TcpProxy.create({wsUrl});
+    })();
+
 }

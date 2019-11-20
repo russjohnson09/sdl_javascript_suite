@@ -35,7 +35,6 @@ class TcpProxyOnly {
 
 
         this.sdlCoreConnection.on('data', async chunk => {
-            console.log(`TcpProxy from core`,chunk)
             if (self.ws) {
                 self.ws.send(chunk);
             }
@@ -59,9 +58,7 @@ class TcpProxyOnly {
         let client = new W3CWebSocket(this.wsUrl);
         self.ws = client;
 
-        console.log(`TcpProxy initialize listener`)
         self.ws.addEventListener('message', async (evt) => {
-            console.log(`TcpProxy from app`,evt.data);
             self.sdlCoreConnection.write(new Buffer(evt.data));
         });
     }
