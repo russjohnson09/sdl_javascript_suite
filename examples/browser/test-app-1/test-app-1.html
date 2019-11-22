@@ -124,6 +124,10 @@
             }
 
             let listener = {
+                onTransportConnected() {
+                    console.log(`transport is connected`);
+                    initApp();
+                },
                 onProtocolSessionEnded() {
                     console.error(`protocol session ended ACk`);
                 },
@@ -144,6 +148,7 @@
                     // }    
                 },
                 onRpcMessageReceived: async function (rpcMessage) {
+                    console.log(`onRpcMessageReceived`,rpcMessage);
                     for (listener of rpcListeners) {
                         listener(rpcMessage);
                     }
@@ -318,12 +323,17 @@
             // testing.onServiceEnded = () => {console.log("2")};
             // testing.onServiceError = () => {console.log("3")};
 
-            sdlSession.start();
 
 
             // sdlSession.addServiceListener(ServiceType.RPC,testing);
 
-            sdlSession.startService(ServiceType.RPC, 0x00, false);
+
+            sdlSession.start();
+
+            function initApp() {
+                console.log(`start service of app`);
+                sdlSession.startService(ServiceType.RPC, 0x00, false);
+            }
 
 
 
