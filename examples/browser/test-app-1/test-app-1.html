@@ -135,8 +135,8 @@
                     console.error(`protocol session ended NACK`);
                     // process.exit(1);
                 },
-                onProtocolSessionStarted: async function (session) {
-                    console.log(`session started`, session);
+                onProtocolSessionStarted: async function (serviceType, sessionId, version) {
+                    console.log(`session started`, {serviceType, sessionId, version});
 
                     await registerApp();
 

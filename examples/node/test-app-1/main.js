@@ -11,7 +11,9 @@ import { WsClientSession } from './../../../lib/node/src/session/WsClientSession
 
 
 import { ServiceType } from './../../../lib/js/src/protocol/enums/ServiceType';
-import { RpcMessage } from './../../../lib/js/src/rpc/RpcMessage';
+// import { RpcMessage } from './../../../lib/js/src/rpc/RpcMessage';
+import { RpcRequest } from './../../../lib/js/src/rpc/RpcRequest';
+
 import { RpcType } from './../../../lib/js/src/rpc/enums/RpcType';
 
 const SdlSession = WsClientSession;
@@ -52,22 +54,22 @@ async function startApp(appConfig) {
         let id = ++maxCorrelationId;
 
         //https://stackoverflow.com/questions/9546437/how-send-arraybuffer-as-binary-via-websocket
-        let rpcMessage = new RpcMessage(
+        let rpcRequest = new RpcRequest(
             {
                 functionName: method,
                 parameters: params,
                 rpcType: RpcType.REQUEST,
-                correlationId: id, //
             }
         );
+        rpcRequest.setCorrelationID(id);
 
         //bulk data is blob.
         if (bulkData) {
-            rpcMessage.setBulkData(bulkData);
+            rpcRequest.setBulkData(bulkData);
         }
 
 
-        let result = await sendRPC(rpcMessage);
+        let result = await sendRPC(rpcRequest);
 
         console.log(`sendRPC result`, result);
 
@@ -84,21 +86,22 @@ async function startApp(appConfig) {
 
     }
 
-    let sendRPC = async function (rpcMessage) {
+    let sendRPC = async function (rpcRequest) {
 
         return new Promise((resolve) => {
-            let correlationId = rpcMessage.getCorrelationId();
+            console.log(`sendRPC`,rpcRequest);
+            let correlationId = rpcRequest.getCorrelationID();
 
-            rpcListeners.push((rpcMessage) => {
+            rpcListeners.push((rpcRequest) => {
 
-                let responsCorrelationId = rpcMessage.getCorrelationId();
+                let responsCorrelationId = rpcRequest.getCorrelationID();
 
                 if (responsCorrelationId === correlationId) {
-                    return resolve(rpcMessage);
+                    return resolve(rpcRequest);
                 }
             })
 
-            sdlSession.sendRpc(rpcMessage);
+            sdlSession.sendRpc(rpcRequest);
 
         })
     }
