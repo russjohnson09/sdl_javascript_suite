@@ -83,7 +83,6 @@
             }
 
             async _init() {
-                console.log(`init app`);
                 await this._startConnection();
                 await this._startService();
                 await this._registerApp();
@@ -107,7 +106,6 @@
 
             async _setAppIcon() {
                 let fileBinary = await this._fetchImageUnit8Array('./test_icon_1.png');
-                console.log('_setAppIcon', { fileBinary });
                 let fileName = this._appConfig.appID + '_icon.gif';
                 let fileType = 'GRAPHIC_PNG';
 
@@ -123,7 +121,6 @@
 
                 });
 
-                console.log('_setAppIcon', { putFile });
 
                 let setIconResult = await this.sendRPCJson({
                     method: 'SetAppIcon',
@@ -132,27 +129,20 @@
                     }
                 });
 
-                console.log('_setAppIcon', { setIconResult });
-
-
             }
 
             async _registerApp() {
-                console.log('_registerApp');
                 let result = await this.sendRPCJson(
                     {
                         method: 'RegisterAppInterface',
                         params: this._appConfig,
                     }
                 );
-                console.log(`app registered response`, { result });
             }
 
             async sendRPCJson(
                 data
             ) {
-
-                console.log('sendRPCJson',data);
                 let { method, params, bulkData } = data;
                 let id = ++this._maxCorrelationId;
 
@@ -180,9 +170,7 @@
 
                 const self = this;
                 return new Promise((resolve) => {
-                    console.log(`sendRPC`, rpcRequest);
                     let correlationId = rpcRequest.getCorrelationID();
-
 
                     self.on('INCOMING_RPC', (rpcResponse) => {
                         let responseCorrelationId = rpcResponse.getCorrelationID();
@@ -202,7 +190,6 @@
                 const self = this;
                 return new Promise((resolve) => {
                     self.on('onProtocolSessionStarted', () => {
-                        console.log('onProtocolSessionStarted connected');
                         return resolve();
                     });
 
@@ -215,7 +202,6 @@
                 const self = this;
                 return new Promise((resolve) => {
                     self.once('onTransportConnected', () => {
-                        console.log('onTransportConnected');
                         return resolve();
                     });
                     self._sdlSession.start();
@@ -223,24 +209,18 @@
             }
 
             async onTransportConnected() {
-                console.log(`transport is connected`);
                 this.emit('onTransportConnected', {})
             }
             async onProtocolSessionEnded() {
-                console.error(`protocol session ended ACK`);
             }
             async onProtocolSessionEndedNACKed() {
-                console.error(`protocol session ended NACK`);
             }
 
             async onProtocolSessionStarted() {
-                console.log(`onProtocolSessionStarted`);
                 this.emit('onProtocolSessionStarted')
             }
 
             async onRpcMessageReceived(rpcMessage) {
-                console.log(`onRpcMessageReceived`, rpcMessage);
-
                 let functionName = rpcMessage.getFunctionName();
                 let parameters = rpcMessage.getParameters();
                 this.emit('INCOMING_RPC', rpcMessage);
@@ -253,7 +233,6 @@
             }
 
             async exit() {
-                console.log('exit end session');
                 await this._unregister();
                 this._sdlSession.endSession();
             }
@@ -276,8 +255,6 @@
             let app = await TestApp1.startApp();
 
             console.log('app started and registered', app);
-
-
             console.log('start listeners');
             app.on('INCOMING_RPC', async (rpcMessage) => {
                 let functionName = rpcMessage.getFunctionName();
