@@ -106,13 +106,8 @@ async function startApp(appConfig) {
         })
     }
 
-    let rpcListeners = [];
-
-
-
 
     let registerApp = async function () {
-        // let {method,params,bulkData} = 
         let result = await sendRPCJson(
             {
                 method: 'RegisterAppInterface',
