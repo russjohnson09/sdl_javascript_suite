@@ -4,64 +4,124 @@
     <script src='./../../../lib/js/dist/SDL.js'></script>
 
     <script>
-        function test(Bson) {
-            console.log(`Bson`, Bson);
-            let serial = Bson.serialize({ x: 1 })
-            console.log(serial);
-            let deserial = Bson.deserialize(serial)
-            console.log(deserial);
-        }
-        test(SDL.util.Bson);
 
-        // import {SdlSession} from './../../../lib/js/session/SdlSession.js';
-        // import {ServiceType} from './../../../lib/js/protocol/enums/ServiceType.js';
-        // import {RpcMessage} from './../../../lib/js/rpc/RpcMessage';
-        // import {RpcType} from './../../../lib/js/rpc/enums/RpcType';
-
-        // const SdlSession = SDL.session.SdlSession;
-        const SdlSession = SDL.test.TestWsSession;
+        const SdlSession = SDL.session.WsClientSession;
 
         const ServiceType = SDL.protocol.enums.ServiceType;
-        const RpcMessage = SDL.rpc.RpcMessage;
+        const RpcRequest = SDL.rpc.RpcRequest;
         const RpcType = SDL.rpc.enums.RpcType;
 
+        class EventEmitter {
+            constructor() {
+                this.events = {};
+            }
+            on(event, listener) {
+                if (typeof this.events[event] !== 'object') {
+                    this.events[event] = [];
+                }
+                this.events[event].push(listener);
+                return () => this.removeListener(event, listener);
+            }
+            removeListener(event, listener) {
+                if (typeof this.events[event] === 'object') {
+                    const idx = this.events[event].indexOf(listener);
+                    if (idx > -1) {
+                        this.events[event].splice(idx, 1);
+                    }
+                }
+            }
+            emit(event, ...args) {
+                if (typeof this.events[event] === 'object') {
+                    this.events[event].forEach(listener => listener.apply(this, args));
+                }
+            }
+            once(event, listener) {
+                const remove = this.on(event, (...args) => {
+                    remove();
+                    listener.apply(this, args);
+                });
+            }
+        };
 
-        async function startApp(appConfig) {
 
-            let maxCorrelationId = 0;
+        class TestApp1 extends EventEmitter {
 
-            let hashID;
-            let sessionID;
-            let sdlSession;
+            constructor() {
+                super();
+                let appID = (Math.floor(Date.now() / 1000) + '').substr(7);
 
-            let baseTransportConfig = {
+                let appConfig = {
+                    "appName": appID,
+                    "appID": appID,
+                    "fullAppID": appID,
+                    "appHMIType": [
+                        "DEFAULT",
+                        "MEDIA"
+                    ],
+                    "hmiDisplayLanguageDesired": "EN-US",
+                    "isMediaApplication": false,
+                    "languageDesired": "EN-US",
+                    "syncMsgVersion": {
+                        "majorVersion": 3,
+                        "minorVersion": 1,
+                        "patchVersion": 0
+                    }
+                };
 
-            };
+                this._eventListeners = [];
+                this._appConfig = appConfig;
+                let baseTransportConfig = {};
+                this._sdlSession = new SdlSession(baseTransportConfig, this);
+                this._maxCorrelationId = 0;
+            }
 
-            let sendRPCJson = async function (
+            static async startApp() {
+                let obj = new this();
+                await obj._init();
+                return obj;
+            }
+
+            async _init() {
+                console.log(`init app`);
+                await this._startConnection();
+                await this._startService();
+                await this._registerApp();
+            }
+
+            async _registerApp() {
+                console.log('_registerApp');
+                let result = await this.sendRPCJson(
+                    {
+                        method: 'RegisterAppInterface',
+                        params: this._appConfig,
+                    }
+                );
+                console.log(`app registered response`, { result });
+            }
+
+            async sendRPCJson(
                 data
             ) {
 
                 let { method, params, bulkData } = data;
-                let id = ++maxCorrelationId;
+                let id = ++this._maxCorrelationId;
 
-                //https://stackoverflow.com/questions/9546437/how-send-arraybuffer-as-binary-via-websocket
-                let rpcMessage = new RpcMessage(
+                let rpcRequest = new RpcRequest(
                     {
                         functionName: method,
                         parameters: params,
                         rpcType: RpcType.REQUEST,
-                        correlationId: id, //
                     }
                 );
+                rpcRequest.setCorrelationID(id);
 
                 //bulk data is blob.
                 if (bulkData) {
-                    rpcMessage.setBulkData(bulkData);
+                    rpcRequest.setBulkData(bulkData);
                 }
 
 
-                let result = await sendRPC(rpcMessage);
+                let result = await this.sendRPC(rpcRequest);
 
                 console.log(`sendRPC result`, result);
 
@@ -78,294 +138,94 @@
 
             }
 
-            let sendRPC = async function (rpcMessage) {
+            async sendRPC(rpcRequest) {
 
+                const self = this;
                 return new Promise((resolve) => {
-                    let correlationId = rpcMessage.getCorrelationId();
+                    console.log(`sendRPC`, rpcRequest);
+                    let correlationId = rpcRequest.getCorrelationID();
 
-                    rpcListeners.push((rpcMessage) => {
 
-                        let responsCorrelationId = rpcMessage.getCorrelationId();
+                    self.on('INCOMING_RPC', (rpcResponse) => {
+                        let responseCorrelationId = rpcResponse.getCorrelationID();
 
-                        if (responsCorrelationId === correlationId) {
-                            return resolve(rpcMessage);
+                        if (responseCorrelationId === correlationId) {
+                            return resolve(rpcRequest);
                         }
-                    })
+                    });
 
-                    sdlSession.sendRpc(rpcMessage);
+                    self._sdlSession.sendRpc(rpcRequest);
 
                 })
             }
 
-            let rpcListeners = [];
+            async _startService() {
 
-
-
-
-            let registerApp = async function () {
-                // let {method,params,bulkData} = 
-                let result = await sendRPCJson(
-                    {
-                        method: 'RegisterAppInterface',
-                        params: appConfig,
-                    }
-                );
-                console.log(`app registered response`, { result });
-
-                // hashID = session.getSessionId();
-
-                // console.log(`hashID++++++++++++++++
-                // ${hashID}
-                // 
-                // 
-                // `)
-
-                // console.log(`app registered response`, {method,params,bulkData})
-            }
-
-            let listener = {
-                onTransportConnected() {
-                    console.log(`transport is connected`);
-                    initApp();
-                },
-                onProtocolSessionEnded() {
-                    console.error(`protocol session ended ACk`);
-                },
-                onProtocolSessionEndedNACKed() {
-                    console.error(`protocol session ended NACK`);
-                    // process.exit(1);
-                },
-                onProtocolSessionStarted: async function (serviceType, sessionId, version) {
-                    console.log(`session started`, {serviceType, sessionId, version});
-
-                    await registerApp();
-
-
-                    //RAI request
-                    // sdlSession.sendRpc(rpcMessage) 
-                    // {
-                    // this._sdlProtocol.sendRpc(rpcMessage);
-                    // }    
-                },
-                onRpcMessageReceived: async function (rpcMessage) {
-                    console.log(`onRpcMessageReceived`,rpcMessage);
-                    for (listener of rpcListeners) {
-                        listener(rpcMessage);
-                    }
-                    // console.log(`app listener onRpcMessageReceived`,rpcMessage);
-
-                    let functionName = rpcMessage.getFunctionName();
-                    let parameters = rpcMessage.getParameters();
-                    if (functionName === 'OnHMIStatus') {
-                        OnHMIStatus(parameters);
-                    }
-                }
-            };
-
-            async function OnHMIStatus(parameters) {
-                console.log(`handleHmi`, { parameters });
-
-                let { hmiLevel } = parameters;
-
-                if (hmiLevel === 'FULL') {
-                    return OnHmiFull();
-                }
-
-
-            }
-
-            async function OnHmiFull() {
-
-                console.log(`send show message
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    ++++++++++++++++++++++
-    `)
-                let rpcResponse = await sendRPCJson(
-                    {
-                        "method": "Show",
-                        "params": {
-                            "mainField1": "こんにちは",
-                            "mainField2": "你好 ( ni hao / nĭ hăo )",
-                            "mainField3": "@#$#%$^^%&**&(_     !@#$@#$~~~```"
-                        }
-                    }
-                );
-                console.log(`show message response`, rpcResponse);
-
-
-                //get/put/delete
-
-
-                await putGetDeleteImage();
-
-
-
-                setTimeout(async function () {
-
-                    let requestJson = {
-                        method: `UnregisterAppInterface`
-                    }
-
-                    let result = await sendRPCJson(requestJson);
-
-                    console.log(`UnregisterAppInterface response`, result);
-
-                    //unregister and close session.
-
-                    console.log(`closing session`);
-                    sdlSession.close();
-                }, 1000);
-            }
-
-
-            let putGetDeleteImage = async function () {
-                let fileBinary = new Uint8Array([1, 2, 3]);
-                try {
-
-                    let fileName = Date.now() + '';
-                    let fileType = 'GRAPHIC_JPEG';
-
-                    let result = await sendRPCJson({
-                        method: 'PutFile',
-                        params: {
-                            syncFileName: fileName,
-                            // fileType: 'GRAPHIC_PNG',
-                            fileType,
-                            persistentFile: true,
-
-                        },
-                        bulkData: fileBinary //unit8 array
-
+                const self = this;
+                return new Promise((resolve) => {
+                    self.on('onProtocolSessionStarted', () => {
+                        console.log('onProtocolSessionStarted connected');
+                        return resolve();
                     });
 
+                    self._sdlSession.startService(ServiceType.RPC, 0, false);
 
-                    // <element name="GRAPHIC_BMP" />
-                    // <element name="GRAPHIC_JPEG" />
-                    // <element name="GRAPHIC_PNG" />
-                    // <element name="AUDIO_WAVE" />
-                    // <element name="AUDIO_MP3" />
-                    // <element name="AUDIO_AAC" />
-                    // <element name="BINARY" />
-                    // <element name="JSON" />
-                    let resultGetFile = await sendRPCJson({
-                        method: 'GetFile',
-                        params: {
-                            fileName: fileName,
-                            fileType,
-                            persistentFile: true,
-
-                        }
-                    });
-
-                    // let data = resultGetFile.bulkData;
-                    console.log(`GetFile`, { resultGetFile });
-
-                    // var blob = new Blob( [ data ], { type: "image/jpeg" } );
-                    // var blob = new Blob( resultGetFile.bulkData , { type: "image/jpeg" } );
-
-                    // var imageUrl = URL.createObjectURL( blob );
-
-                    // this.setState({displayImage:imageUrl})
-
-                    // console.log(`putGetImage`,resultGetFile,{imageUrl});
-
-                    // let base64 = this.base
-
-
-                    let resultDeleteFile = await sendRPCJson({
-                        method: 'DeleteFile',
-                        params: {
-                            syncFileName: fileName,
-                            fileType,
-                            persistentFile: true,
-
-                        }
-                    });
-
-                    // console.log(`putGetImage delete`,{resultDeleteFile});
-
-                    //TODO await response.
-                    //TODO correlationID or messageID?
-                } catch (e) {
-                    console.error(e);
-                }
+                })
             }
 
-
-            sdlSession = new SdlSession(baseTransportConfig, listener);
-
-
-
-            // // const testing = new SdlServiceListener();
-            // let testing = {};
-            // testing.onServiceStarted = () => {
-
-            //     console.log("1");
-
-            //     console.log(`++++++++++++++++++++
-
-
-
-
-
-            //     `)
-
-            // };
-            // testing.onServiceEnded = () => {console.log("2")};
-            // testing.onServiceError = () => {console.log("3")};
-
-
-
-            // sdlSession.addServiceListener(ServiceType.RPC,testing);
-
-
-            sdlSession.start();
-
-            function initApp() {
-                console.log(`start service of app`);
-                sdlSession.startService(ServiceType.RPC, 0x00, false);
+            async _startConnection() {
+                const self = this;
+                return new Promise((resolve) => {
+                    self.once('onTransportConnected', () => {
+                        console.log('onTransportConnected');
+                        return resolve();
+                    });
+                    self._sdlSession.start();
+                })
             }
 
+            async onTransportConnected() {
+                console.log(`transport is connected`);
+                this.emit('onTransportConnected', {})
+            }
+            async onProtocolSessionEnded() {
+                console.error(`protocol session ended ACK`);
+            }
+            async onProtocolSessionEndedNACKed() {
+                console.error(`protocol session ended NACK`);
+            }
 
+            async onProtocolSessionStarted() {
+                console.log(`onProtocolSessionStarted`);
+                this.emit('onProtocolSessionStarted')
+            }
 
+            async onRpcMessageReceived(rpcMessage) {
+                console.log(`onRpcMessageReceived`, rpcMessage);
+
+                let functionName = rpcMessage.getFunctionName();
+                let parameters = rpcMessage.getParameters();
+                let eventName = 'INCOMING_RPC';
+                this.emit(eventName + '.' + functionName, rpcMessage);
+                this.emit(eventName, rpcMessage);
+            }
         }
 
+    </script>
+
+
+    <script>
 
 
 
-        let appID = (Math.floor(Date.now() / 1000) + '').substr(7);
+        (async function () {
+            let app = await TestApp1.startApp();
 
-        let appConfig = {
-            "appName": appID,
-            "appID": appID,
-            "fullAppID": appID,
-            "appHMIType": [
-                "DEFAULT",
-                "MEDIA"
-            ],
-            "hmiDisplayLanguageDesired": "EN-US",
-            "isMediaApplication": false,
-            "languageDesired": "EN-US",
-            "syncMsgVersion": {
-                "majorVersion": 3,
-                "minorVersion": 1,
-                "patchVersion": 0
-            }
-        };
+            app.on('INCOMING_RPC.OnHMIStatus', (rpcMessage) => {
+                console.log(`hmi status update`, rpcMessage);
+            });
 
-        startApp(appConfig);
-
-
-
+        })();
     </script>
 </head>
 
