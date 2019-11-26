@@ -5,6 +5,13 @@
 
     <script>
 
+        const SdlSession = SDL.session.WsClientSession;
+
+        const ServiceType = SDL.protocol.enums.ServiceType;
+        const RpcRequest = SDL.rpc.RpcRequest;
+        const RpcType = SDL.rpc.enums.RpcType;
+
+
         class EventEmitter {
             constructor() {
                 this.events = {};
@@ -64,8 +71,9 @@
 
                 this._eventListeners = [];
                 this._appConfig = appConfig;
+                // let baseTransportConfig = {};
                 let baseTransportConfig = new SDL.transport.WebsocketTransportConfig('ws://localhost', 9090);
-                this._sdlSession = new SDL.session.WsClientSession(baseTransportConfig, this);
+                this._sdlSession = new SdlSession(baseTransportConfig, this);
                 this._maxCorrelationId = 0;
             }
 
@@ -101,58 +109,70 @@
             }
 
             async _setAppIcon() {
-                console.log('setAppIcon',);
-                const fileBinary = await this._fetchImageUnit8Array('./test_icon_1.png');
-                const fileName = this._appConfig.appID + '_icon.gif';
+                let fileBinary = await this._fetchImageUnit8Array('./test_icon_1.png');
+                let fileName = this._appConfig.appID + '_icon.gif';
+                let fileType = 'GRAPHIC_PNG';
 
-                let putFile = await this.sendRPC(
-                    new SDL.rpc.messages.PutFile()
-                        .setFileName(fileName)
-                        .setFileType('GRAPHIC_PNG')
-                        .setPersistentFile(true)
-                        .setFileData(fileBinary)
-                );
+                console.log('_setAppIcon')
+                let putFile = await this.sendRPCJson({
+                    method: 'PutFile',
+                    params: {
+                        syncFileName: fileName,
+                        fileType,
+                        persistentFile: true,
 
-                console.log('setAppIcon','putFile',{putFile});
+                    },
+                    bulkData: fileBinary //unit8 array
+
+                });
+                console.log('_setAppIcon')
 
 
-                let setIconResult = await this.sendRPC(
-                    new SDL.rpc.messages.SetAppIcon()
-                        .setFileName(fileName)
-                );
-                console.log('setAppIcon','putFile',{putFile,setIconResult});
+                let setIconResult = await this.sendRPCJson({
+                    method: 'SetAppIcon',
+                    params: {
+                        syncFileName: fileName,
+                    }
+                });
 
             }
 
             async _registerApp() {
-                const version = new SDL.rpc.structs.SdlMsgVersion();
-                version.setMajorVersion(3)
-                    .setMinorVersion(1)
-                    .setPatchVersion(0);
-
-                const rai = new SDL.rpc.messages.RegisterAppInterface();
-                rai.setSdlMsgVersion(version)
-                    .setLanguageDesired(SDL.rpc.enums.Language.EN_US)
-                    .setHmiDisplayLanguageDesired(SDL.rpc.enums.Language.EN_US)
-                    .setIsMediaApplication(false)
-                    .setAppName(this._appConfig.appID)
-                    .setFullAppId(this._appConfig.appID)
-                    .setAppHmiType([
-                        SDL.rpc.enums.AppHMIType.DEFAULT,
-                        SDL.rpc.enums.AppHMIType.MEDIA,
-                    ])
-
-                let result = await this.sendRPC(rai);
+                let result = await this.sendRPCJson(
+                    {
+                        method: 'RegisterAppInterface',
+                        params: this._appConfig,
+                    }
+                );
             }
 
-            getNextCorrelationId() {
-                ++this._maxCorrelationId;
-                console.log('getNextCorrelationId',this._maxCorrelationId);
-                return this._maxCorrelationId;
+            async sendRPCJson(
+                data
+            ) {
+                let { method, params, bulkData } = data;
+                let id = ++this._maxCorrelationId;
+
+                let rpcRequest = new RpcRequest(
+                    {
+                        functionName: method,
+                        parameters: params,
+                        rpcType: RpcType.REQUEST,
+                    }
+                );
+                rpcRequest.setCorrelationID(id);
+
+                //bulk data is blob.
+                if (bulkData) {
+                    rpcRequest.setBulkData(bulkData);
+                }
+
+
+                return await this.sendRPC(rpcRequest);
+
+
             }
 
             async sendRPC(rpcRequest) {
-                rpcRequest.setCorrelationID(this.getNextCorrelationId());
 
                 const self = this;
                 return new Promise((resolve) => {
@@ -160,14 +180,12 @@
 
                     self.on('INCOMING_RPC', (rpcResponse) => {
                         let responseCorrelationId = rpcResponse.getCorrelationID();
-                        console.log('sendRPC','INCOMING',{correlationId,responseCorrelationId,rpcResponse});
 
                         if (responseCorrelationId === correlationId) {
                             return resolve(rpcResponse);
                         }
                     });
 
-                    console.log('sendRPC',rpcRequest);
                     self._sdlSession.sendRpc(rpcRequest);
 
                 })
@@ -178,11 +196,10 @@
                 const self = this;
                 return new Promise((resolve) => {
                     self.on('onProtocolSessionStarted', () => {
-                        console.log('onProtocolSessionStarted')
                         return resolve();
                     });
 
-                    self._sdlSession.startService(SDL.protocol.enums.ServiceType.RPC, 0, false);
+                    self._sdlSession.startService(ServiceType.RPC, 0, false);
 
                 })
             }
@@ -191,7 +208,6 @@
                 const self = this;
                 return new Promise((resolve) => {
                     self.once('onTransportConnected', () => {
-                        console.log('onTransportConnected');
                         return resolve();
                     });
                     self._sdlSession.start();
@@ -211,14 +227,15 @@
             }
 
             async onRpcMessageReceived(rpcMessage) {
-                console.log('onRpcMessageReceived');
                 let functionName = rpcMessage.getFunctionName();
                 let parameters = rpcMessage.getParameters();
                 this.emit('INCOMING_RPC', rpcMessage);
             }
 
             async _unregister() {
-                await this.sendRPC(new SDL.rpc.messages.UnregisterAppInterface());
+                await this.sendRPCJson({
+                    'method': 'UnregisterAppInterface'
+                })
             }
 
             async exit() {
@@ -247,7 +264,6 @@
             console.log('app started and registered', app);
             console.log('start listeners');
             app.on('INCOMING_RPC', async (rpcMessage) => {
-                console.log('INCOMING_RPC');
                 let functionName = rpcMessage.getFunctionName();
 
                 console.log(`INCOMING_RPC`, functionName, rpcMessage);
@@ -256,8 +272,6 @@
                     let parameters = rpcMessage.getParameters();
                     let { hmiLevel } = parameters;
                     if (hmiLevel === 'FULL') {
-                        /*
-                        
 
                         let rpcResponse = await app.sendRPCJson(
                             {
@@ -269,33 +283,11 @@
                                 }
                             }
                         );
-                        */
-
-                        const show = new SDL.rpc.messages.Show();
-                        show.setMainField1("こんにちは")
-                            .setMainField2("你好 ( ni hao / nĭ hăo )")
-                            .setMainField3("@#$#%$^^%&**&(_     !@#$@#$~~~```");
-
-                        let rpcResponse = await app.sendRPC(show);
-
                         console.log(`show message response`, rpcResponse);
 
                         await sleep();
 
                         let count = 3;
-                        for (let i = 0; i < count; i++) {
-
-                            const showCountdown = new SDL.rpc.messages.Show();
-                            showCountdown.setMainField1("Exiting in " + (count - i).toString())
-                                .setMainField2("")
-                                .setMainField3("");
-
-                            let rpcResponse = await app.sendRPC(showCountdown);
-
-                            await sleep();
-
-                        }
-                        /*
                         for (let i = 0; i < count; i++) {
                             let rpcResponse = await app.sendRPCJson(
                                 {
@@ -312,7 +304,6 @@
                             await sleep();
 
                         }
-                        */
                         app.exit();
 
                     }
