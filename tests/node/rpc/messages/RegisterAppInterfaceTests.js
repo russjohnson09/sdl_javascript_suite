@@ -31,20 +31,20 @@ const { msg, } = require('./setup.js')(createMessage);
 describe('RegisterAppInterfaceTests', function () {
     it ('testRpcValues', function (done) {
         const testVersion = msg.getSdlMsgVersion();
-		const testName = msg.getAppName();
-		const testNgnName = msg.getNgnMediaScreenAppName();
-		const testAppId = msg.getAppId();
-		const testFullAppId = msg.getFullAppId();
-		const testLang = msg.getLanguageDesired();
-		const testHmiLang = msg.getHmiDisplayLanguageDesired();
-		const testHashId = msg.getHashID();
+        const testName = msg.getAppName();
+        const testNgnName = msg.getNgnMediaScreenAppName();
+        const testAppId = msg.getAppId();
+        const testFullAppId = msg.getFullAppId();
+        const testLang = msg.getLanguageDesired();
+        const testHmiLang = msg.getHmiDisplayLanguageDesired();
+        const testHashId = msg.getHashID();
         const testTts = msg.getTtsName();
-		const testSynonyms = msg.getVrSynonyms();
-		const testApps = msg.getAppHMIType();
-		const testMedia = msg.getIsMediaApplication();
- 		const testDeviceInfo = msg.getDeviceInfo();
-		const testDayColorScheme = msg.getDayColorScheme();
-		const testNightColorScheme = msg.getNightColorScheme();
+        const testSynonyms = msg.getVrSynonyms();
+        const testApps = msg.getAppHMIType();
+        const testMedia = msg.getIsMediaApplication();
+        const testDeviceInfo = msg.getDeviceInfo();
+        const testDayColorScheme = msg.getDayColorScheme();
+        const testNightColorScheme = msg.getNightColorScheme();
 
         console.log({
             testVersion,
