@@ -1,9 +1,9 @@
 
-describe('VersionTest', function() {
-    it('testConstructorCorrect', async function() {
+describe('VersionTest', function () {
+    it('testConstructorCorrect', function () {
 
     });
-})
+});
 
 
 // package com.smartdevicelink.test.util;
