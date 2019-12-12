@@ -16,7 +16,7 @@ function createMessage () {
     msg.setHashID(Test.GENERAL_STRING);
     msg.setTtsName(Test.GENERAL_TTSCHUNK_LIST);
     msg.setVrSynonyms(Test.GENERAL_STRING_LIST);
-    msg.setAppHMIType(Test.GENERAL_APPHMITYPE_LIST);
+    msg.setAppHmiType(Test.GENERAL_APPHMITYPE_LIST);
     msg.setIsMediaApplication(Test.GENERAL_BOOLEAN);
     msg.setDeviceInfo(Test.GENERAL_DEVICEINFO);
     msg.setDayColorScheme(Test.GENERAL_DAYCOLORSCHEME);
@@ -26,32 +26,45 @@ function createMessage () {
 }
 
 
-let {msg} = require('./setup.js')(createMessage);
-
-console.log(msg);
-
-
-
-console.log(1);
+const { msg, } = require('./setup.js')(createMessage);
 
 describe('RegisterAppInterfaceTests', function () {
     it ('testRpcValues', function (done) {
+        const testVersion = msg.getSdlMsgVersion();
+		const testName = msg.getAppName();
+		const testNgnName = msg.getNgnMediaScreenAppName();
+		const testAppId = msg.getAppId();
+		const testFullAppId = msg.getFullAppId();
+		const testLang = msg.getLanguageDesired();
+		const testHmiLang = msg.getHmiDisplayLanguageDesired();
+		const testHashId = msg.getHashID();
+        const testTts = msg.getTtsName();
+		const testSynonyms = msg.getVrSynonyms();
+		const testApps = msg.getAppHMIType();
+		const testMedia = msg.getIsMediaApplication();
+ 		const testDeviceInfo = msg.getDeviceInfo();
+		const testDayColorScheme = msg.getDayColorScheme();
+		const testNightColorScheme = msg.getNightColorScheme();
 
-        // SdlMsgVersion testVersion = ( (RegisterAppInterface) msg).getSdlMsgVersion();
-// 		String testName = ( (RegisterAppInterface) msg).getAppName();
-// 		String testNgnName = ( (RegisterAppInterface) msg).getNgnMediaScreenAppName();
-// 		String testAppId = ( (RegisterAppInterface) msg).getAppID();
-// 		String testFullAppId = ( (RegisterAppInterface) msg).getFullAppID();
-// 		Language testLang = ( (RegisterAppInterface) msg).getLanguageDesired();
-// 		Language testHmiLang = ( (RegisterAppInterface) msg).getHmiDisplayLanguageDesired();
-// 		String testHashId = ( (RegisterAppInterface) msg).getHashID();
-// 		List<TTSChunk> testTts = ( (RegisterAppInterface) msg).getTtsName();
-// 		List<String> testSynonyms = ( (RegisterAppInterface) msg).getVrSynonyms();
-// 		List<AppHMIType> testApps = ( (RegisterAppInterface) msg).getAppHMIType();
-// 		Boolean testMedia = ( (RegisterAppInterface) msg).getIsMediaApplication();
-// 		DeviceInfo testDeviceInfo = ( (RegisterAppInterface) msg).getDeviceInfo();
-// 		TemplateColorScheme testDayColorScheme = ( (RegisterAppInterface) msg).getDayColorScheme();
-// 		TemplateColorScheme testNightColorScheme = ( (RegisterAppInterface) msg).getNightColorScheme();
+        console.log({
+            testVersion,
+            testName,
+            testNgnName,
+            testAppId,
+            testFullAppId,
+            testLang,
+            testHmiLang,
+            testDeviceInfo,
+            testHashId,
+            testTts,
+            testSynonyms,
+            testApps,
+            testMedia,
+            testDayColorScheme,
+            testNightColorScheme,
+        });
+
+        done();
     });
 
     // 	/**

@@ -3,8 +3,12 @@ const SDL = require('./../lib/js/dist/SDL.js');
 const SdlMsgVersion = SDL.rpc.structs.SdlMsgVersion;
 const TTSChunk = SDL.rpc.structs.TTSChunk;
 
+const DeviceInfo = SDL.rpc.structs.DeviceInfo;
+
 const SpeechCapabilities = SDL.rpc.enums.SpeechCapabilities;
 const AppHMIType = SDL.rpc.enums.AppHMIType;
+const Language = SDL.rpc.enums.Language;
+
 
 
 
@@ -26,19 +30,24 @@ const GENERAL_APP_ID = Test.GENERAL_APP_ID                      = "123e4567e8";
 const GENERAL_FULL_APP_ID =             Test.GENERAL_FULL_APP_ID                    = "123e4567-e89b-12d3-a456-426655440000";
 
 
-const GENERAL_LANGUAGE =             Test.GENERAL_LANGUAGE                    = "123e4567-e89b-12d3-a456-426655440000";
-const GENERAL_STRING =             Test.GENERAL_STRING                    = "test";
-const GENERAL_TTSCHUNK_LIST =             Test.GENERAL_TTSCHUNK_LIST                    = "123e4567-e89b-12d3-a456-426655440000";
-const GENERAL_STRING_LIST =             Test.GENERAL_STRING_LIST                    = ['a', 'b'];
-const GENERAL_APPHMITYPE_LIST =             Test.GENERAL_APPHMITYPE_LIST                    = [AppHMIType.BACKGROUND_PROCESS,AppHMIType.COMMUNICATION]
-const GENERAL_BOOLEAN =             Test.GENERAL_BOOLEAN                    = true;
-const GENERAL_DEVICEINFO =             Test.GENERAL_DEVICEINFO                    = "123e4567-e89b-12d3-a456-426655440000";
-const GENERAL_DAYCOLORSCHEME =             Test.GENERAL_DAYCOLORSCHEME                    = "123e4567-e89b-12d3-a456-426655440000";
-const GENERAL_NIGHTCOLORSCHEME =             Test.GENERAL_NIGHTCOLORSCHEME                    = "123e4567-e89b-12d3-a456-426655440000";
+const GENERAL_LANGUAGE =             Test.GENERAL_LANGUAGE                    = Language.EN_US;
+const GENERAL_STRING =             Test.GENERAL_STRING                    = 'test';
+const GENERAL_TTSCHUNK_LIST = Test.GENERAL_TTSCHUNK_LIST = [];
+const GENERAL_STRING_LIST = Test.GENERAL_STRING_LIST = [
+    'a', 
+    'b',
+];
+const GENERAL_APPHMITYPE_LIST =             Test.GENERAL_APPHMITYPE_LIST                    = [
+    AppHMIType.BACKGROUND_PROCESS, 
+    AppHMIType.COMMUNICATION,
+];
+const GENERAL_BOOLEAN = Test.GENERAL_BOOLEAN = true;
+const GENERAL_DEVICEINFO = Test.GENERAL_DEVICEINFO = new DeviceInfo();
+const GENERAL_DAYCOLORSCHEME = Test.GENERAL_DAYCOLORSCHEME = "123e4567-e89b-12d3-a456-426655440000";
+const GENERAL_NIGHTCOLORSCHEME = Test.GENERAL_NIGHTCOLORSCHEME = "123e4567-e89b-12d3-a456-426655440000";
 
 
 function createTtsChunk (type, text) {
-    console.log({type,text});
     const ttsChunk = new TTSChunk();
     ttsChunk.setType(type);
     ttsChunk.setText(text);
@@ -49,8 +58,8 @@ function createTtsChunk (type, text) {
 })();
 
 
-GENERAL_TTSCHUNK_LIST.push(createTtsChunk(SpeechCapabilities.TEXT, "Welcome to the jungle"));
-GENERAL_TTSCHUNK_LIST.push(createTtsChunk(SpeechCapabilities.TEXT, "Say a command"));
+GENERAL_TTSCHUNK_LIST.push(createTtsChunk(SpeechCapabilities.SC_TEXT, "Welcome to the jungle"));
+GENERAL_TTSCHUNK_LIST.push(createTtsChunk(SpeechCapabilities.SC_TEXT, "Say a command"));
 
 // msg.setFullAppId(Test.GENERAL_FULL_APP_ID);
 // msg.setLanguageDesired(Test.GENERAL_LANGUAGE);
@@ -63,5 +72,13 @@ GENERAL_TTSCHUNK_LIST.push(createTtsChunk(SpeechCapabilities.TEXT, "Say a comman
 // msg.setDeviceInfo(Test.GENERAL_DEVICEINFO);
 // msg.setDayColorScheme(Test.GENERAL_DAYCOLORSCHEME);
 // msg.setNightColorScheme(Test.GENERAL_NIGHTCOLORSCHEME);
+
+GENERAL_DEVICEINFO.setCarrier(GENERAL_STRING);
+GENERAL_DEVICEINFO.setFirmwareRev(GENERAL_STRING);
+GENERAL_DEVICEINFO.setHardware(GENERAL_STRING);
+GENERAL_DEVICEINFO.setMaxNumberRFCOMMPorts(GENERAL_INT);
+GENERAL_DEVICEINFO.setOs(GENERAL_STRING);
+GENERAL_DEVICEINFO.setOsVersion(GENERAL_STRING);
+
 
 module.exports = Test;
