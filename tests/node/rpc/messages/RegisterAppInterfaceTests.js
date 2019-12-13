@@ -1,6 +1,12 @@
 const SDL = require('./../../../../lib/js/dist/SDL.js');
-
 const Test = require('./../../../Test.js');
+const Validator = require('./../../../Validator.js');
+
+//http://junit.sourceforge.net/javadoc/org/junit/Assert.html
+// const { assertTrue, assertEquals, assertNull } = Validator;
+const assertTrue = Validator.assertTrue.bind(Validator);
+const assertEquals = Validator.assertEquals.bind(Validator);
+// const assertNull = Validator.assertNull.bind(Validator);
 
 const RegisterAppInterface = SDL.rpc.messages.RegisterAppInterface;
 
@@ -9,7 +15,7 @@ function createMessage () {
 
     msg.setSdlMsgVersion(Test.GENERAL_SDLMSGVERSION);
     msg.setAppName(Test.GENERAL_STRING);
-    // msg.setNgnMediaScreenAppName(Test.GENERAL_STRING);
+    msg.setNgnMediaScreenAppName(Test.GENERAL_STRING);
     msg.setFullAppId(Test.GENERAL_FULL_APP_ID);
     msg.setLanguageDesired(Test.GENERAL_LANGUAGE);
     msg.setHmiDisplayLanguageDesired(Test.GENERAL_LANGUAGE);
@@ -40,57 +46,24 @@ describe('RegisterAppInterfaceTests', function () {
         const testHashId = msg.getHashID();
         const testTts = msg.getTtsName();
         const testSynonyms = msg.getVrSynonyms();
-        const testApps = msg.getAppHMIType();
+        const testApps = msg.getAppHmiType();
         const testMedia = msg.getIsMediaApplication();
         const testDeviceInfo = msg.getDeviceInfo();
         const testDayColorScheme = msg.getDayColorScheme();
         const testNightColorScheme = msg.getNightColorScheme();
 
-        console.log({
-            testVersion,
-            testName,
-            testNgnName,
-            testAppId,
-            testFullAppId,
-            testLang,
-            testHmiLang,
-            testDeviceInfo,
-            testHashId,
-            testTts,
-            testSynonyms,
-            testApps,
-            testMedia,
-            testDayColorScheme,
-            testNightColorScheme,
-        });
+        const dayPrimary = testDayColorScheme.getPrimaryColor();
 
-        done();
-    });
 
-    // 	/**
-// 	 * Tests the expected values of the RPC message.
-// 	 */
-//     public void testRpcValues () {
-//     	// Test Values
-// 		SdlMsgVersion testVersion = ( (RegisterAppInterface) msg).getSdlMsgVersion();
-// 		String testName = ( (RegisterAppInterface) msg).getAppName();
-// 		String testNgnName = ( (RegisterAppInterface) msg).getNgnMediaScreenAppName();
-// 		String testAppId = ( (RegisterAppInterface) msg).getAppID();
-// 		String testFullAppId = ( (RegisterAppInterface) msg).getFullAppID();
-// 		Language testLang = ( (RegisterAppInterface) msg).getLanguageDesired();
-// 		Language testHmiLang = ( (RegisterAppInterface) msg).getHmiDisplayLanguageDesired();
-// 		String testHashId = ( (RegisterAppInterface) msg).getHashID();
-// 		List<TTSChunk> testTts = ( (RegisterAppInterface) msg).getTtsName();
-// 		List<String> testSynonyms = ( (RegisterAppInterface) msg).getVrSynonyms();
-// 		List<AppHMIType> testApps = ( (RegisterAppInterface) msg).getAppHMIType();
-// 		Boolean testMedia = ( (RegisterAppInterface) msg).getIsMediaApplication();
-// 		DeviceInfo testDeviceInfo = ( (RegisterAppInterface) msg).getDeviceInfo();
-// 		TemplateColorScheme testDayColorScheme = ( (RegisterAppInterface) msg).getDayColorScheme();
-// 		TemplateColorScheme testNightColorScheme = ( (RegisterAppInterface) msg).getNightColorScheme();
+        Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion);
 
+
+
+
+        console.log('tests');
 // 		// Valid Tests
-// 		assertTrue(Test.TRUE, Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion));
-// 		assertEquals(Test.MATCH, Test.GENERAL_STRING, testName);
+        assertTrue(Test.TRUE, Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion));
+		assertEquals(Test.MATCH, Test.GENERAL_STRING, testName);
 // 		assertEquals(Test.MATCH, Test.GENERAL_STRING, testNgnName);
 // 		assertEquals(Test.MATCH, Test.GENERAL_APP_ID, testAppId);
 // 		assertEquals(Test.MATCH, Test.GENERAL_FULL_APP_ID, testFullAppId);
@@ -126,6 +99,30 @@ describe('RegisterAppInterfaceTests', function () {
 // 		assertNull(Test.NULL, msg.getDayColorScheme());
 // 		assertNull(Test.NULL, msg.getNightColorScheme());
 // 	}
+
+        // console.log({
+        //     testVersion,
+        //     testName,
+        //     testNgnName,
+        //     testAppId,
+        //     testFullAppId,
+        //     testLang,
+        //     testHmiLang,
+        //     testDeviceInfo,
+        //     testHashId,
+        //     testTts,
+        //     testSynonyms,
+        //     testApps,
+        //     testMedia,
+        //     testDayColorScheme,
+        //     testNightColorScheme,
+        //     dayPrimary,
+        // });
+
+        done();
+    });
+
+
 
 });
 
