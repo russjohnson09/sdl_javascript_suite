@@ -1,4 +1,3 @@
-const expect = require('chai').expect;
 const SDL = require('./../../../../lib/js/dist/SDL');
 const Image = SDL.rpc.structs.Image;
 
