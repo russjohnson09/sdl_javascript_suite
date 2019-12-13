@@ -1,4 +1,9 @@
 const SDL = require('./../../../../lib/js/dist/SDL.js');
+const RegisterAppInterface = SDL.rpc.messages.RegisterAppInterface;
+const FunctionID = SDL.rpc.enums.FunctionID;
+const RpcType = SDL.rpc.enums.RpcType;
+
+
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
@@ -6,9 +11,12 @@ const Validator = require('./../../../Validator.js');
 // const { assertTrue, assertEquals, assertNull } = Validator;
 const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
-// const assertNull = Validator.assertNull.bind(Validator);
+const assertNull = Validator.assertNull.bind(Validator);
+const assertNotNull = Validator.assertNotNull.bind(Validator);
+const testNullBase = Validator.testNullBase.bind(Validator, 
+    FunctionID.keyForValue(FunctionID.RegisterAppInterface), 
+    RpcType.REQUEST);
 
-const RegisterAppInterface = SDL.rpc.messages.RegisterAppInterface;
 
 function createMessage () {
     const msg = new RegisterAppInterface();
@@ -32,7 +40,7 @@ function createMessage () {
 }
 
 
-const { msg, } = require('./setup.js')(createMessage);
+let { msg, } = require('./setup.js')(createMessage);
 
 describe('RegisterAppInterfaceTests', function () {
     it ('testRpcValues', function (done) {
@@ -63,61 +71,41 @@ describe('RegisterAppInterfaceTests', function () {
         console.log('tests');
 // 		// Valid Tests
         assertTrue(Test.TRUE, Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion));
-		assertEquals(Test.MATCH, Test.GENERAL_STRING, testName);
-// 		assertEquals(Test.MATCH, Test.GENERAL_STRING, testNgnName);
-// 		assertEquals(Test.MATCH, Test.GENERAL_APP_ID, testAppId);
-// 		assertEquals(Test.MATCH, Test.GENERAL_FULL_APP_ID, testFullAppId);
-// 		assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
-// 		assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
-// 		assertEquals(Test.MATCH, Test.GENERAL_STRING, testHashId);
-// 		assertTrue(Test.TRUE, Validator.validateTtsChunks(Test.GENERAL_TTSCHUNK_LIST, testTts));
-// 		assertEquals(Test.MATCH, Test.GENERAL_STRING_LIST, testSynonyms);
-// 		assertEquals(Test.MATCH, Test.GENERAL_APPHMITYPE_LIST, testApps);
-// 		assertEquals(Test.MATCH, (Boolean) Test.GENERAL_BOOLEAN, testMedia);
-// 		assertTrue(Test.TRUE, Validator.validateDeviceInfo(Test.GENERAL_DEVICEINFO, testDeviceInfo));
-// 		assertTrue(Test.TRUE, Validator.validateTemplateColorScheme(Test.GENERAL_DAYCOLORSCHEME, testDayColorScheme));
-// 		assertTrue(Test.TRUE, Validator.validateTemplateColorScheme(Test.GENERAL_NIGHTCOLORSCHEME, testNightColorScheme));
+        assertEquals(Test.MATCH, Test.GENERAL_STRING, testName);
+        assertEquals(Test.MATCH, Test.GENERAL_STRING, testNgnName);
+        assertEquals(Test.MATCH, Test.GENERAL_APP_ID, testAppId);
+        assertEquals(Test.MATCH, Test.GENERAL_FULL_APP_ID, testFullAppId);
+        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
+        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
+        assertEquals(Test.MATCH, Test.GENERAL_STRING, testHashId);
+        // assertTrue(Test.TRUE, Validator.validateTtsChunks(Test.GENERAL_TTSCHUNK_LIST, testTts));
+        assertEquals(Test.MATCH, Test.GENERAL_STRING_LIST, testSynonyms);
+        assertEquals(Test.MATCH, Test.GENERAL_APPHMITYPE_LIST, testApps);
+        assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testMedia);
+        assertTrue(Test.TRUE, Validator.validateDeviceInfo(Test.GENERAL_DEVICEINFO, testDeviceInfo));
+        assertTrue(Test.TRUE, Validator.validateTemplateColorScheme(Test.GENERAL_DAYCOLORSCHEME, testDayColorScheme));
+        assertTrue(Test.TRUE, Validator.validateTemplateColorScheme(Test.GENERAL_NIGHTCOLORSCHEME, testNightColorScheme));
 
-// 		// Invalid/Null Tests
-// 		RegisterAppInterface msg = new RegisterAppInterface();
-// 		assertNotNull(Test.NOT_NULL, msg);
-// 		testNullBase(msg);
+        // Invalid/Null Tests
+        msg = new RegisterAppInterface();
+        assertNotNull(Test.NOT_NULL, msg);
+        testNullBase(msg);
 
-// 		assertNull(Test.NULL, msg.getSdlMsgVersion());
-// 		assertNull(Test.NULL, msg.getAppName());
-// 		assertNull(Test.NULL, msg.getNgnMediaScreenAppName());
-// 		assertNull(Test.NULL, msg.getAppID());
-// 		assertNull(Test.NULL, msg.getFullAppID());
-// 		assertNull(Test.NULL, msg.getLanguageDesired());
-// 		assertNull(Test.NULL, msg.getHmiDisplayLanguageDesired());
-// 		assertNull(Test.NULL, msg.getHashID());
-// 		assertNull(Test.NULL, msg.getTtsName());
-// 		assertNull(Test.NULL, msg.getVrSynonyms());
-// 		assertNull(Test.NULL, msg.getAppHMIType());
-// 		assertNull(Test.NULL, msg.getIsMediaApplication());
-// 		assertNull(Test.NULL, msg.getDeviceInfo());
-// 		assertNull(Test.NULL, msg.getDayColorScheme());
-// 		assertNull(Test.NULL, msg.getNightColorScheme());
-// 	}
-
-        // console.log({
-        //     testVersion,
-        //     testName,
-        //     testNgnName,
-        //     testAppId,
-        //     testFullAppId,
-        //     testLang,
-        //     testHmiLang,
-        //     testDeviceInfo,
-        //     testHashId,
-        //     testTts,
-        //     testSynonyms,
-        //     testApps,
-        //     testMedia,
-        //     testDayColorScheme,
-        //     testNightColorScheme,
-        //     dayPrimary,
-        // });
+        assertNull(Test.NULL, msg.getSdlMsgVersion());
+        assertNull(Test.NULL, msg.getAppName());
+        assertNull(Test.NULL, msg.getNgnMediaScreenAppName());
+        assertNull(Test.NULL, msg.getAppID());
+        assertNull(Test.NULL, msg.getFullAppID());
+        assertNull(Test.NULL, msg.getLanguageDesired());
+        assertNull(Test.NULL, msg.getHmiDisplayLanguageDesired());
+        assertNull(Test.NULL, msg.getHashID());
+        assertNull(Test.NULL, msg.getTtsName());
+        assertNull(Test.NULL, msg.getVrSynonyms());
+        assertNull(Test.NULL, msg.getAppHMIType());
+        assertNull(Test.NULL, msg.getIsMediaApplication());
+        assertNull(Test.NULL, msg.getDeviceInfo());
+        assertNull(Test.NULL, msg.getDayColorScheme());
+        assertNull(Test.NULL, msg.getNightColorScheme());
 
         done();
     });
