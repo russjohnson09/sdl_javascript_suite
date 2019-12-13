@@ -3,9 +3,6 @@ const expect = require('chai').expect;
 const SDL = require('./../../../lib/js/dist/SDL');
 const BitConverter = SDL.util.BitConverter;
 
-// const TEST_VERSION_STRING = '1.2.3';
-// const TEST_VERSION = new Version(1, 2, 3);
-
 function assertEquals (val1, val2) {
     expect(val1).to.be.deep.equal(val2);
 }

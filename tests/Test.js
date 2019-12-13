@@ -7,10 +7,11 @@ const DeviceInfo = SDL.rpc.structs.DeviceInfo;
 const TemplateColorScheme = SDL.rpc.structs.TemplateColorScheme;
 const RGBColor = SDL.rpc.structs.RGBColor;
 
+// enums
 const SpeechCapabilities = SDL.rpc.enums.SpeechCapabilities;
 const AppHMIType = SDL.rpc.enums.AppHMIType;
 const Language = SDL.rpc.enums.Language;
-
+const ImageType = SDL.rpc.enums.ImageType;
 
 
 
@@ -28,7 +29,7 @@ const ARRAY  = Test.ARRAY   = 'Array values should match.';
 const TRUE    = Test.TRUE  = 'Value should be true.';
 const FALSE   = Test.FALSE  = 'Value should be false.';
 const NOT_NULL = Test.NOT_NULL = 'Value should not be null.';
-const JSON_FAIL = Test.JSON_FAIL= 'Json testing failed.';
+const JSON_FAIL = Test.JSON_FAIL = 'Json testing failed.';
 
 //sdl_javascript_suite/lib/js/src/rpc/structs/SdlMsgVersion.js
 
@@ -43,6 +44,7 @@ const GENERAL_APP_ID = Test.GENERAL_APP_ID                      = '123e4567e8';
 const GENERAL_FULL_APP_ID =             Test.GENERAL_FULL_APP_ID                    = '123e4567-e89b-12d3-a456-426655440000';
 
 
+const GENERAL_IMAGETYPE = Test.GENERAL_IMAGETYPE = ImageType.DYNAMIC
 const GENERAL_LANGUAGE =             Test.GENERAL_LANGUAGE                    = Language.EN_US;
 const GENERAL_STRING =             Test.GENERAL_STRING                    = 'test';
 const GENERAL_TTSCHUNK_LIST = Test.GENERAL_TTSCHUNK_LIST = [];
