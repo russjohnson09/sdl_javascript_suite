@@ -29,27 +29,33 @@ class Validator {
 
 
     static validateTtsChunks (list1, list2) {
-        if (list1 === null) {
-            return (list2 === null);
-        }
-        if (list2 === null) {
-            return (list1 === null);
+        if (list1 === null || list2 === null) {
+            expect(list1).to.equal(list2);
+            return;
         }
 
-        if (list1.length !== list2.length) {
-            return false;
-        }
+        let text1 = list1.map((val) => {
+            return val.getText();
+        });
+        let text2 = list1.map((val) => {
+            return val.getText();
+        });
 
-        for (const idx in list1) {
-            const chunk1 = list1[idx];
-            const chunk2 = list2[idx];
+        expect(text1).to.deep.equal(text2);
+        // expect(text1).to.deep.equal(text2);
 
-            if (!this.validateText(chunk1.getText(), chunk2.getText()) || (chunk1.getType() !== chunk2.getType())) {
-                return false;
-            }
-        }
 
-        return true;
+
+        // for (const idx in list1) {
+        //     const chunk1 = list1[idx];
+        //     const chunk2 = list2[idx];
+
+        //     if (!this.validateText(chunk1.getText(), chunk2.getText()) || (chunk1.getType() !== chunk2.getType())) {
+        //         return false;
+        //     }
+        // }
+
+        // return true;
     }
 
 
@@ -140,7 +146,10 @@ class Validator {
         } else {
             throw new Error('Bad arguments');
         }
+        console.log(`assertNull`,{val1});
+        // expect(val1, msg).to.be.undefined;
         expect(val1, msg).to.be.null;
+
     }
 
     static assertNotNull () {
