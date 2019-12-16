@@ -35,15 +35,12 @@ exports.tests = function () {
     it('testCorrelationId', function (done) {
         const msg = this.msg;
         const CORR_ID = this.CORR_ID;
-        console.log({RpcRequest});
         if (msg instanceof RpcRequest) {
             const correlationId = msg.getCorrelationId(); 
-            console.log('RpcRequest', { correlationId });
             assertNotNullUndefined('Correlation ID should be defined.', correlationId);
             assertEquals('Correlation ID doesn\'t match expected ID.', CORR_ID, correlationId);
         } else if (msg instanceof RpcResponse) {
             const correlationId = msg.getCorrelationId();
-            console.log('RpcResponse', { correlationId });
             assertNotNullUndefined('Correlation ID should be defined.', correlationId);
             assertEquals('Correlation ID doesn\'t match expected ID.', CORR_ID, correlationId);
         }
