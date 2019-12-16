@@ -200,7 +200,15 @@ class Validator {
     }
 
 
-    static assertNotNullUndefined (msg, val) {
+    static assertNotNullUndefined () {
+        const args = arguments;
+        let val,msg;
+        if (args.length === 2) {
+            val = args[1];
+            msg = args[0];
+        } else {
+            val = args[0];
+        }
         expect(val, msg).not.to.be.null.and.not.to.be.undefined;
     }
 

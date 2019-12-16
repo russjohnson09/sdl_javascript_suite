@@ -50,22 +50,23 @@ exports.tests = function () {
         done();
     });
 
-    it('testMessageType' function (done) {
-        
+    it('testRPCType', function (done) {
+        const messageType = this.msg.getRPCType();
+        assertNotNullUndefined(messageType);
+        assertEquals(messageType, this.getRPCType());
         done();
-    }); 
+    });
 
-    // it('should have .name.first', function() {
-    //   this.user.name.first.should.equal('tobi');
-    // });
-  
-    // it('should have .name.last', function() {
-    //   this.user.name.last.should.equal('holowaychuk');
-    // });
-  
-    // describe('.fullname()', function() {
-    //   it('should return the full name', function() {
-    //     this.user.fullname().should.equal('tobi holowaychuk');
-    //   })
-    // });
+    it('testFunctionName', function (done) {
+        const functionName = this.msg.getFunctionName();
+        assertNotNullUndefined(functionName);
+        assertEquals(functionName, this.getFunctionName());
+
+        done();
+    });
+
+    it('testJson', function (done) {
+        Validator.validateJson(this.msg, this.getExpectedParameters());
+        done();
+    });
 };

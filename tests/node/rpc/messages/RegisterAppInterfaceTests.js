@@ -60,14 +60,17 @@ describe('RegisterAppInterfaceTests', function () {
             expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
             return expectedParameters;
         };
+
+        this.getRPCType = function () {
+            return RpcType.REQUEST;
+        };
+
+        this.getFunctionName = function () {
+            return FunctionID.keyForValue(FunctionID.RegisterAppInterface);
+        }
     });
 
     BaseRpcTests.tests();
-
-    it('testJson', function (done) {
-        Validator.validateJson(this.msg, this.getExpectedParameters());
-        done();
-    });
 
     it ('testRpcValues', function (done) {
         let rpcMessage = this.msg;
