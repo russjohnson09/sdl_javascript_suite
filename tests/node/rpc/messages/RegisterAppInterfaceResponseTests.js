@@ -3,7 +3,7 @@ const RegisterAppInterfaceResponse = SDL.rpc.messages.RegisterAppInterfaceRespon
 const FunctionID = SDL.rpc.enums.FunctionID;
 const RpcType = SDL.rpc.enums.RpcType;
 
-
+const BaseRpcTests = require('./BaseRpcTests');
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
@@ -22,24 +22,7 @@ let rpcMessage;
 const expectedParameters = {};
 describe('setup', function () {
     it('createMessage', function (done) {
-        let msg = new RegisterAppInterfaceResponse();
 
-        msg.setSdlMsgVersion(Test.GENERAL_SDLMSGVERSION);
-        msg.setLanguage(Test.GENERAL_LANGUAGE);
-        msg.setHmiDisplayLanguage(Test.GENERAL_LANGUAGE);
-        msg.setDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES);
-        msg.setPresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES);
-        msg.setVehicleType(Test.GENERAL_VEHICLETYPE);
-        msg.setButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST);
-        msg.setSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST);
-        msg.setAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST);
-        msg.setPcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES);
-        msg.setHmiZoneCapabilities(Test.GENERAL_HMIZONECAPABILITIES_LIST);
-        msg.setSpeechCapabilities(Test.GENERAL_SPEECHCAPABILITIES_LIST);
-        msg.setVrCapabilities(Test.GENERAL_VRCAPABILITIES_LIST);
-        msg.setPrerecordedSpeech(Test.GENERAL_PRERECORDEDSPEECH_LIST);
-        msg.setSupportedDiagModes(Test.GENERAL_INTEGER_LIST);
-        msg.setIconResumed(Test.GENERAL_BOOLEAN);
 
         done();
     });
@@ -67,15 +50,64 @@ describe('setup', function () {
     });
 });
 
-return;
+
+// return;
 
 describe('RegisterAppInterfaceTests', function () {
-    it('testJson', function (done) {
-        const rpcMessageJson = rpcMessage.serializeJSON();  
+    before(function () {
+        this.createMessage = function () {
+            const msg = new RegisterAppInterfaceResponse();
 
-        console.log({rpcMessageJson});
-        done();
+            msg.setSdlMsgVersion(Test.GENERAL_SDLMSGVERSION);
+            msg.setLanguage(Test.GENERAL_LANGUAGE);
+            msg.setHmiDisplayLanguage(Test.GENERAL_LANGUAGE);
+            msg.setDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES);
+            msg.setPresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES);
+            msg.setVehicleType(Test.GENERAL_VEHICLETYPE);
+            msg.setButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST);
+            msg.setSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST);
+            msg.setAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST);
+            msg.setPcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES);
+            msg.setHmiZoneCapabilities(Test.GENERAL_HMIZONECAPABILITIES_LIST);
+            msg.setSpeechCapabilities(Test.GENERAL_SPEECHCAPABILITIES_LIST);
+            msg.setVrCapabilities(Test.GENERAL_VRCAPABILITIES_LIST);
+            msg.setPrerecordedSpeech(Test.GENERAL_PRERECORDEDSPEECH_LIST);
+            msg.setSupportedDiagModes(Test.GENERAL_INTEGER_LIST);
+            msg.setIconResumed(Test.GENERAL_BOOLEAN);
+            return msg;
+        };
+
+        this.getExpectedParameters = function (sdlVersion) {
+            const expectedParameters = {};
+            // expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
+            // expectedParameters[RegisterAppInterface.KEY_APP_NAME] = Test.GENERAL_STRING;
+            // expectedParameters[RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME] = Test.GENERAL_STRING;
+            // expectedParameters[RegisterAppInterface.KEY_APP_ID] = Test.GENERAL_APP_ID;
+            // expectedParameters[RegisterAppInterface.KEY_FULL_APP_ID] = Test.GENERAL_FULL_APP_ID;
+            // expectedParameters[RegisterAppInterface.KEY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
+            // expectedParameters[RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
+            // expectedParameters[RegisterAppInterface.KEY_HASH_ID] = Test.GENERAL_STRING;
+            // expectedParameters[RegisterAppInterface.KEY_TTS_NAME] = Test.JSON_TTSCHUNKS;
+            // expectedParameters[RegisterAppInterface.KEY_VR_SYNONYMS] = Test.GENERAL_STRING_LIST;
+            // expectedParameters[RegisterAppInterface.KEY_APP_HMI_TYPE] = Test.GENERAL_APPHMITYPE_LIST;
+            // expectedParameters[RegisterAppInterface.KEY_IS_MEDIA_APPLICATION] = Test.GENERAL_BOOLEAN;
+            // expectedParameters[RegisterAppInterface.KEY_DEVICE_INFO] = Test.JSON_DEVICEINFO;
+            // expectedParameters[RegisterAppInterface.KEY_DAY_COLOR_SCHEME] = Test.JSON_DAYCOLORSCHEME;
+            // expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
+            return expectedParameters;
+        };
+
+        this.getRPCType = function () {
+            return RpcType.RESPONSE;
+        };
+
+        this.getFunctionName = function () {
+            return FunctionID.keyForValue(FunctionID.RegisterAppInterface);
+        };
     });
+
+    BaseRpcTests.tests();
+    return;
 
     it ('testRpcValues', function (done) {
         const testVersion = rpcMessage.getSdlMsgVersion();
