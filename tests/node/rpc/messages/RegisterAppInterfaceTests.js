@@ -7,6 +7,9 @@ const RpcType = SDL.rpc.enums.RpcType;
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
+const BaseRpcTests = require('./BaseRpcTests');
+
+
 // http://junit.sourceforge.net/javadoc/org/junit/Assert.html
 // const { assertTrue, assertEquals, assertNull } = Validator;
 const assertTrue = Validator.assertTrue.bind(Validator);
@@ -45,35 +48,36 @@ describe('setup', function () {
 
     it('expectedParameters', function (done) {
         expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
-
-        // result.put(RegisterAppInterface.KEY_SDL_MSG_VERSION, Test.JSON_SDLMSGVERSION);
-        // result.put(RegisterAppInterface.KEY_APP_NAME, Test.GENERAL_STRING);
-        // result.put(RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME, Test.GENERAL_STRING);
-        // result.put(RegisterAppInterface.KEY_APP_ID, Test.GENERAL_APP_ID);
-        // result.put(RegisterAppInterface.KEY_FULL_APP_ID, Test.GENERAL_FULL_APP_ID);
-        // result.put(RegisterAppInterface.KEY_LANGUAGE_DESIRED, Test.GENERAL_LANGUAGE);
-        // result.put(RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED, Test.GENERAL_LANGUAGE);
-        // result.put(RegisterAppInterface.KEY_HASH_ID, Test.GENERAL_STRING);
-        // result.put(RegisterAppInterface.KEY_TTS_NAME, Test.JSON_TTSCHUNKS);
-        // result.put(RegisterAppInterface.KEY_VR_SYNONYMS, JsonUtils.createJsonArray(Test.GENERAL_STRING_LIST));
-        // result.put(RegisterAppInterface.KEY_APP_HMI_TYPE, JsonUtils.createJsonArrayOfJsonNames(Test.GENERAL_APPHMITYPE_LIST, SDL_VERSION_UNDER_TEST));
-        // result.put(RegisterAppInterface.KEY_IS_MEDIA_APPLICATION, Test.GENERAL_BOOLEAN);
-        // result.put(RegisterAppInterface.KEY_DEVICE_INFO, Test.JSON_DEVICEINFO);
-        // result.put(RegisterAppInterface.KEY_DAY_COLOR_SCHEME, Test.JSON_DAYCOLORSCHEME);
-        // result.put(RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME, Test.JSON_NIGHTCOLORSCHEME);
+        expectedParameters[RegisterAppInterface.KEY_APP_NAME] = Test.GENERAL_STRING;
+        expectedParameters[RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME] = Test.GENERAL_STRING;
+        expectedParameters[RegisterAppInterface.KEY_APP_ID] = Test.GENERAL_APP_ID;
+        expectedParameters[RegisterAppInterface.KEY_FULL_APP_ID] = Test.GENERAL_FULL_APP_ID;
+        expectedParameters[RegisterAppInterface.KEY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
+        expectedParameters[RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
+        expectedParameters[RegisterAppInterface.KEY_HASH_ID] = Test.GENERAL_STRING;
+        expectedParameters[RegisterAppInterface.KEY_TTS_NAME] = Test.JSON_TTSCHUNKS;
+        expectedParameters[RegisterAppInterface.KEY_VR_SYNONYMS] = Test.GENERAL_STRING_LIST;
+        expectedParameters[RegisterAppInterface.KEY_APP_HMI_TYPE] = Test.GENERAL_APPHMITYPE_LIST;
+        expectedParameters[RegisterAppInterface.KEY_IS_MEDIA_APPLICATION] = Test.GENERAL_BOOLEAN;
+        expectedParameters[RegisterAppInterface.KEY_DEVICE_INFO] = Test.JSON_DEVICEINFO;
+        expectedParameters[RegisterAppInterface.KEY_DAY_COLOR_SCHEME] = Test.JSON_DAYCOLORSCHEME;
+        expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
 
         done();
     });
 });
 
+describe('RegisterAppInterfaceTests BaseRPC', function () {
+    BaseRpcTests.tests();
+});
+
 describe('RegisterAppInterfaceTests', function () {
+
+    // it('testFunction', function (done) {
+    // });
 
     it('testJson', function (done) {
         Validator.validateJson(rpcMessage, expectedParameters);
-        // const parameters = rpcMessage.getParameters();
-        // // const rpcMessageJson = rpcMessage.serializeJSON(); //TODO get equivalent.
-        // // get parameters.
-        // console.log({parameters});
         done();
     });
 

@@ -80,6 +80,49 @@ GENERAL_DAYCOLORSCHEME.setPrimaryColor(GENERAL_RGBCOLOR);
 GENERAL_DAYCOLORSCHEME.setSecondaryColor(GENERAL_RGBCOLOR);
 GENERAL_DAYCOLORSCHEME.setBackgroundColor(GENERAL_RGBCOLOR);
 
+
+const JSON_RGBCOLOR = Test.JSON_RGBCOLOR = {
+    [RGBColor.KEY_RED]: GENERAL_INT,
+    [RGBColor.KEY_GREEN]: GENERAL_INT,
+    [RGBColor.KEY_BLUE]: GENERAL_INT,
+};
+
+const JSON_DAYCOLORSCHEME = Test.JSON_DAYCOLORSCHEME = {
+    [TemplateColorScheme.KEY_PRIMARY_COLOR]: JSON_RGBCOLOR,
+    [TemplateColorScheme.KEY_SECONDARY_COLOR]: JSON_RGBCOLOR,
+    [TemplateColorScheme.KEY_BACKGROUND_COLOR]: JSON_RGBCOLOR,
+};
+
+const JSON_NIGHTCOLORSCHEME = Test.JSON_NIGHTCOLORSCHEME = {
+    [TemplateColorScheme.KEY_PRIMARY_COLOR]: JSON_RGBCOLOR,
+    [TemplateColorScheme.KEY_SECONDARY_COLOR]: JSON_RGBCOLOR,
+    [TemplateColorScheme.KEY_BACKGROUND_COLOR]: JSON_RGBCOLOR,
+};
+
+
+
+const JSON_DEVICEINFO = Test.JSON_DEVICEINFO = {
+    [DeviceInfo.KEY_CARRIER]: GENERAL_STRING,
+    [DeviceInfo.KEY_FIRMWARE_REV]: GENERAL_STRING,
+    [DeviceInfo.KEY_HARDWARE]: GENERAL_STRING,
+    [DeviceInfo.KEY_MAX_NUMBER_RFCOMM_PORTS]: GENERAL_INT,
+    [DeviceInfo.KEY_OS]: GENERAL_STRING,
+    [DeviceInfo.KEY_OS_VERSION]: GENERAL_STRING,
+};
+
+
+const JSON_TTSCHUNKS = Test.JSON_TTSCHUNKS = [
+    {
+        [TTSChunk.KEY_TEXT]: 'Welcome to the jungle',
+        [TTSChunk.KEY_TYPE]: SpeechCapabilities.SC_TEXT,
+    },
+    {
+        [TTSChunk.KEY_TEXT]: 'Say a command',
+        [TTSChunk.KEY_TYPE]: SpeechCapabilities.SC_TEXT,
+    },
+]
+
+
 function createTtsChunk(type, text) {
     const ttsChunk = new TTSChunk();
     ttsChunk.setType(type);
