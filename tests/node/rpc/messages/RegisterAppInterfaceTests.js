@@ -10,8 +10,6 @@ const Validator = require('./../../../Validator.js');
 const BaseRpcTests = require('./BaseRpcTests');
 
 
-// http://junit.sourceforge.net/javadoc/org/junit/Assert.html
-// const { assertTrue, assertEquals, assertNull } = Validator;
 const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
 const assertNull = Validator.assertNull.bind(Validator);
@@ -20,109 +18,59 @@ const testNullBase = Validator.testNullBase.bind(Validator,
     FunctionID.keyForValue(FunctionID.RegisterAppInterface), 
     RpcType.REQUEST);
 
-
-
-let rpcMessage;
-const expectedParameters = {};
-
-describe('setup', function () {
-    it('createMessage', function (done) {
-        rpcMessage = new RegisterAppInterface();
-        rpcMessage.setSdlMsgVersion(Test.GENERAL_SDLMSGVERSION);
-        rpcMessage.setAppName(Test.GENERAL_STRING);
-        rpcMessage.setNgnMediaScreenAppName(Test.GENERAL_STRING);
-        rpcMessage.setFullAppId(Test.GENERAL_FULL_APP_ID);
-        rpcMessage.setLanguageDesired(Test.GENERAL_LANGUAGE);
-        rpcMessage.setHmiDisplayLanguageDesired(Test.GENERAL_LANGUAGE);
-        rpcMessage.setHashID(Test.GENERAL_STRING);
-        rpcMessage.setTtsName(Test.GENERAL_TTSCHUNK_LIST);
-        rpcMessage.setVrSynonyms(Test.GENERAL_STRING_LIST);
-        rpcMessage.setAppHmiType(Test.GENERAL_APPHMITYPE_LIST);
-        rpcMessage.setIsMediaApplication(Test.GENERAL_BOOLEAN);
-        rpcMessage.setDeviceInfo(Test.GENERAL_DEVICEINFO);
-        rpcMessage.setDayColorScheme(Test.GENERAL_DAYCOLORSCHEME);
-        rpcMessage.setNightColorScheme(Test.GENERAL_NIGHTCOLORSCHEME);
-
-        this.rpcMessage = rpcMessage;
-
-        done();
-    });
-
-    it('expectedParameters', function (done) {
-        expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
-        expectedParameters[RegisterAppInterface.KEY_APP_NAME] = Test.GENERAL_STRING;
-        expectedParameters[RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME] = Test.GENERAL_STRING;
-        expectedParameters[RegisterAppInterface.KEY_APP_ID] = Test.GENERAL_APP_ID;
-        expectedParameters[RegisterAppInterface.KEY_FULL_APP_ID] = Test.GENERAL_FULL_APP_ID;
-        expectedParameters[RegisterAppInterface.KEY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
-        expectedParameters[RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
-        expectedParameters[RegisterAppInterface.KEY_HASH_ID] = Test.GENERAL_STRING;
-        expectedParameters[RegisterAppInterface.KEY_TTS_NAME] = Test.JSON_TTSCHUNKS;
-        expectedParameters[RegisterAppInterface.KEY_VR_SYNONYMS] = Test.GENERAL_STRING_LIST;
-        expectedParameters[RegisterAppInterface.KEY_APP_HMI_TYPE] = Test.GENERAL_APPHMITYPE_LIST;
-        expectedParameters[RegisterAppInterface.KEY_IS_MEDIA_APPLICATION] = Test.GENERAL_BOOLEAN;
-        expectedParameters[RegisterAppInterface.KEY_DEVICE_INFO] = Test.JSON_DEVICEINFO;
-        expectedParameters[RegisterAppInterface.KEY_DAY_COLOR_SCHEME] = Test.JSON_DAYCOLORSCHEME;
-        expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
-
-        done();
-    });
-});
-
-// describe('RegisterAppInterfaceTests BaseRPC', function () {
-//     BaseRpcTests.tests(rpcMessage);
-// });
-
 describe('RegisterAppInterfaceTests', function () {
 
-    beforeEach(function () {
-        // this.user = new User('tobi', 'holowaychuk');
-        rpcMessage = new RegisterAppInterface();
-        rpcMessage.setSdlMsgVersion(Test.GENERAL_SDLMSGVERSION);
-        rpcMessage.setAppName(Test.GENERAL_STRING);
-        rpcMessage.setNgnMediaScreenAppName(Test.GENERAL_STRING);
-        rpcMessage.setFullAppId(Test.GENERAL_FULL_APP_ID);
-        rpcMessage.setLanguageDesired(Test.GENERAL_LANGUAGE);
-        rpcMessage.setHmiDisplayLanguageDesired(Test.GENERAL_LANGUAGE);
-        rpcMessage.setHashID(Test.GENERAL_STRING);
-        rpcMessage.setTtsName(Test.GENERAL_TTSCHUNK_LIST);
-        rpcMessage.setVrSynonyms(Test.GENERAL_STRING_LIST);
-        rpcMessage.setAppHmiType(Test.GENERAL_APPHMITYPE_LIST);
-        rpcMessage.setIsMediaApplication(Test.GENERAL_BOOLEAN);
-        rpcMessage.setDeviceInfo(Test.GENERAL_DEVICEINFO);
-        rpcMessage.setDayColorScheme(Test.GENERAL_DAYCOLORSCHEME);
-        rpcMessage.setNightColorScheme(Test.GENERAL_NIGHTCOLORSCHEME);
+    before(function () {
+        console.log('RegisterAppInterfaceTests beforeEach');
+        this.createMessage = function () {
+            const msg = new RegisterAppInterface();
+            msg.setSdlMsgVersion(Test.GENERAL_SDLMSGVERSION);
+            msg.setAppName(Test.GENERAL_STRING);
+            msg.setNgnMediaScreenAppName(Test.GENERAL_STRING);
+            msg.setFullAppId(Test.GENERAL_FULL_APP_ID);
+            msg.setLanguageDesired(Test.GENERAL_LANGUAGE);
+            msg.setHmiDisplayLanguageDesired(Test.GENERAL_LANGUAGE);
+            msg.setHashID(Test.GENERAL_STRING);
+            msg.setTtsName(Test.GENERAL_TTSCHUNK_LIST);
+            msg.setVrSynonyms(Test.GENERAL_STRING_LIST);
+            msg.setAppHmiType(Test.GENERAL_APPHMITYPE_LIST);
+            msg.setIsMediaApplication(Test.GENERAL_BOOLEAN);
+            msg.setDeviceInfo(Test.GENERAL_DEVICEINFO);
+            msg.setDayColorScheme(Test.GENERAL_DAYCOLORSCHEME);
+            msg.setNightColorScheme(Test.GENERAL_NIGHTCOLORSCHEME);
+            return msg;
+        };
 
-        this.rpcMessage = rpcMessage;
-
-        expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
-        expectedParameters[RegisterAppInterface.KEY_APP_NAME] = Test.GENERAL_STRING;
-        expectedParameters[RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME] = Test.GENERAL_STRING;
-        expectedParameters[RegisterAppInterface.KEY_APP_ID] = Test.GENERAL_APP_ID;
-        expectedParameters[RegisterAppInterface.KEY_FULL_APP_ID] = Test.GENERAL_FULL_APP_ID;
-        expectedParameters[RegisterAppInterface.KEY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
-        expectedParameters[RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
-        expectedParameters[RegisterAppInterface.KEY_HASH_ID] = Test.GENERAL_STRING;
-        expectedParameters[RegisterAppInterface.KEY_TTS_NAME] = Test.JSON_TTSCHUNKS;
-        expectedParameters[RegisterAppInterface.KEY_VR_SYNONYMS] = Test.GENERAL_STRING_LIST;
-        expectedParameters[RegisterAppInterface.KEY_APP_HMI_TYPE] = Test.GENERAL_APPHMITYPE_LIST;
-        expectedParameters[RegisterAppInterface.KEY_IS_MEDIA_APPLICATION] = Test.GENERAL_BOOLEAN;
-        expectedParameters[RegisterAppInterface.KEY_DEVICE_INFO] = Test.JSON_DEVICEINFO;
-        expectedParameters[RegisterAppInterface.KEY_DAY_COLOR_SCHEME] = Test.JSON_DAYCOLORSCHEME;
-        expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
-
-        this.expectedParameters = expectedParameters;
+        this.getExpectedParameters = function (sdlVersion) {
+            const expectedParameters = {};
+            expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
+            expectedParameters[RegisterAppInterface.KEY_APP_NAME] = Test.GENERAL_STRING;
+            expectedParameters[RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME] = Test.GENERAL_STRING;
+            expectedParameters[RegisterAppInterface.KEY_APP_ID] = Test.GENERAL_APP_ID;
+            expectedParameters[RegisterAppInterface.KEY_FULL_APP_ID] = Test.GENERAL_FULL_APP_ID;
+            expectedParameters[RegisterAppInterface.KEY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
+            expectedParameters[RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
+            expectedParameters[RegisterAppInterface.KEY_HASH_ID] = Test.GENERAL_STRING;
+            expectedParameters[RegisterAppInterface.KEY_TTS_NAME] = Test.JSON_TTSCHUNKS;
+            expectedParameters[RegisterAppInterface.KEY_VR_SYNONYMS] = Test.GENERAL_STRING_LIST;
+            expectedParameters[RegisterAppInterface.KEY_APP_HMI_TYPE] = Test.GENERAL_APPHMITYPE_LIST;
+            expectedParameters[RegisterAppInterface.KEY_IS_MEDIA_APPLICATION] = Test.GENERAL_BOOLEAN;
+            expectedParameters[RegisterAppInterface.KEY_DEVICE_INFO] = Test.JSON_DEVICEINFO;
+            expectedParameters[RegisterAppInterface.KEY_DAY_COLOR_SCHEME] = Test.JSON_DAYCOLORSCHEME;
+            expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
+            return expectedParameters;
+        };
     });
 
-    BaseRpcTests.tests(rpcMessage);
-
+    BaseRpcTests.tests();
 
     it('testJson', function (done) {
-        Validator.validateJson(rpcMessage, expectedParameters);
+        Validator.validateJson(this.msg, this.getExpectedParameters());
         done();
     });
 
     it ('testRpcValues', function (done) {
+        let rpcMessage = this.msg;
         const testVersion = rpcMessage.getSdlMsgVersion();
         const testName = rpcMessage.getAppName();
         const testNgnName = rpcMessage.getNgnMediaScreenAppName();
@@ -138,7 +86,6 @@ describe('RegisterAppInterfaceTests', function () {
         const testDeviceInfo = rpcMessage.getDeviceInfo();
         const testDayColorScheme = rpcMessage.getDayColorScheme();
         const testNightColorScheme = rpcMessage.getNightColorScheme();
-        const dayPrimary = testDayColorScheme.getPrimaryColor();
 
        
         // Valid Tests

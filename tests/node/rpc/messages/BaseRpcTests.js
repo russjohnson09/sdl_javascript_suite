@@ -1,3 +1,5 @@
+const expect = require('chai').expect;
+
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
@@ -5,11 +7,17 @@ const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
 const assertNull = Validator.assertNull.bind(Validator);
 const assertNotNull = Validator.assertNotNull.bind(Validator);
+const assertNotNullUndefined = Validator.assertNotNullUndefined.bind(Validator);
 
 exports.tests = function () {
-    // console.log(rpcMessage);
+    before(function () {
+        console.log('BaseRpcTests','beforeEach'); //setup
+        this.msg = this.createMessage();
+      });
+
     it('testCreation', function (done) {
-        assertNotNull('Object creation failed.', this.rpcMessage);
+        // console.log(this.msg);
+        assertNotNullUndefined('Object creation failed.', this.msg);
         done();
     });
 
