@@ -7,7 +7,6 @@ const RpcRequest = SDL.rpc.RpcRequest;
 class Validator {
     static getParametersJson(obj) {
         let result;
-        console.log(typeof obj);
         if (typeof obj === 'object') {
             if (typeof obj.getParameters === 'function') {
                 return this.getParametersJson(obj.getParameters());
@@ -23,11 +22,8 @@ class Validator {
                     for (let key in obj) {
                         let val = obj[key];
                         result[key] = this.getParametersJson(val);
-                        // if (typeof val === 'object') {
-                        // }
                     }
                 }
-
             }
         } else {
             return obj;
@@ -38,12 +34,6 @@ class Validator {
 
     static validateJson (rpcMessage, expectedParameters) {
         const parameters = this.getParametersJson(rpcMessage.getParameters());
-
-        console.log({parameters,expectedParameters});
-
-        console.log(JSON.stringify(parameters,null,4));
-
-
         expect(parameters).to.be.deep.equal(expectedParameters);
     }
 
@@ -188,10 +178,7 @@ class Validator {
         } else {
             throw new Error('Bad arguments');
         }
-        console.log(`assertNull`,{val1});
-        // expect(val1, msg).to.be.undefined;
         expect(val1, msg).to.be.null;
-
     }
 
     static assertNotNull () {

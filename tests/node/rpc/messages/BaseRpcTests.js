@@ -1,6 +1,15 @@
+const Test = require('./../../../Test.js');
+const Validator = require('./../../../Validator.js');
+
+const assertTrue = Validator.assertTrue.bind(Validator);
+const assertEquals = Validator.assertEquals.bind(Validator);
+const assertNull = Validator.assertNull.bind(Validator);
+const assertNotNull = Validator.assertNotNull.bind(Validator);
+
 exports.tests = function () {
+    // console.log(rpcMessage);
     it('testCreation', function (done) {
-        console.log('............... test Creation');
+        assertNotNull('Object creation failed.', this.rpcMessage);
         done();
     });
 
