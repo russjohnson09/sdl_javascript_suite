@@ -7,7 +7,7 @@ const RpcType = SDL.rpc.enums.RpcType;
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
-//http://junit.sourceforge.net/javadoc/org/junit/Assert.html
+// http://junit.sourceforge.net/javadoc/org/junit/Assert.html
 // const { assertTrue, assertEquals, assertNull } = Validator;
 const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
