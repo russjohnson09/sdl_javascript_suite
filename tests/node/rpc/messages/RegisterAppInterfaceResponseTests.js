@@ -68,7 +68,6 @@ describe('setup', function () {
 
 describe('RegisterAppInterfaceTests', function () {
     it('testJson', function (done) {
-
         const rpcMessageJson = rpcMessage.serializeJSON();  
 
         console.log({rpcMessageJson});
