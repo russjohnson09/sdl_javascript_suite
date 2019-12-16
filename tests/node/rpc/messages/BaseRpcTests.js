@@ -3,15 +3,9 @@ const SDL = require('./../../../../lib/js/dist/SDL.js');
 const RpcRequest = SDL.rpc.RpcRequest;
 const RpcResponse = SDL.rpc.RpcResponse;
 
-const expect = require('chai').expect;
-
-const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
-const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNull = Validator.assertNull.bind(Validator);
-const assertNotNull = Validator.assertNotNull.bind(Validator);
 const assertNotNullUndefined = Validator.assertNotNullUndefined.bind(Validator);
 
 const CORR_ID = 402;
