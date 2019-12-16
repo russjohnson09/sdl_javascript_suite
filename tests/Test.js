@@ -18,16 +18,16 @@ const ImageType = SDL.rpc.enums.ImageType;
 
 
 class Test {
-    constructor () {
+    constructor() {
     }
 }
 
 
-const NULL = Test.NULL      = 'Value should be null.';
-const MATCH  = Test.MATCH   = 'Values should match.';
-const ARRAY  = Test.ARRAY   = 'Array values should match.';
-const TRUE    = Test.TRUE  = 'Value should be true.';
-const FALSE   = Test.FALSE  = 'Value should be false.';
+const NULL = Test.NULL = 'Value should be null.';
+const MATCH = Test.MATCH = 'Values should match.';
+const ARRAY = Test.ARRAY = 'Array values should match.';
+const TRUE = Test.TRUE = 'Value should be true.';
+const FALSE = Test.FALSE = 'Value should be false.';
 const NOT_NULL = Test.NOT_NULL = 'Value should not be null.';
 const JSON_FAIL = Test.JSON_FAIL = 'Json testing failed.';
 
@@ -40,20 +40,20 @@ const GENERAL_INTEGER = Test.GENERAL_INTEGER = 100;
 GENERAL_SDLMSGVERSION.setMajorVersion(GENERAL_INT);
 GENERAL_SDLMSGVERSION.setMinorVersion(GENERAL_INT);
 
-const GENERAL_APP_ID = Test.GENERAL_APP_ID                      = '123e4567e8';
-const GENERAL_FULL_APP_ID =             Test.GENERAL_FULL_APP_ID                    = '123e4567-e89b-12d3-a456-426655440000';
+const GENERAL_APP_ID = Test.GENERAL_APP_ID = '123e4567e8';
+const GENERAL_FULL_APP_ID = Test.GENERAL_FULL_APP_ID = '123e4567-e89b-12d3-a456-426655440000';
 
 
-const GENERAL_IMAGETYPE = Test.GENERAL_IMAGETYPE = ImageType.DYNAMIC
-const GENERAL_LANGUAGE =             Test.GENERAL_LANGUAGE                    = Language.EN_US;
-const GENERAL_STRING =             Test.GENERAL_STRING                    = 'test';
+const GENERAL_IMAGETYPE = Test.GENERAL_IMAGETYPE = ImageType.DYNAMIC;
+const GENERAL_LANGUAGE = Test.GENERAL_LANGUAGE = Language.EN_US;
+const GENERAL_STRING = Test.GENERAL_STRING = 'test';
 const GENERAL_TTSCHUNK_LIST = Test.GENERAL_TTSCHUNK_LIST = [];
 const GENERAL_STRING_LIST = Test.GENERAL_STRING_LIST = [
-    'a', 
+    'a',
     'b',
 ];
-const GENERAL_APPHMITYPE_LIST =             Test.GENERAL_APPHMITYPE_LIST                    = [
-    AppHMIType.BACKGROUND_PROCESS, 
+const GENERAL_APPHMITYPE_LIST = Test.GENERAL_APPHMITYPE_LIST = [
+    AppHMIType.BACKGROUND_PROCESS,
     AppHMIType.COMMUNICATION,
 ];
 const GENERAL_BOOLEAN = Test.GENERAL_BOOLEAN = true;
@@ -74,7 +74,7 @@ GENERAL_DAYCOLORSCHEME.setPrimaryColor(GENERAL_RGBCOLOR);
 GENERAL_DAYCOLORSCHEME.setSecondaryColor(GENERAL_RGBCOLOR);
 GENERAL_DAYCOLORSCHEME.setBackgroundColor(GENERAL_RGBCOLOR);
 
-function createTtsChunk (type, text) {
+function createTtsChunk(type, text) {
     const ttsChunk = new TTSChunk();
     ttsChunk.setType(type);
     ttsChunk.setText(text);
