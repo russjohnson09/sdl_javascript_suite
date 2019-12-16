@@ -3,15 +3,21 @@ const SDL = require('./../lib/js/dist/SDL.js');
 const SdlMsgVersion = SDL.rpc.structs.SdlMsgVersion;
 const TTSChunk = SDL.rpc.structs.TTSChunk;
 
+// structs
 const DeviceInfo = SDL.rpc.structs.DeviceInfo;
 const TemplateColorScheme = SDL.rpc.structs.TemplateColorScheme;
 const RGBColor = SDL.rpc.structs.RGBColor;
+const DisplayCapabilities = SDL.rpc.structs.DisplayCapabilities;
+const PresetBankCapabilities = SDL.rpc.structs.PresetBankCapabilities;
+const VehicleType = SDL.rpc.structs.VehicleType;
+const AudioPassThruCapabilities =  SDL.rpc.structs.AudioPassThruCapabilities;
 
 // enums
 const SpeechCapabilities = SDL.rpc.enums.SpeechCapabilities;
 const AppHMIType = SDL.rpc.enums.AppHMIType;
 const Language = SDL.rpc.enums.Language;
 const ImageType = SDL.rpc.enums.ImageType;
+
 
 
 
@@ -120,7 +126,13 @@ const JSON_TTSCHUNKS = Test.JSON_TTSCHUNKS = [
         [TTSChunk.KEY_TEXT]: 'Say a command',
         [TTSChunk.KEY_TYPE]: SpeechCapabilities.SC_TEXT,
     },
-]
+];
+
+
+const GENERAL_DISPLAYCAPABILITIES = Test.GENERAL_DISPLAYCAPABILITIES = new DisplayCapabilities();
+const GENERAL_PRESETBANKCAPABILITIES = Test.GENERAL_PRESETBANKCAPABILITIES = new PresetBankCapabilities();
+const GENERAL_VEHICLETYPE = Test.GENERAL_VEHICLETYPE = new VehicleType();
+const GENERAL_AUDIOPASSTHRUCAPABILITIES = Test.GENERAL_AUDIOPASSTHRUCAPABILITIES = new AudioPassThruCapabilities();
 
 
 function createTtsChunk(type, text) {
