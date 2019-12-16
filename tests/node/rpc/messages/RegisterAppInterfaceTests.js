@@ -20,6 +20,8 @@ const testNullBase = Validator.testNullBase.bind(Validator,
 
 
 let rpcMessage;
+const expectedParameters = {};
+
 describe('setup', function () {
     it('createMessage', function (done) {
         rpcMessage = new RegisterAppInterface();
@@ -40,9 +42,41 @@ describe('setup', function () {
 
         done();
     });
+
+    it('expectedParameters', function (done) {
+        expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
+
+        // result.put(RegisterAppInterface.KEY_SDL_MSG_VERSION, Test.JSON_SDLMSGVERSION);
+        // result.put(RegisterAppInterface.KEY_APP_NAME, Test.GENERAL_STRING);
+        // result.put(RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME, Test.GENERAL_STRING);
+        // result.put(RegisterAppInterface.KEY_APP_ID, Test.GENERAL_APP_ID);
+        // result.put(RegisterAppInterface.KEY_FULL_APP_ID, Test.GENERAL_FULL_APP_ID);
+        // result.put(RegisterAppInterface.KEY_LANGUAGE_DESIRED, Test.GENERAL_LANGUAGE);
+        // result.put(RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED, Test.GENERAL_LANGUAGE);
+        // result.put(RegisterAppInterface.KEY_HASH_ID, Test.GENERAL_STRING);
+        // result.put(RegisterAppInterface.KEY_TTS_NAME, Test.JSON_TTSCHUNKS);
+        // result.put(RegisterAppInterface.KEY_VR_SYNONYMS, JsonUtils.createJsonArray(Test.GENERAL_STRING_LIST));
+        // result.put(RegisterAppInterface.KEY_APP_HMI_TYPE, JsonUtils.createJsonArrayOfJsonNames(Test.GENERAL_APPHMITYPE_LIST, SDL_VERSION_UNDER_TEST));
+        // result.put(RegisterAppInterface.KEY_IS_MEDIA_APPLICATION, Test.GENERAL_BOOLEAN);
+        // result.put(RegisterAppInterface.KEY_DEVICE_INFO, Test.JSON_DEVICEINFO);
+        // result.put(RegisterAppInterface.KEY_DAY_COLOR_SCHEME, Test.JSON_DAYCOLORSCHEME);
+        // result.put(RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME, Test.JSON_NIGHTCOLORSCHEME);
+
+        done();
+    });
 });
 
 describe('RegisterAppInterfaceTests', function () {
+
+    it('testJson', function (done) {
+        Validator.validateJson(rpcMessage, expectedParameters);
+        // const parameters = rpcMessage.getParameters();
+        // // const rpcMessageJson = rpcMessage.serializeJSON(); //TODO get equivalent.
+        // // get parameters.
+        // console.log({parameters});
+        done();
+    });
+
     it ('testRpcValues', function (done) {
         const testVersion = rpcMessage.getSdlMsgVersion();
         const testName = rpcMessage.getAppName();
@@ -71,9 +105,6 @@ describe('RegisterAppInterfaceTests', function () {
         assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
         assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
         assertEquals(Test.MATCH, Test.GENERAL_STRING, testHashId);
-        // assertTrue(Test.TRUE, Validator.validateTtsChunks(Test.GENERAL_TTSCHUNK_LIST, testTts));
-
-        console.log({ testTts, rpcMessage, });
         Validator.validateTtsChunks(Test.GENERAL_TTSCHUNK_LIST, testTts);
 
         assertEquals(Test.MATCH, Test.GENERAL_STRING_LIST, testSynonyms);

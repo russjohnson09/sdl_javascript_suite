@@ -5,6 +5,48 @@ const RpcResponse = SDL.rpc.RpcResponse;
 const RpcRequest = SDL.rpc.RpcRequest;
 
 class Validator {
+    static getParametersJson(obj) {
+        let result;
+        console.log(typeof obj);
+        if (typeof obj === 'object') {
+            if (typeof obj.getParameters === 'function') {
+                return this.getParametersJson(obj.getParameters());
+            } else {
+                if (Array.isArray(obj)) {
+                    result = [];
+                    for (let val of obj) {
+                        result.push(this.getParametersJson(val));
+                    }
+                    return result;
+                } else {
+                    result = {};
+                    for (let key in obj) {
+                        let val = obj[key];
+                        result[key] = this.getParametersJson(val);
+                        // if (typeof val === 'object') {
+                        // }
+                    }
+                }
+
+            }
+        } else {
+            return obj;
+        }
+        return result;
+    }
+
+
+    static validateJson (rpcMessage, expectedParameters) {
+        const parameters = this.getParametersJson(rpcMessage.getParameters());
+
+        console.log({parameters,expectedParameters});
+
+        console.log(JSON.stringify(parameters,null,4));
+
+
+        expect(parameters).to.be.deep.equal(expectedParameters);
+    }
+
     /**
      * 
      * Checks major and minor versions match. patch versions can be different.

@@ -34,11 +34,17 @@ const JSON_FAIL = Test.JSON_FAIL = 'Json testing failed.';
 //sdl_javascript_suite/lib/js/src/rpc/structs/SdlMsgVersion.js
 
 const GENERAL_SDLMSGVERSION = Test.GENERAL_SDLMSGVERSION = new SdlMsgVersion();
+
+
 const GENERAL_INT = Test.GENERAL_INT = 100;
 const GENERAL_INTEGER = Test.GENERAL_INTEGER = 100;
 
 GENERAL_SDLMSGVERSION.setMajorVersion(GENERAL_INT);
 GENERAL_SDLMSGVERSION.setMinorVersion(GENERAL_INT);
+const JSON_SDLMSGVERSION = Test.JSON_SDLMSGVERSION = {
+    [SdlMsgVersion.KEY_MAJOR_VERSION]: GENERAL_INT,
+    [SdlMsgVersion.KEY_MINOR_VERSION]: GENERAL_INT,
+};
 
 const GENERAL_APP_ID = Test.GENERAL_APP_ID = '123e4567e8';
 const GENERAL_FULL_APP_ID = Test.GENERAL_FULL_APP_ID = '123e4567-e89b-12d3-a456-426655440000';
