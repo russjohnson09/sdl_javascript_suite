@@ -17,42 +17,6 @@ const testNullBase = Validator.testNullBase.bind(Validator,
     RpcType.REQUEST);
 
 
-
-let rpcMessage;
-const expectedParameters = {};
-describe('setup', function () {
-    it('createMessage', function (done) {
-
-
-        done();
-    });
-
-    it('expectedParameters', function (done) {
-        // expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
-
-        // result.put(RegisterAppInterface.KEY_SDL_MSG_VERSION, Test.JSON_SDLMSGVERSION);
-        // result.put(RegisterAppInterface.KEY_APP_NAME, Test.GENERAL_STRING);
-        // result.put(RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME, Test.GENERAL_STRING);
-        // result.put(RegisterAppInterface.KEY_APP_ID, Test.GENERAL_APP_ID);
-        // result.put(RegisterAppInterface.KEY_FULL_APP_ID, Test.GENERAL_FULL_APP_ID);
-        // result.put(RegisterAppInterface.KEY_LANGUAGE_DESIRED, Test.GENERAL_LANGUAGE);
-        // result.put(RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED, Test.GENERAL_LANGUAGE);
-        // result.put(RegisterAppInterface.KEY_HASH_ID, Test.GENERAL_STRING);
-        // result.put(RegisterAppInterface.KEY_TTS_NAME, Test.JSON_TTSCHUNKS);
-        // result.put(RegisterAppInterface.KEY_VR_SYNONYMS, JsonUtils.createJsonArray(Test.GENERAL_STRING_LIST));
-        // result.put(RegisterAppInterface.KEY_APP_HMI_TYPE, JsonUtils.createJsonArrayOfJsonNames(Test.GENERAL_APPHMITYPE_LIST, SDL_VERSION_UNDER_TEST));
-        // result.put(RegisterAppInterface.KEY_IS_MEDIA_APPLICATION, Test.GENERAL_BOOLEAN);
-        // result.put(RegisterAppInterface.KEY_DEVICE_INFO, Test.JSON_DEVICEINFO);
-        // result.put(RegisterAppInterface.KEY_DAY_COLOR_SCHEME, Test.JSON_DAYCOLORSCHEME);
-        // result.put(RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME, Test.JSON_NIGHTCOLORSCHEME);
-
-        done();
-    });
-});
-
-
-// return;
-
 describe('RegisterAppInterfaceTests', function () {
     before(function () {
         this.createMessage = function () {
@@ -64,6 +28,7 @@ describe('RegisterAppInterfaceTests', function () {
             msg.setDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES);
             msg.setPresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES);
             msg.setVehicleType(Test.GENERAL_VEHICLETYPE);
+            console.log(Test.GENERAL_BUTTONCAPABILITIES_LIST);
             msg.setButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST);
             msg.setSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST);
             msg.setAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST);
@@ -74,6 +39,8 @@ describe('RegisterAppInterfaceTests', function () {
             msg.setPrerecordedSpeech(Test.GENERAL_PRERECORDEDSPEECH_LIST);
             msg.setSupportedDiagModes(Test.GENERAL_INTEGER_LIST);
             msg.setIconResumed(Test.GENERAL_BOOLEAN);
+
+            console.log({msg});
             return msg;
         };
 
