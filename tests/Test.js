@@ -16,6 +16,7 @@ const ImageField =  SDL.rpc.structs.ImageField;
 const ImageResolution =  SDL.rpc.structs.ImageResolution;
 const ScreenParams = SDL.rpc.structs.ScreenParams;
 const TextField = SDL.rpc.structs.TextField;
+const TouchEventCapabilities = SDL.rpc.structs.TouchEventCapabilities;
 
 
 
@@ -35,9 +36,9 @@ const DisplayType = SDL.rpc.enums.DisplayType;
 const MediaClockFormat = SDL.rpc.enums.MediaClockFormat;
 const TextFieldName = SDL.rpc.enums.TextFieldName;
 const CharacterSet = SDL.rpc.enums.CharacterSet;
-
-
-
+const HmiZoneCapabilities =  SDL.rpc.enums.HmiZoneCapabilities;
+const PrerecordedSpeech = SDL.rpc.enums.PrerecordedSpeech;
+const VrCapabilities = SDL.rpc.enums.VrCapabilities;
 
 class Test {
     constructor() {
@@ -57,19 +58,27 @@ const JSON_FAIL = Test.JSON_FAIL = 'Json testing failed.';
 
 const GENERAL_INT = Test.GENERAL_INT = 100;
 const GENERAL_INTEGER = Test.GENERAL_INTEGER = 100;
-const GENERAL_FILETYPE  = FileType.BINARY;
+const GENERAL_BOOLEAN = Test.GENERAL_BOOLEAN = true;
+const GENERAL_STRING = Test.GENERAL_STRING = 'test';
 
+const GENERAL_FILETYPE  = FileType.BINARY;
 
 const GENERAL_SDLMSGVERSION = Test.GENERAL_SDLMSGVERSION = new SdlMsgVersion();
 GENERAL_SDLMSGVERSION.setMajorVersion(GENERAL_INT);
 GENERAL_SDLMSGVERSION.setMinorVersion(GENERAL_INT);
 
-const GENERAL_IMAGERESOLUTION                = new ImageResolution();
+const GENERAL_IMAGERESOLUTION = new ImageResolution();
 GENERAL_IMAGERESOLUTION.setResolutionHeight(GENERAL_INT);
 GENERAL_IMAGERESOLUTION.setResolutionWidth(GENERAL_INT);
 
+const GENERAL_TOUCHEVENTCAPABILITIES = new TouchEventCapabilities();
+GENERAL_TOUCHEVENTCAPABILITIES.setDoublePressAvailable(GENERAL_BOOLEAN);
+GENERAL_TOUCHEVENTCAPABILITIES.setMultiTouchAvailable(GENERAL_BOOLEAN);
+GENERAL_TOUCHEVENTCAPABILITIES.setPressAvailable(GENERAL_BOOLEAN);
 
-const GENERAL_SCREENPARAMS		        	  = new ScreenParams();
+const GENERAL_SCREENPARAMS = new ScreenParams();
+GENERAL_SCREENPARAMS.setResolution(GENERAL_IMAGERESOLUTION);
+GENERAL_SCREENPARAMS.setTouchEventAvailable(GENERAL_TOUCHEVENTCAPABILITIES);
 
 
 const JSON_SDLMSGVERSION = Test.JSON_SDLMSGVERSION = {
@@ -98,17 +107,19 @@ GENERAL_IMAGEFIELD.setImageTypeSupported(GENERAL_FILETYPE_LIST);
 
 const GENERAL_IMAGETYPE = Test.GENERAL_IMAGETYPE = ImageType.DYNAMIC;
 const GENERAL_LANGUAGE = Test.GENERAL_LANGUAGE = Language.EN_US;
-const GENERAL_STRING = Test.GENERAL_STRING = 'test';
 const GENERAL_TTSCHUNK_LIST = Test.GENERAL_TTSCHUNK_LIST = [];
 const GENERAL_STRING_LIST = Test.GENERAL_STRING_LIST = [
     'a',
     'b',
 ];
+const GENERAL_INTEGER_LIST = Test.GENERAL_INTEGER_LIST = [
+    -1,
+    -2,
+];
 const GENERAL_APPHMITYPE_LIST = Test.GENERAL_APPHMITYPE_LIST = [
     AppHMIType.BACKGROUND_PROCESS,
     AppHMIType.COMMUNICATION,
 ];
-const GENERAL_BOOLEAN = Test.GENERAL_BOOLEAN = true;
 const GENERAL_DEVICEINFO = Test.GENERAL_DEVICEINFO = new DeviceInfo();
 const GENERAL_DAYCOLORSCHEME = Test.GENERAL_DAYCOLORSCHEME = new TemplateColorScheme();
 const GENERAL_NIGHTCOLORSCHEME = Test.GENERAL_NIGHTCOLORSCHEME = new TemplateColorScheme();
@@ -210,6 +221,10 @@ GENERAL_DISPLAYCAPABILITIES.setTextFields(GENERAL_TEXTFIELD_LIST);
 
 const GENERAL_PRESETBANKCAPABILITIES = Test.GENERAL_PRESETBANKCAPABILITIES = new PresetBankCapabilities();
 const GENERAL_VEHICLETYPE = Test.GENERAL_VEHICLETYPE = new VehicleType();
+GENERAL_VEHICLETYPE.setMake(GENERAL_STRING);
+GENERAL_VEHICLETYPE.setModel(GENERAL_STRING);
+GENERAL_VEHICLETYPE.setModelYear(GENERAL_STRING);
+GENERAL_VEHICLETYPE.setTrim(GENERAL_STRING);
 
 const GENERAL_AUDIOTYPE = AudioType.PCM;
 const GENERAL_BITSPERSAMPLE = BitsPerSample.BitsPerSample_8_BIT;
@@ -232,6 +247,26 @@ GENERAL_BUTTONCAPABILITIES.setName(ButtonName.SEEKRIGHT);
 
 const GENERAL_BUTTONCAPABILITIES_LIST = Test.GENERAL_BUTTONCAPABILITIES_LIST = [
     GENERAL_BUTTONCAPABILITIES,
+];
+
+
+const GENERAL_HMIZONECAPABILITIES_LIST = Test.GENERAL_HMIZONECAPABILITIES_LIST = [
+    HmiZoneCapabilities.BACK,
+    HmiZoneCapabilities.FRONT,
+];
+
+const GENERAL_PRERECORDEDSPEECH_LIST = Test.GENERAL_PRERECORDEDSPEECH_LIST = [
+    PrerecordedSpeech.HELP_JINGLE,
+    PrerecordedSpeech.INITIAL_JINGLE,
+];
+
+const GENERAL_VRCAPABILITIES_LIST = Test.GENERAL_VRCAPABILITIES_LIST = [
+    VrCapabilities.VR_TEXT
+];
+
+const GENERAL_SPEECHCAPABILITIES_LIST = Test.GENERAL_SPEECHCAPABILITIES_LIST = [
+    SpeechCapabilities.SILENCE,
+    SpeechCapabilities.SC_TEXT,
 ];
 
 function createTtsChunk(type, text) {
