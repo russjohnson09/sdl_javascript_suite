@@ -46,21 +46,24 @@ describe('RegisterAppInterfaceTests', function () {
 
         this.getExpectedParameters = function (sdlVersion) {
             const expectedParameters = {};
-            // expectedParameters[RegisterAppInterface.KEY_SDL_MSG_VERSION] = Test.JSON_SDLMSGVERSION;
-            // expectedParameters[RegisterAppInterface.KEY_APP_NAME] = Test.GENERAL_STRING;
-            // expectedParameters[RegisterAppInterface.KEY_NGN_MEDIA_SCREEN_APP_NAME] = Test.GENERAL_STRING;
-            // expectedParameters[RegisterAppInterface.KEY_APP_ID] = Test.GENERAL_APP_ID;
-            // expectedParameters[RegisterAppInterface.KEY_FULL_APP_ID] = Test.GENERAL_FULL_APP_ID;
-            // expectedParameters[RegisterAppInterface.KEY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
-            // expectedParameters[RegisterAppInterface.KEY_HMI_DISPLAY_LANGUAGE_DESIRED] = Test.GENERAL_LANGUAGE;
-            // expectedParameters[RegisterAppInterface.KEY_HASH_ID] = Test.GENERAL_STRING;
-            // expectedParameters[RegisterAppInterface.KEY_TTS_NAME] = Test.JSON_TTSCHUNKS;
-            // expectedParameters[RegisterAppInterface.KEY_VR_SYNONYMS] = Test.GENERAL_STRING_LIST;
-            // expectedParameters[RegisterAppInterface.KEY_APP_HMI_TYPE] = Test.GENERAL_APPHMITYPE_LIST;
-            // expectedParameters[RegisterAppInterface.KEY_IS_MEDIA_APPLICATION] = Test.GENERAL_BOOLEAN;
-            // expectedParameters[RegisterAppInterface.KEY_DEVICE_INFO] = Test.JSON_DEVICEINFO;
-            // expectedParameters[RegisterAppInterface.KEY_DAY_COLOR_SCHEME] = Test.JSON_DAYCOLORSCHEME;
-            // expectedParameters[RegisterAppInterface.KEY_NIGHT_COLOR_SCHEME] = Test.JSON_NIGHTCOLORSCHEME;
+            
+            expectedParameters[RegisterAppInterfaceResponse.KEY_LANGUAGE] = Test.GENERAL_LANGUAGE
+			expectedParameters[RegisterAppInterfaceResponse.KEY_HMI_DISPLAY_LANGUAGE] =Test.GENERAL_LANGUAGE;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_SUPPORTED_DIAG_MODES] = Test.GENERAL_INTEGER_LIST;			
+			expectedParameters[RegisterAppInterfaceResponse.KEY_SDL_MSG_VERSION] =Test.JSON_SDLMSGVERSION;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_VEHICLE_TYPE] = Test.JSON_GENERAL_VEHICLETYPE;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_PRESET_BANK_CAPABILITIES] = Test.JSON_PRESETBANKCAPABILITIES;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_DISPLAY_CAPABILITIES] = Test.JSON_DISPLAYCAPABILITIES;	
+			expectedParameters[RegisterAppInterfaceResponse.KEY_BUTTON_CAPABILITIES] = Test.JSON_BUTTONCAPABILITIES;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_SOFT_BUTTON_CAPABILITIES] = Test.JSON_SOFTBUTTONCAPABILITIES;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_AUDIO_PASS_THRU_CAPABILITIES] = Test.JSON_AUDIOPASSTHRUCAPABILITIES;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_PCM_STREAM_CAPABILITIES] = Test.JSON_PCMSTREAMCAPABILITIES;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_SPEECH_CAPABILITIES] = Test.GENERAL_SPEECHCAPABILITIES_LIST;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_VR_CAPABILITIES] = Test.GENERAL_VRCAPABILITIES_LIST;	
+			expectedParameters[RegisterAppInterfaceResponse.KEY_HMI_ZONE_CAPABILITIES] = Test.GENERAL_HMIZONECAPABILITIES_LIST;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_PRERECORDED_SPEECH] = Test.GENERAL_PRERECORDEDSPEECH_LISt;
+			expectedParameters[RegisterAppInterfaceResponse.KEY_ICON_RESUMED] = Test.GENERAL_BOOLEAN;
+            
             return expectedParameters;
         };
 
