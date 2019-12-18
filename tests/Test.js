@@ -221,14 +221,91 @@ GENERAL_DISPLAYCAPABILITIES.setScreenParams(GENERAL_SCREENPARAMS);
 GENERAL_DISPLAYCAPABILITIES.setTemplatesAvailable(GENERAL_STRING_LIST);
 GENERAL_DISPLAYCAPABILITIES.setTextFields(GENERAL_TEXTFIELD_LIST);
 
+const JSON_GENERAL_DISPLAYCAPABILITIES = Test.JSON_GENERAL_DISPLAYCAPABILITIES = {
+    [DisplayCapabilities.KEY_DISPLAY_TYPE]: GENERAL_DISPLAYTYPE,
+    [DisplayCapabilities.KEY_DISPLAY_NAME]: GENERAL_STRING,
+    [DisplayCapabilities.KEY_TEXT_FIELDS]: [
+        GENERAL_TEXTFIELD.getParameters(), 
+    ],
+    // [DisplayCapabilities.KEY_IMAGE_FIELDS]: 
+    [DisplayCapabilities.KEY_MEDIA_CLOCK_FORMATS]: GENERAL_MEDIACLOCKFORMAT_LIST,
+    [DisplayCapabilities.KEY_GRAPHICS_SUPPORTED]: GENERAL_BOOLEAN,
+    [DisplayCapabilities.KEY_TEMPLATES_AVAILABLE]: GENERAL_STRING_LIST,
+    // [DisplayCapabilities.KEY_SCREEN_PARAMS]: 'screenParams';
+    [DisplayCapabilities.KEY_NUM_CUSTOM_PRESETS_AVAILABLE]:  GENERAL_INT,
+};
+
+
+// -  "displayCapabilities": {
+//     -    "displayName": "test"
+//     -    "displayType": "CID"
+//     -    "graphicSupported": true
+//     -    "imageFields": [
+//     -      {
+//     -        "imageResolution": {
+//     -          "resolutionHeight": 100
+//     -          "resolutionWidth": 100
+//     -        }
+//     -        "imageTypeSupported": [
+//     -          "BINARY"
+//     -        ]
+//     -        "name": "graphic"
+//     -      }
+//     -    ]
+//     -    "mediaClockFormats": [
+//     -      "CLOCK1"
+//     -      "CLOCK2"
+//     -    ]
+//     -    "numCustomPresetsAvailable": 100
+//     -    "screenParams": {
+//     -      "resolution": {
+//     -        "resolutionHeight": 100
+//     -        "resolutionWidth": 100
+//     -      }
+//     -      "touchEventAvailable": {
+//     -        "doublePressAvailable": true
+//     -        "multiTouchAvailable": true
+//     -        "pressAvailable": true
+//     -      }
+//     -    }
+
 
 
 const GENERAL_PRESETBANKCAPABILITIES = Test.GENERAL_PRESETBANKCAPABILITIES = new PresetBankCapabilities();
+GENERAL_PRESETBANKCAPABILITIES.setOnScreenPresetsAvailable(GENERAL_BOOLEAN);
+
+const JSON_PRESETBANKCAPABILITIES = Test.JSON_PRESETBANKCAPABILITIES = {
+    [PresetBankCapabilities.KEY_ON_SCREEN_PRESETS_AVAILABLE]: GENERAL_BOOLEAN,
+};
+
+
+
+
 const GENERAL_VEHICLETYPE = Test.GENERAL_VEHICLETYPE = new VehicleType();
 GENERAL_VEHICLETYPE.setMake(GENERAL_STRING);
 GENERAL_VEHICLETYPE.setModel(GENERAL_STRING);
 GENERAL_VEHICLETYPE.setModelYear(GENERAL_STRING);
 GENERAL_VEHICLETYPE.setTrim(GENERAL_STRING);
+
+// -  "vehicleType": {
+//     -    "make": "test"
+//     -    "model": "test"
+//     -    "modelYear": "test"
+//     -    "test": "trim"
+//     -  }
+const JSON_GENERAL_VEHICLETYPE = Test.JSON_GENERAL_VEHICLETYPE = {
+    [VehicleType.KEY_MAKE]: GENERAL_STRING,
+    [VehicleType.KEY_MODEL]: GENERAL_STRING,
+    [VehicleType.KEY_MODEL_YEAR]: GENERAL_STRING,
+    [VehicleType.KEY_TRIM]: GENERAL_STRING,
+
+    // "make": "test"
+    // -    "model": "test"
+    // -    "modelYear": "test"
+    // -    "test": "trim"
+};
+
+
 
 const GENERAL_AUDIOTYPE = AudioType.PCM;
 const GENERAL_BITSPERSAMPLE = BitsPerSample.BitsPerSample_8_BIT;
@@ -242,6 +319,24 @@ const GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST = Test.GENERAL_AUDIOPASSTHRUCAPABIL
     GENERAL_AUDIOPASSTHRUCAPABILITIES,
 ];
 
+// -  "audioPassThruCapabilities": [
+//     -    {
+//     -      "audioType": "US
+"
+//     -      "bitsPerSample": "8_BIT"
+//     -      "samplingRate": "8KHZ"
+//     -    }
+//     -  ]
+const JSON_AUDIOPASSTHRUCAPABILITIES = {
+    [AudioPassThruCapabilities.KEY_SAMPLING_RATE] : GENERAL_SAMPLINGRATE,
+    [AudioPassThruCapabilities.KEY_BITS_PER_SAMPLE] : GENERAL_BITSPERSAMPLE,
+    [AudioPassThruCapabilities.KEY_AUDIO_TYPE] : GENERAL_AUDIOTYPE,
+};
+
+const JSON_AUDIOPASSTHRUCAPABILITIES_LIST = Test.JSON_AUDIOPASSTHRUCAPABILITIES_LIST = [
+    JSON_AUDIOPASSTHRUCAPABILITIES,
+];
+
 const GENERAL_BUTTONCAPABILITIES = Test.GENERAL_BUTTONCAPABILITIES = new ButtonCapabilities(); 
 
 GENERAL_BUTTONCAPABILITIES.setLongPressAvailable(false);
@@ -251,6 +346,18 @@ GENERAL_BUTTONCAPABILITIES.setName(ButtonName.SEEKRIGHT);
 
 const GENERAL_BUTTONCAPABILITIES_LIST = Test.GENERAL_BUTTONCAPABILITIES_LIST = [
     GENERAL_BUTTONCAPABILITIES,
+];
+
+const JSON_GENERAL_BUTTON_CAPABILITIES = {
+    [ButtonCapabilities.KEY_NAME]: ButtonName.SEEKRIGHT,
+    // [ButtonCapabilities.KEY_MODULE_INFO] : 
+    [ButtonCapabilities.KEY_SHORT_PRESS_AVAILABLE] : true,
+    [ButtonCapabilities.KEY_LONG_PRESS_AVAILABLE] : false,
+    [ButtonCapabilities.KEY_UP_DOWN_AVAILABLE] : true,
+};
+
+const JSON_GENERAL_BUTTON_CAPABILITIES_LIST = Test.JSON_GENERAL_BUTTON_CAPABILITIES_LIST = [
+    JSON_GENERAL_BUTTON_CAPABILITIES,
 ];
 
 
