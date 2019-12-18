@@ -117,9 +117,7 @@ describe('RegisterAppInterfaceResponseTests', function () {
         Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream);
         assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testIconResumed);
 
-        // done();
-        // return;
-		// Invalid/Null Tests
+        // Invalid/Null Tests
         msg = new RegisterAppInterfaceResponse();
         assertNotNull(Test.NOT_NULL, msg);
         testNullBase(msg);
