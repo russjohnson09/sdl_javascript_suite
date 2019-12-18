@@ -4,6 +4,8 @@ const SDL = require('./../lib/js/dist/SDL.js');
 const RpcResponse = SDL.rpc.RpcResponse;
 const RpcRequest = SDL.rpc.RpcRequest;
 
+const MediaClockFormat = SDL.rpc.enums.MediaClockFormat;
+
 class Validator {
     /**
      * Takes an RpcStruct and converts it to a json object.
@@ -142,6 +144,52 @@ class Validator {
     }
 
 
+    static validateTouchEventCapabilities(item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+
+        expect(item1).to.exist;
+        expect(item2).to.exist;
+
+        expect(item1.getPressAvailable()).to.be.equal(item2.getPressAvailable());
+        expect(item1.getDoublePressAvailable()).to.be.equal(item2.getDoublePressAvailable());
+        expect(item1.getMultiTouchAvailable()).to.be.equal(item2.getMultiTouchAvailable());
+
+        return true;
+    }
+
+    static validateScreenParams (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+
+        expect(item1).to.exist;
+        expect(item2).to.exist;
+
+
+
+        this.validateImageResolution(item1.getResolution(), item2.getResolution());
+        this.validateTouchEventCapabilities(item1.getTouchEventAvailable(), item2.getTouchEventAvailable());
+
+        return true;
+
+        if(!( validateImageResolution(params1.getImageResolution(), params2.getImageResolution()) )){
+            log("validateScreenParams", "Image resolutions didn't match!");
+            return false;
+        }
+
+        if(!( validateTouchEventCapabilities(params1.getTouchEventAvailable(), params2.getTouchEventAvailable()) )){
+            log("validateScreenParams", "Touch event capabilities didn't match!");
+            return false;
+        }
+
+        return true;
+    }
+
+
     static validateDisplayCapabilities  (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
@@ -150,108 +198,29 @@ class Validator {
         expect(item1.getDisplayType()).to.be.equal(item2.getDisplayType());
 
         expect(Array.isArray(item1.getImageFields())).to.be.true;
+        expect(Array.isArray(item2.getImageFields())).to.be.true;
+
         expect(Array.isArray(item1.getMediaClockFormats())).to.be.true;
+        expect(Array.isArray(item2.getMediaClockFormats())).to.be.true;
+
         expect(Array.isArray(item1.getTextFields())).to.be.true;
+        expect(Array.isArray(item2.getTextFields())).to.be.true;
 
         this.validateImageFields(item1.getImageFields(), item2.getImageFields());
-        // this.validateMed(item1.getMediaClockFormats());
-        // this.validateImageFields(item1.getImageFields());
 
         const mediaClockFormats = item1.getMediaClockFormats();
-
         for (const clockFormat of mediaClockFormats) {
             expect(clockFormat).to.be.a.string;
+            expect(MediaClockFormat.valueForString(clockFormat)).to.be.a.string;
         }
 
-        // console.log('validateDisplayCapabilities');
+        expect(item1.getDisplayType()).to.be.equal(item2.getDisplayType());
+        expect(item1.getDisplayName()).to.be.equal(item2.getDisplayName());
+        expect(item1.getGraphicsSupported()).to.be.equal(item2.getGraphicsSupported());
+        expect(item1.getTemplatesAvailable()).to.be.equal(item2.getTemplatesAvailable());
+        expect(item1.getNumCustomPresetsAvailable()).to.be.equal(item2.getNumCustomPresetsAvailable());
 
-        return true;
-
-           	
-    	// for (int i = 0; i < item1.getImageFields().size(); i++) {
-    	// 	if (item1.getImageFields().get(i) == null && item2.getImageFields().get(i) != null) {
-        // 		return false;
-        // 	}
-    		
-    	// 	if (!validateImageFields(item1.getImageFields().get(i), item2.getImageFields().get(i))) {
-    	// 		return false;
-    	// 	}
-    	// }
-                
-            	
-    	// for (int i = 0; i < item1.getMediaClockFormats().size(); i++) {
-    	// 	if (item1.getMediaClockFormats().get(i) == null && item2.getMediaClockFormats().get(i) != null) {
-        // 		return false;
-        // 	}
-    		
-    	// 	if (item1.getMediaClockFormats().get(i) != item2.getMediaClockFormats().get(i)) {
-    	// 		return false;
-    	// 	}
-    	// }
-
-
-    	
-    	if (item1.getDisplayType() == null) {
-    		return ( item2.getDisplayType() == null );
-    	}
-    	
-    	if (item1.getDisplayType() != item2.getDisplayType()) {
-    		return false;
-    	}
-
-        if (!item1.getDisplayName().equals(item2.getDisplayName())) {
-            return false;
-        }
-    	
-    	if (item1.getGraphicSupported() != item2.getGraphicSupported()) {    		
-    		return false;
-    	}
-    	// Failing past here:
-    	// log("GS", item1.getGraphicSupported() + " : " + item2.getGraphicSupported());
-    	
-    	if (!validateStringList(item1.getTemplatesAvailable(),item2.getTemplatesAvailable())) {
-    		log("TA", item1.getTemplatesAvailable() + " | " + item2.getTemplatesAvailable());
-    		return false;
-    	}
-    	
-    	if (item1.getNumCustomPresetsAvailable() != item2.getNumCustomPresetsAvailable()) {
-    		return false;
-    	}
-    	
-    	if (item1.getMediaClockFormats() == null) {
-    		return ( item2.getMediaClockFormats() == null );
-    	}
-    	
-    	if (item1.getMediaClockFormats().size() != item2.getMediaClockFormats().size()) {
-    		return false;
-    	}
-
-    	    	
-    	if (item1.getTextFields() == null) {
-    		return ( item2.getTextFields() == null );
-    	}
-    	
-    	if (item1.getTextFields().size() != item2.getTextFields().size()) {
-    		return false;
-        }
-
-    	
-    	if (item1.getImageFields() == null) {
-    		return ( item2.getImageFields() == null );
-    	}
-    	
-    	if (item1.getImageFields().size() != item2.getImageFields().size()) {
-    		return false;
-    	}
- 
-    	
-    	if (!validateScreenParams(item1.getScreenParams(), item2.getScreenParams())) {
-    		return false;
-    	}
-    	  	
-    	return true;
-
-        expect(item1.getOnScreenPresetsAvailable()).to.be.equal(item2.getOnScreenPresetsAvailable());
+        this.validateScreenParams(item1.getScreenParams(), item2.getScreenParams());
         return true;
     }
 
