@@ -107,6 +107,8 @@ describe('RegisterAppInterfaceTests', function () {
 
         // Invalid/Null Tests
         rpcMessage = new RegisterAppInterface();
+        // TODO correlationId should be set automatically during construction using a correlation id generator.
+        rpcMessage.setCorrelationId(Test.GENERAL_INT);
         assertNotNull(Test.NOT_NULL, rpcMessage);
         testNullBase(rpcMessage);
 

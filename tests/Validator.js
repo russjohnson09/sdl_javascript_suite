@@ -381,6 +381,20 @@ class Validator {
         expect(val1, msg).to.be.null;
     }
 
+    static assertNullOrUndefined () {
+        const args = arguments;
+        let val1, msg;
+        if (args.length === 1) {
+            val1 = args[0];
+        } else if (args.length === 2) {
+            msg = args[0];
+            val1 = args[1];
+        } else {
+            throw new Error('Bad arguments');
+        }
+        expect(val1, msg).to.not.exist;
+    }
+
     static assertNotNull () {
         const args = arguments;
         let val1, msg;
@@ -417,6 +431,7 @@ class Validator {
 
     // this method must be manually called from the subclass
     static testNullBase (functionName, messageType, msg) {
+        console.log(msg.getCorrelationId(), msg instanceof RpcRequest, msg instanceof RpcResponse);
         this.assertNotNull('RPCMessage was null.', msg);
 
         let correlationId;
@@ -425,7 +440,7 @@ class Validator {
             this.assertNotNull('Correlation ID of the RPC message was null.', correlationId);
         } else if (msg instanceof RpcResponse) {
             correlationId = msg.getCorrelationId();
-            this.assertNull('Correlation ID of the RPC message was not null.', correlationId);
+            this.assertNullOrUndefined('Correlation ID of the RPC message was not null.', correlationId);
         }
         this.assertNotNull('Message type of the RPC message was null.', msg.getRPCType());
 

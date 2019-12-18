@@ -11,9 +11,10 @@ const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
 const assertNull = Validator.assertNull.bind(Validator);
 const assertNotNull = Validator.assertNotNull.bind(Validator);
-const testNullBase = Validator.testNullBase.bind(Validator,
-    FunctionID.keyForValue(FunctionID.RegisterAppInterface),
-    RpcType.REQUEST);
+
+const testNullBase = Validator.testNullBase.bind(Validator, 
+    FunctionID.keyForValue(FunctionID.RegisterAppInterface), 
+    RpcType.RESPONSE);
 
 
 describe('RegisterAppInterfaceResponseTests', function () {
@@ -116,29 +117,29 @@ describe('RegisterAppInterfaceResponseTests', function () {
         Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream);
         assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testIconResumed);
 
-        done();
-        return;
+        // done();
+        // return;
 		// Invalid/Null Tests
-		msg = new RegisterAppInterfaceResponse();
-		assertNotNull(Test.NOT_NULL, msg);
-		testNullBase(msg);
+        msg = new RegisterAppInterfaceResponse();
+        assertNotNull(Test.NOT_NULL, msg);
+        testNullBase(msg);
 
-		assertNull(Test.NULL, msg.getSdlMsgVersion());
-		assertNull(Test.NULL, msg.getLanguage());
-		assertNull(Test.NULL, msg.getHmiDisplayLanguage());
-		assertNull(Test.NULL, msg.getDisplayCapabilities());
-		assertNull(Test.NULL, msg.getPresetBankCapabilities());
-		assertNull(Test.NULL, msg.getVehicleType());
-		assertNull(Test.NULL, msg.getButtonCapabilities());
-		assertNull(Test.NULL, msg.getSoftButtonCapabilities());
-		assertNull(Test.NULL, msg.getAudioPassThruCapabilities());
-		assertNull(Test.NULL, msg.getPcmStreamingCapabilities());
-		assertNull(Test.NULL, msg.getHmiZoneCapabilities());
-		assertNull(Test.NULL, msg.getSpeechCapabilities());
-		assertNull(Test.NULL, msg.getVrCapabilities());
-		assertNull(Test.NULL, msg.getPrerecordedSpeech());
-		assertNull(Test.NULL, msg.getSupportedDiagModes());
-	    assertNull(Test.NULL, msg.getIconResumed());
+        assertNull(Test.NULL, msg.getSdlMsgVersion());
+        assertNull(Test.NULL, msg.getLanguage());
+        assertNull(Test.NULL, msg.getHmiDisplayLanguage());
+        assertNull(Test.NULL, msg.getDisplayCapabilities());
+        assertNull(Test.NULL, msg.getPresetBankCapabilities());
+        assertNull(Test.NULL, msg.getVehicleType());
+        assertNull(Test.NULL, msg.getButtonCapabilities());
+        assertNull(Test.NULL, msg.getSoftButtonCapabilities());
+        assertNull(Test.NULL, msg.getAudioPassThruCapabilities());
+        assertNull(Test.NULL, msg.getPcmStreamCapabilities());
+        assertNull(Test.NULL, msg.getHmiZoneCapabilities());
+        assertNull(Test.NULL, msg.getSpeechCapabilities());
+        assertNull(Test.NULL, msg.getVrCapabilities());
+        assertNull(Test.NULL, msg.getPrerecordedSpeech());
+        assertNull(Test.NULL, msg.getSupportedDiagModes());
+        assertNull(Test.NULL, msg.getIconResumed());
 
         done();
     });
