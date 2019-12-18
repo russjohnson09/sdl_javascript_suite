@@ -68,6 +68,31 @@ class Validator {
     }
 
 
+    static validateImageFields (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+        expect(Array.isArray(item1)).to.be.true;
+        expect(Array.isArray(item2)).to.be.true;
+
+        expect(item1.length).to.be.equal(item2.length);
+
+        for (let index = 0; index < item1.length; index++) {
+            const val1 = item1[index];
+            const val2 = item2[index];
+            
+            expect(val1.getImageTypeSupported()).to.be.deep.equal(val2.getImageTypeSupported());
+            expect(val1.getImageFieldName()).to.be.equal(val2.getImageFieldName());
+            this.validateImageResolution(val1.getImageResolution(), val2.getImageResolution());
+        }
+
+
+
+        return true;
+    }
+
+
     static validatePcmStreamCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
@@ -77,6 +102,20 @@ class Validator {
         expect(item1.getAudioType()).to.be.equal(item2.getAudioType());
         expect(item1.getBitsPerSample()).to.be.equal(item2.getBitsPerSample());
         expect(item1.getSamplingRate()).to.be.equal(item2.getSamplingRate());
+    }
+
+
+    static validateImageResolution (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+
+        expect(item1).to.exist;
+        expect(item2).to.exist;
+
+        expect(item1.getResolutionHeight()).to.be.equal(item2.getResolutionHeight());
+        expect(item1.getResolutionWidth()).to.be.equal(item2.getResolutionWidth());
     }
 
 
@@ -113,8 +152,18 @@ class Validator {
         expect(Array.isArray(item1.getImageFields())).to.be.true;
         expect(Array.isArray(item1.getMediaClockFormats())).to.be.true;
         expect(Array.isArray(item1.getTextFields())).to.be.true;
-        
-        console.log('validateDisplayCapabilities');
+
+        this.validateImageFields(item1.getImageFields(), item2.getImageFields());
+        // this.validateMed(item1.getMediaClockFormats());
+        // this.validateImageFields(item1.getImageFields());
+
+        const mediaClockFormats = item1.getMediaClockFormats();
+
+        for (const clockFormat of mediaClockFormats) {
+            expect(clockFormat).to.be.a.string;
+        }
+
+        // console.log('validateDisplayCapabilities');
 
         return true;
 
