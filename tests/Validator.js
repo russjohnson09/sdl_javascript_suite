@@ -60,6 +60,37 @@ class Validator {
     }
 
 
+
+
+    // assertTrue(Test.TRUE, Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities));
+
+    static validateSoftButtonCapabilities (item1, item2) {
+        console.log({item1,item2});
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+        expect(Array.isArray(item1)).to.be.true;
+        expect(Array.isArray(item2)).to.be.true;
+
+        expect(item1.length).to.be.equal(item2.length);
+
+        for (let index = 0; index < item1.length; index++) {
+            const val1 = item1[index];
+            const val2 = item2[index];
+            
+            expect(val1.getImageSupported()).to.be.equal(val2.getImageSupported())
+            expect(val1.getUpDownAvailable()).to.be.equal(val2.getImageSupported())
+            expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable())
+            expect(val1.getShortPressAvailable()).to.be.equal(val2.getShortPressAvailable())
+        }
+    }
+
+    // assertTrue(Test.TRUE, Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities));
+    // assertTrue(Test.TRUE, Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType));
+    // assertTrue(Test.TRUE, Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc));
+    // assertTrue(Test.TRUE, Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc));
+
     static validateTtsChunks (list1, list2) {
         if (list1 === null || list2 === null) {
             expect(list1).to.equal(list2);
@@ -74,20 +105,6 @@ class Validator {
         });
 
         expect(text1).to.deep.equal(text2);
-        // expect(text1).to.deep.equal(text2);
-
-
-
-        // for (const idx in list1) {
-        //     const chunk1 = list1[idx];
-        //     const chunk2 = list2[idx];
-
-        //     if (!this.validateText(chunk1.getText(), chunk2.getText()) || (chunk1.getType() !== chunk2.getType())) {
-        //         return false;
-        //     }
-        // }
-
-        // return true;
     }
 
 

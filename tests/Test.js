@@ -250,41 +250,15 @@ const JSON_GENERAL_DISPLAYCAPABILITIES = Test.JSON_GENERAL_DISPLAYCAPABILITIES =
     [DisplayCapabilities.KEY_NUM_CUSTOM_PRESETS_AVAILABLE]:  GENERAL_INT,
 };
 
+const  GENERAL_SOFTBUTTONCAPABILITIES = Test.GENERAL_SOFTBUTTONCAPABILITIES = new SoftButtonCapabilities();
+GENERAL_SOFTBUTTONCAPABILITIES.setLongPressAvailable(GENERAL_BOOLEAN);
+GENERAL_SOFTBUTTONCAPABILITIES.setShortPressAvailable(GENERAL_BOOLEAN);
+GENERAL_SOFTBUTTONCAPABILITIES.setUpDownAvailable(GENERAL_BOOLEAN);
+GENERAL_SOFTBUTTONCAPABILITIES.setImageSupported(GENERAL_BOOLEAN);
 
-// -  "displayCapabilities": {
-//     -    "displayName": "test"
-//     -    "displayType": "CID"
-//     -    "graphicSupported": true
-//     -    "imageFields": [
-//     -      {
-//     -        "imageResolution": {
-//     -          "resolutionHeight": 100
-//     -          "resolutionWidth": 100
-//     -        }
-//     -        "imageTypeSupported": [
-//     -          "BINARY"
-//     -        ]
-//     -        "name": "graphic"
-//     -      }
-//     -    ]
-//     -    "mediaClockFormats": [
-//     -      "CLOCK1"
-//     -      "CLOCK2"
-//     -    ]
-//     -    "numCustomPresetsAvailable": 100
-//     -    "screenParams": {
-//     -      "resolution": {
-//     -        "resolutionHeight": 100
-//     -        "resolutionWidth": 100
-//     -      }
-//     -      "touchEventAvailable": {
-//     -        "doublePressAvailable": true
-//     -        "multiTouchAvailable": true
-//     -        "pressAvailable": true
-//     -      }
-//     -    }
-
-
+const GENERAL_SOFTBUTTONCAPABILITIES_LIST = Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST = [
+    GENERAL_SOFTBUTTONCAPABILITIES,
+];
 
 const GENERAL_PRESETBANKCAPABILITIES = Test.GENERAL_PRESETBANKCAPABILITIES = new PresetBankCapabilities();
 GENERAL_PRESETBANKCAPABILITIES.setOnScreenPresetsAvailable(GENERAL_BOOLEAN);

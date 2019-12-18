@@ -74,4 +74,70 @@ describe('RegisterAppInterfaceResponseTests', function () {
     });
 
     BaseRpcTests.tests();
+
+
+    it ('testRpcValues', function (done) {
+        let msg = this.msg;
+        // Test Values
+        const testSupportedDiagModes =  msg.getSupportedDiagModes();
+        const testPrerecordedSpeech  =  msg.getPrerecordedSpeech();
+        const  testVrCapabilities     =  msg.getVrCapabilities();
+        const testSpeechCapabilities =  msg.getSpeechCapabilities();
+        const testHmiZoneCapabilities =  msg.getHmiZoneCapabilities();
+        const testSoftButtonCapabilities =  msg.getSoftButtonCapabilities();
+        const testButtonCapabilities =  msg.getButtonCapabilities();
+        const testVehicleType =  msg.getVehicleType();
+        const testPbc =  msg.getPresetBankCapabilities();
+        const testDc =  msg.getDisplayCapabilities();
+        const testHmiLang =  msg.getHmiDisplayLanguage();
+        const testLang =  msg.getLanguage();
+        const testMsgVersion =  msg.getSdlMsgVersion();
+        const testAptc =  msg.getAudioPassThruCapabilities();
+        const testPcmStream =  msg.getPcmStreamCapabilities();
+        const testIconResumed =  msg.getIconResumed();
+		
+        // Valid Tests
+        assertEquals(Test.MATCH, Test.GENERAL_INTEGER_LIST, testSupportedDiagModes);
+        assertEquals(Test.MATCH, Test.GENERAL_PRERECORDEDSPEECH_LIST, testPrerecordedSpeech);
+        assertEquals(Test.MATCH, Test.GENERAL_VRCAPABILITIES_LIST, testVrCapabilities);
+        assertEquals(Test.MATCH, Test.GENERAL_SPEECHCAPABILITIES_LIST, testSpeechCapabilities);
+        assertEquals(Test.MATCH, Test.GENERAL_HMIZONECAPABILITIES_LIST, testHmiZoneCapabilities);
+        Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities);
+
+        return;
+        assertTrue(Test.TRUE, Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities));
+        assertTrue(Test.TRUE, Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType));
+        assertTrue(Test.TRUE, Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc));
+        assertTrue(Test.TRUE, Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc));
+        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
+        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
+        assertTrue(Test.TRUE, Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testMsgVersion));
+        assertTrue(Test.TRUE, Validator.validateAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST, testAptc));
+        assertTrue(Test.TRUE, Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream));
+        assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testIconResumed);
+
+		// Invalid/Null Tests
+		msg = new RegisterAppInterfaceResponse();
+		assertNotNull(Test.NOT_NULL, msg);
+		testNullBase(msg);
+
+		assertNull(Test.NULL, msg.getSdlMsgVersion());
+		assertNull(Test.NULL, msg.getLanguage());
+		assertNull(Test.NULL, msg.getHmiDisplayLanguage());
+		assertNull(Test.NULL, msg.getDisplayCapabilities());
+		assertNull(Test.NULL, msg.getPresetBankCapabilities());
+		assertNull(Test.NULL, msg.getVehicleType());
+		assertNull(Test.NULL, msg.getButtonCapabilities());
+		assertNull(Test.NULL, msg.getSoftButtonCapabilities());
+		assertNull(Test.NULL, msg.getAudioPassThruCapabilities());
+		assertNull(Test.NULL, msg.getPcmStreamingCapabilities());
+		assertNull(Test.NULL, msg.getHmiZoneCapabilities());
+		assertNull(Test.NULL, msg.getSpeechCapabilities());
+		assertNull(Test.NULL, msg.getVrCapabilities());
+		assertNull(Test.NULL, msg.getPrerecordedSpeech());
+		assertNull(Test.NULL, msg.getSupportedDiagModes());
+	    assertNull(Test.NULL, msg.getIconResumed());
+
+        done();
+    });
 });
