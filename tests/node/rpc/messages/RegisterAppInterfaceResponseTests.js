@@ -7,7 +7,6 @@ const BaseRpcTests = require('./BaseRpcTests');
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
-// sdl_java_suite/android/sdl_android/src/androidTest/java/com/smartdevicelink/test/rpc/responses/RegisterAppInterfaceResponseTest.java
 const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
 const assertNull = Validator.assertNull.bind(Validator);
@@ -17,7 +16,7 @@ const testNullBase = Validator.testNullBase.bind(Validator,
     RpcType.REQUEST);
 
 
-describe('RegisterAppInterfaceTests', function () {
+describe('RegisterAppInterfaceResponseTests', function () {
     before(function () {
         this.createMessage = function () {
             const msg = new RegisterAppInterfaceResponse();
@@ -55,7 +54,7 @@ describe('RegisterAppInterfaceTests', function () {
             expectedParameters[RegisterAppInterfaceResponse.KEY_BUTTON_CAPABILITIES] = Test.JSON_GENERAL_BUTTON_CAPABILITIES_LIST;
             expectedParameters[RegisterAppInterfaceResponse.KEY_SOFT_BUTTON_CAPABILITIES] = Test.JSON_SOFTBUTTONCAPABILITIES;
             expectedParameters[RegisterAppInterfaceResponse.KEY_AUDIO_PASS_THRU_CAPABILITIES] = Test.JSON_AUDIOPASSTHRUCAPABILITIES_LIST;
-            expectedParameters[RegisterAppInterfaceResponse.KEY_PCM_STREAM_CAPABILITIES] = Test.JSON_PCMSTREAMCAPABILITIES;
+            expectedParameters[RegisterAppInterfaceResponse.KEY_PCM_STREAM_CAPABILITIES] = Test.JSON_AUDIOPASSTHRUCAPABILITIES;
             expectedParameters[RegisterAppInterfaceResponse.KEY_SPEECH_CAPABILITIES] = Test.GENERAL_SPEECHCAPABILITIES_LIST;
             expectedParameters[RegisterAppInterfaceResponse.KEY_VR_CAPABILITIES] = Test.GENERAL_VRCAPABILITIES_LIST;
             expectedParameters[RegisterAppInterfaceResponse.KEY_HMI_ZONE_CAPABILITIES] = Test.GENERAL_HMIZONECAPABILITIES_LIST;
