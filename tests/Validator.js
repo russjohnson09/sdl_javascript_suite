@@ -5,7 +5,11 @@ const RpcResponse = SDL.rpc.RpcResponse;
 const RpcRequest = SDL.rpc.RpcRequest;
 
 class Validator {
-    static getParametersJson(obj) {
+    /**
+     * Takes an RpcStruct and converts it to a json object.
+     * @param {Object} obj Either a primative value, an array, or an object with getParameters defined. 
+     */
+    static getParametersJson (obj) {
         let result;
         if (typeof obj === 'object') {
             if (typeof obj.getParameters === 'function') {
@@ -13,14 +17,14 @@ class Validator {
             } else {
                 if (Array.isArray(obj)) {
                     result = [];
-                    for (let val of obj) {
+                    for (const val of obj) {
                         result.push(this.getParametersJson(val));
                     }
                     return result;
                 } else {
                     result = {};
-                    for (let key in obj) {
-                        let val = obj[key];
+                    for (const key in obj) {
+                        const val = obj[key];
                         result[key] = this.getParametersJson(val);
                     }
                 }
@@ -31,7 +35,11 @@ class Validator {
         return result;
     }
 
-
+    /**
+     * Validate an rpcMessage matches the given expectedParameters
+     * @param {RpcMessage} rpcMessage - ssageto validate against.
+     * @param {Object} expectedParameters - json object of expected parameters
+     */
     static validateJson (rpcMessage, expectedParameters) {
         const parameters = this.getParametersJson(rpcMessage.getParameters());
         expect(parameters).to.be.deep.equal(expectedParameters);
@@ -69,12 +77,10 @@ class Validator {
         expect(item1.getAudioType()).to.be.equal(item2.getAudioType());
         expect(item1.getBitsPerSample()).to.be.equal(item2.getBitsPerSample());
         expect(item1.getSamplingRate()).to.be.equal(item2.getSamplingRate());
-
     }
 
 
     static validateAudioPassThruCapabilities (item1, item2) {
-
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
             return;
@@ -104,6 +110,12 @@ class Validator {
         }
         expect(item1.getDisplayType()).to.be.equal(item2.getDisplayType());
 
+        expect(Array.isArray(item1.getImageFields())).to.be.true;
+        expect(Array.isArray(item1.getMediaClockFormats())).to.be.true;
+        expect(Array.isArray(item1.getTextFields())).to.be.true;
+        
+        console.log('validateDisplayCapabilities');
+
         return true;
 
            	
@@ -127,16 +139,7 @@ class Validator {
     	// 		return false;
     	// 	}
     	// }
-    	
-    	// for (int i = 0; i < item1.getTextFields().size(); i++) {    		
-    	// 	if (item1.getTextFields().get(i) == null && item2.getTextFields().get(i) != null) {
-        // 		return false;
-        // 	}
-    		
-    	// 	if (!validateTextFields(item1.getTextFields().get(i), item2.getTextFields().get(i))) {
-    	// 		return false;
-    	// 	}
-    	// }
+
 
     	
     	if (item1.getDisplayType() == null) {
@@ -428,12 +431,8 @@ class Validator {
 
 
 
-
-    // this method must be manually called from the subclass
     static testNullBase (functionName, messageType, msg) {
-        console.log(msg.getCorrelationId(), msg instanceof RpcRequest, msg instanceof RpcResponse);
         this.assertNotNull('RPCMessage was null.', msg);
-
         let correlationId;
         if (msg instanceof RpcRequest) {
             correlationId = msg.getCorrelationId(); 
