@@ -52,7 +52,7 @@ describe('RegisterAppInterfaceResponseTests', function () {
             expectedParameters[RegisterAppInterfaceResponse.KEY_PRESET_BANK_CAPABILITIES] = Test.JSON_PRESETBANKCAPABILITIES;
             expectedParameters[RegisterAppInterfaceResponse.KEY_DISPLAY_CAPABILITIES] = Test.JSON_GENERAL_DISPLAYCAPABILITIES;
             expectedParameters[RegisterAppInterfaceResponse.KEY_BUTTON_CAPABILITIES] = Test.JSON_GENERAL_BUTTON_CAPABILITIES_LIST;
-            expectedParameters[RegisterAppInterfaceResponse.KEY_SOFT_BUTTON_CAPABILITIES] = Test.JSON_SOFTBUTTONCAPABILITIES;
+            expectedParameters[RegisterAppInterfaceResponse.KEY_SOFT_BUTTON_CAPABILITIES] = Test.JSON_SOFTBUTTONCAPABILITIES_LIST;
             expectedParameters[RegisterAppInterfaceResponse.KEY_AUDIO_PASS_THRU_CAPABILITIES] = Test.JSON_AUDIOPASSTHRUCAPABILITIES_LIST;
             expectedParameters[RegisterAppInterfaceResponse.KEY_PCM_STREAM_CAPABILITIES] = Test.JSON_AUDIOPASSTHRUCAPABILITIES;
             expectedParameters[RegisterAppInterfaceResponse.KEY_SPEECH_CAPABILITIES] = Test.GENERAL_SPEECHCAPABILITIES_LIST;
@@ -104,18 +104,20 @@ describe('RegisterAppInterfaceResponseTests', function () {
         assertEquals(Test.MATCH, Test.GENERAL_HMIZONECAPABILITIES_LIST, testHmiZoneCapabilities);
         Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities);
 
-        return;
-        assertTrue(Test.TRUE, Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities));
-        assertTrue(Test.TRUE, Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType));
-        assertTrue(Test.TRUE, Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc));
-        assertTrue(Test.TRUE, Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc));
+
+        Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities);
+        Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType);
+        Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc);
+        Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc);
         assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
         assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
-        assertTrue(Test.TRUE, Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testMsgVersion));
-        assertTrue(Test.TRUE, Validator.validateAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST, testAptc));
-        assertTrue(Test.TRUE, Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream));
+        Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testMsgVersion);
+        Validator.validateAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST, testAptc);
+        Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream);
         assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testIconResumed);
 
+        done();
+        return;
 		// Invalid/Null Tests
 		msg = new RegisterAppInterfaceResponse();
 		assertNotNull(Test.NOT_NULL, msg);

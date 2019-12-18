@@ -17,7 +17,7 @@ const ImageResolution =  SDL.rpc.structs.ImageResolution;
 const ScreenParams = SDL.rpc.structs.ScreenParams;
 const TextField = SDL.rpc.structs.TextField;
 const TouchEventCapabilities = SDL.rpc.structs.TouchEventCapabilities;
-
+const SoftButtonCapabilities = SDL.rpc.structs.SoftButtonCapabilities;
 
 
 
@@ -258,6 +258,10 @@ GENERAL_SOFTBUTTONCAPABILITIES.setImageSupported(GENERAL_BOOLEAN);
 
 const GENERAL_SOFTBUTTONCAPABILITIES_LIST = Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST = [
     GENERAL_SOFTBUTTONCAPABILITIES,
+];
+
+const JSON_SOFTBUTTONCAPABILITIES_LIST = Test.JSON_SOFTBUTTONCAPABILITIES_LIST = [
+    GENERAL_SOFTBUTTONCAPABILITIES.getParameters(),
 ];
 
 const GENERAL_PRESETBANKCAPABILITIES = Test.GENERAL_PRESETBANKCAPABILITIES = new PresetBankCapabilities();

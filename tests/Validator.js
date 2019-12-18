@@ -60,12 +60,21 @@ class Validator {
     }
 
 
+    static validatePcmStreamCapabilities (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+
+        expect(item1.getAudioType()).to.be.equal(item2.getAudioType());
+        expect(item1.getBitsPerSample()).to.be.equal(item2.getBitsPerSample());
+        expect(item1.getSamplingRate()).to.be.equal(item2.getSamplingRate());
+
+    }
 
 
-    // assertTrue(Test.TRUE, Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities));
+    static validateAudioPassThruCapabilities (item1, item2) {
 
-    static validateSoftButtonCapabilities (item1, item2) {
-        console.log({item1,item2});
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
             return;
@@ -79,10 +88,184 @@ class Validator {
             const val1 = item1[index];
             const val2 = item2[index];
             
-            expect(val1.getImageSupported()).to.be.equal(val2.getImageSupported())
-            expect(val1.getUpDownAvailable()).to.be.equal(val2.getImageSupported())
-            expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable())
-            expect(val1.getShortPressAvailable()).to.be.equal(val2.getShortPressAvailable())
+            expect(val1.getAudioType()).to.be.equal(val2.getAudioType());
+            expect(val1.getBitsPerSample()).to.be.equal(val2.getBitsPerSample());
+            expect(val1.getSamplingRate()).to.be.equal(val2.getSamplingRate());
+        }
+
+        return true;
+    }
+
+
+    static validateDisplayCapabilities  (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+        expect(item1.getDisplayType()).to.be.equal(item2.getDisplayType());
+
+        return true;
+
+           	
+    	// for (int i = 0; i < item1.getImageFields().size(); i++) {
+    	// 	if (item1.getImageFields().get(i) == null && item2.getImageFields().get(i) != null) {
+        // 		return false;
+        // 	}
+    		
+    	// 	if (!validateImageFields(item1.getImageFields().get(i), item2.getImageFields().get(i))) {
+    	// 		return false;
+    	// 	}
+    	// }
+                
+            	
+    	// for (int i = 0; i < item1.getMediaClockFormats().size(); i++) {
+    	// 	if (item1.getMediaClockFormats().get(i) == null && item2.getMediaClockFormats().get(i) != null) {
+        // 		return false;
+        // 	}
+    		
+    	// 	if (item1.getMediaClockFormats().get(i) != item2.getMediaClockFormats().get(i)) {
+    	// 		return false;
+    	// 	}
+    	// }
+    	
+    	// for (int i = 0; i < item1.getTextFields().size(); i++) {    		
+    	// 	if (item1.getTextFields().get(i) == null && item2.getTextFields().get(i) != null) {
+        // 		return false;
+        // 	}
+    		
+    	// 	if (!validateTextFields(item1.getTextFields().get(i), item2.getTextFields().get(i))) {
+    	// 		return false;
+    	// 	}
+    	// }
+
+    	
+    	if (item1.getDisplayType() == null) {
+    		return ( item2.getDisplayType() == null );
+    	}
+    	
+    	if (item1.getDisplayType() != item2.getDisplayType()) {
+    		return false;
+    	}
+
+        if (!item1.getDisplayName().equals(item2.getDisplayName())) {
+            return false;
+        }
+    	
+    	if (item1.getGraphicSupported() != item2.getGraphicSupported()) {    		
+    		return false;
+    	}
+    	// Failing past here:
+    	// log("GS", item1.getGraphicSupported() + " : " + item2.getGraphicSupported());
+    	
+    	if (!validateStringList(item1.getTemplatesAvailable(),item2.getTemplatesAvailable())) {
+    		log("TA", item1.getTemplatesAvailable() + " | " + item2.getTemplatesAvailable());
+    		return false;
+    	}
+    	
+    	if (item1.getNumCustomPresetsAvailable() != item2.getNumCustomPresetsAvailable()) {
+    		return false;
+    	}
+    	
+    	if (item1.getMediaClockFormats() == null) {
+    		return ( item2.getMediaClockFormats() == null );
+    	}
+    	
+    	if (item1.getMediaClockFormats().size() != item2.getMediaClockFormats().size()) {
+    		return false;
+    	}
+
+    	    	
+    	if (item1.getTextFields() == null) {
+    		return ( item2.getTextFields() == null );
+    	}
+    	
+    	if (item1.getTextFields().size() != item2.getTextFields().size()) {
+    		return false;
+        }
+
+    	
+    	if (item1.getImageFields() == null) {
+    		return ( item2.getImageFields() == null );
+    	}
+    	
+    	if (item1.getImageFields().size() != item2.getImageFields().size()) {
+    		return false;
+    	}
+ 
+    	
+    	if (!validateScreenParams(item1.getScreenParams(), item2.getScreenParams())) {
+    		return false;
+    	}
+    	  	
+    	return true;
+
+        expect(item1.getOnScreenPresetsAvailable()).to.be.equal(item2.getOnScreenPresetsAvailable());
+        return true;
+    }
+
+    static validatePresetBankCapabilities (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+
+        expect(item1.getOnScreenPresetsAvailable()).to.be.equal(item2.getOnScreenPresetsAvailable());
+    }
+
+    static validateVehicleType (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+
+        expect(item1.getMake()).to.be.equal(item2.getMake());
+        expect(item1.getModel()).to.be.equal(item2.getModel());
+        expect(item1.getTrim()).to.be.equal(item2.getTrim());
+        expect(item1.getModelYear()).to.be.equal(item2.getModelYear());
+    }
+
+
+    static validateButtonCapabilities (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+        expect(Array.isArray(item1)).to.be.true;
+        expect(Array.isArray(item2)).to.be.true;
+
+        expect(item1.length).to.be.equal(item2.length);
+
+        for (let index = 0; index < item1.length; index++) {
+            const val1 = item1[index];
+            const val2 = item2[index];
+            
+            expect(val1.getName()).to.be.equal(val2.getName());
+            expect(val1.getUpDownAvailable()).to.be.equal(val2.getUpDownAvailable());
+            expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable());
+            expect(val1.getShortPressAvailable()).to.be.equal(val2.getShortPressAvailable());
+        }
+    }
+
+    // assertTrue(Test.TRUE, Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities));
+
+    static validateSoftButtonCapabilities (item1, item2) {
+        if (item1 === null) {
+            expect(item1).to.be.equal(item2);
+            return;
+        }
+        expect(Array.isArray(item1)).to.be.true;
+        expect(Array.isArray(item2)).to.be.true;
+
+        expect(item1.length).to.be.equal(item2.length);
+
+        for (let index = 0; index < item1.length; index++) {
+            const val1 = item1[index];
+            const val2 = item2[index];
+            
+            expect(val1.getImageSupported()).to.be.equal(val2.getImageSupported());
+            expect(val1.getUpDownAvailable()).to.be.equal(val2.getImageSupported());
+            expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable());
+            expect(val1.getShortPressAvailable()).to.be.equal(val2.getShortPressAvailable());
         }
     }
 
