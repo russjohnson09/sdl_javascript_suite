@@ -35,7 +35,6 @@ describe('ImageTests', function () {
         assertNotNull(Test.NOT_NULL, msg);
         assertNull(Test.NULL, msg.getImageType());
         assertNull(Test.NULL, msg.getValue());
-        assertNull(Test.NULL, msg.getBulkData());
         assertNull(Test.NULL, msg.getIsTemplate());
         done();
     });
