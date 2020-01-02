@@ -42,7 +42,4 @@ describe('ImageTests', function () {
         Validator.assertNullOrUndefined(msg.getIsTemplate());
         done();
     });
-
-
-
 });
