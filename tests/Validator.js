@@ -9,7 +9,7 @@ const MediaClockFormat = SDL.rpc.enums.MediaClockFormat;
 class Validator {
     /**
      * Takes an RpcStruct and converts it to a json object.
-     * @param {Object} obj Either a primative value, an array, or an object with getParameters defined. 
+     * @param {Object} obj - Either a primative value, an array, or an object with getParameters defined.
      */
     static getParametersJson (obj) {
         let result;
