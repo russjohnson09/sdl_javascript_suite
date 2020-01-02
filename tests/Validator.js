@@ -39,7 +39,7 @@ class Validator {
 
     /**
      * Validate an rpcMessage matches the given expectedParameters
-     * @param {RpcMessage} rpcMessage - ssageto validate against.
+     * @param {RpcMessage} rpcMessage - message to validate against.
      * @param {Object} expectedParameters - json object of expected parameters
      */
     static validateJson (rpcMessage, expectedParameters) {
@@ -67,9 +67,9 @@ class Validator {
 
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * ImageField equals validation.
+     * @param {ImageField} item1
+     * @param {ImageField} item2
      */
     static validateImageFields (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -94,9 +94,9 @@ class Validator {
 
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * RegisterAppInterface pcm stream capabilities validation.
+     * @param {AudioPassThruCapabilities} item1
+     * @param {AudioPassThruCapabilities} item2
      */
     static validatePcmStreamCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -110,28 +110,11 @@ class Validator {
         return true;
     }
 
-    /**
-     * @param {*} item1 
-     * @param {*} item2 
-     */
-    static validateImageResolution (item1, item2) {
-        if (item1 === null || item2 === null) {
-            expect(item1).to.be.equal(item2);
-            return true;
-        }
-
-        expect(item1).to.exist;
-        expect(item2).to.exist;
-
-        expect(item1.getResolutionHeight()).to.be.equal(item2.getResolutionHeight());
-        expect(item1.getResolutionWidth()).to.be.equal(item2.getResolutionWidth());
-    }
-
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * AudioPassThruCapabilities array equals validation.
+     * @param {Array<AudioPassThruCapabilities>} item1
+     * @param {Array<AudioPassThruCapabilities>} item2
      */
     static validateAudioPassThruCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -154,11 +137,29 @@ class Validator {
         return true;
     }
 
+    /**
+     * ImageResolution equals validation
+     * @param {ImageResolution} item1
+     * @param {ImageResolution} item2
+     */
+    static validateImageResolution (item1, item2) {
+        if (item1 === null || item2 === null) {
+            expect(item1).to.be.equal(item2);
+            return true;
+        }
+
+        expect(item1).to.exist;
+        expect(item2).to.exist;
+
+        expect(item1.getResolutionHeight()).to.be.equal(item2.getResolutionHeight());
+        expect(item1.getResolutionWidth()).to.be.equal(item2.getResolutionWidth());
+    }
+
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * TouchEventCapabilities equals validation.
+     * @param {TouchEventCapabilities} item1
+     * @param {TouchEventCapabilities} item2
      */
     static validateTouchEventCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -177,9 +178,9 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * ScreenParams equals validation.
+     * @param {ScreenParams} item1
+     * @param {ScreenParams} item2
      */
     static validateScreenParams (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -198,9 +199,9 @@ class Validator {
 
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * DisplayCapabilities equals validation.
+     * @param {DisplayCapabilities} item1
+     * @param {DisplayCapabilities} item2
      */
     static validateDisplayCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -237,9 +238,9 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * PresetBankCapabilities equals validation.
+     * @param {PresetBankCapabilities} item1
+     * @param {PresetBankCapabilities} item2
      */
     static validatePresetBankCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -252,9 +253,9 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * VehicleType equals validation.
+     * @param {VehicleType} item1
+     * @param {VehicleType} item2
      */
     static validateVehicleType (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -270,9 +271,9 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * ButtonCapabilities array equals validation.
+     * @param {Array<ButtonCapabilities>} item1
+     * @param {Array<ButtonCapabilities>} item2
      */
     static validateButtonCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -297,9 +298,9 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * SoftButtonCapabilities array equals validation.
+     * @param {Array<SoftButtonCapabilities>} item1
+     * @param {Array<SoftButtonCapabilities>} item2
      */
     static validateSoftButtonCapabilities (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -324,32 +325,33 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} list1 
-     * @param {*} list2 
+     * TTSChunk array equals validation.
+     * @param {Array<TTSChunk>} item1
+     * @param {Array<TTSChunk>} item2
      */
-    static validateTtsChunks (list1, list2) {
-        if (list1 === null || list2 === null) {
-            expect(list1).to.equal(list2);
+    static validateTtsChunks (item1, item2) {
+        if (item1 === null || item2 === null) {
+            expect(item1).to.be.equal(item2);
             return true;
         }
+        expect(Array.isArray(item1)).to.be.true;
+        expect(Array.isArray(item2)).to.be.true;
 
-        const text1 = list1.map((val) => {
-            return val.getText();
-        });
-        const text2 = list1.map((val) => {
-            return val.getText();
-        });
+        expect(item1.length).to.be.equal(item2.length);
 
-        expect(text1).to.deep.equal(text2);
+        for (let index = 0; index < item1.length; index++) {
+            const val1 = item1[index];
+            const val2 = item2[index];
+            expect(val1.getText()).to.be.equal(val2.getText());
+        }
         return true;
     }
 
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * DeviceInfo equals validation.
+     * @param {DeviceInfo} item1
+     * @param {DeviceInfo} item2
      */
     static validateDeviceInfo (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -368,9 +370,9 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} item1 
-     * @param {*} item2 
+     * TemplateColorScheme equals validation.
+     * @param {TemplateColorScheme} item1
+     * @param {TemplateColorScheme} item2
      */
     static validateTemplateColorScheme (item1, item2) {
         if (item1 === null || item2 === null) {
@@ -394,40 +396,68 @@ class Validator {
     }
 
     /**
-     * 
-     * @param {*} val 
-     * @param {*} msg 
+     * Assert val is true.
+     * @param {*} val - value to assert
+     * @param {String} msg - Message to display on failure.
      */
     static assertTrue (val, msg) {
         expect(val, msg).to.be.true;
     }
 
     /**
-     * 
-     * @param {*} val1 
-     * @param {*} val2 
-     * @param {*} msg 
+     * Assert values are equal. Defaults to deeply equal which means
+     * objects like [1,2] or {'x': 1} will be compared based on values and not
+     * by reference.
+     * @param {*} val1 - First value to compare.
+     * @param {*} val2 - Second value to compare.
+     * @param {String} msg - Message to display on failure.
      */
     static assertEquals (val1, val2, msg) {
         expect(val1, msg).to.be.deep.equal(val2);
     }
 
+    /**
+     * Assert value is null or undefined.
+     * @param {*} val - value to assert.
+     * @param {String} msg - Message to display on failure.
+     */
     static assertNullOrUndefined (val, msg) {
         expect(val, msg).to.not.exist;
     }
 
+    /**
+     * Assert value is not null.
+     * @param {*} val - value to assert.
+     * @param {String} msg - Message to display on failure.
+     */
     static assertNotNull (val, msg) {
         expect(val, msg).to.be.not.null;
     }
 
+    /**
+     * Assert value is null.
+     * @param {*} val - value to assert.
+     * @param {String} msg - Message to display on failure.
+     */
     static assertNull (val, msg) {
         expect(val, msg).to.be.null;
     }
 
+    /**
+     * Assert value is not null or undefined.
+     * @param {*} val - value to assert.
+     * @param {String} msg - Message to display on failure.
+     */
     static assertNotNullUndefined (val, msg) {
         expect(val, msg).not.to.be.null.and.not.to.be.undefined;
     }
 
+    /**
+     * Test a basic RpcRequest or RpcResponse with no params set.
+     * @param {String} functionName
+     * @param {RpcType} messageType
+     * @param {RpcRequest|RpcResponse} msg
+     */
     static testNullBase (functionName, messageType, msg) {
         Validator.assertNotNull(msg, 'RPCMessage was null.');
         let correlationId;
