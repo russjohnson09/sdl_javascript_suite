@@ -3,38 +3,43 @@ const Image = SDL.rpc.structs.Image;
 
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
-const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
-const assertNotNull = Validator.assertNotNull.bind(Validator);
-
-let msg;
+const BaseStructTests = require('./BaseStructTests');
 
 describe('ImageTests', function () {
-    it('setup', function (done) {
-        msg = new Image();
-        msg.setImageType(Test.GENERAL_IMAGETYPE);
-        msg.setValue(Test.GENERAL_STRING);
-        msg.setIsTemplate(Test.GENERAL_BOOLEAN);
-        done();
+    before(function () {
+        this.create = function () {
+            const msg = new Image();
+            msg.setValue(Test.GENERAL_STRING);
+            msg.setImageType(Test.GENERAL_IMAGETYPE);
+            msg.setIsTemplate(Test.GENERAL_BOOLEAN);
+            return msg;
+        };
+
+        this.getExpectedParameters = function (sdlVersion) {
+            const expectedParameters = {};
+            expectedParameters[Image.KEY_VALUE] = Test.GENERAL_STRING;
+            expectedParameters[Image.KEY_IMAGE_TYPE] = Test.GENERAL_IMAGETYPE;
+            expectedParameters[Image.KEY_IS_TEMPLATE] = Test.GENERAL_BOOLEAN;
+
+            return expectedParameters;
+        };
     });
 
-    it('testRpcValues', function (done) {
-        // Test Values
-        const imageType = msg.getImageType();
-        const value = msg.getValue();
-        const isTemplate = msg.getIsTemplate();
+    BaseStructTests.tests();
 
+    it('testRpcValues', function (done) {
+        let msg = this.msg;
         // Valid Tests
-        assertEquals(Test.GENERAL_IMAGETYPE, imageType);
-        assertEquals(Test.GENERAL_STRING, value);
-        assertEquals(Test.GENERAL_BOOLEAN, isTemplate);
+        Validator.assertEquals(Test.GENERAL_STRING, msg.getValue());
+        Validator.assertEquals(Test.GENERAL_IMAGETYPE, msg.getImageType());
+        Validator.assertEquals(Test.GENERAL_BOOLEAN, msg.getIsTemplate());
 
         // Invalid/Null Tests
         msg = new Image();
-        assertNotNull(msg);
-        assertNullOrUndefined(msg.getImageType());
-        assertNullOrUndefined(msg.getValue());
-        assertNullOrUndefined(msg.getIsTemplate());
+        Validator.assertNotNull(msg);
+        Validator.assertNullOrUndefined(msg.getImageType());
+        Validator.assertNullOrUndefined(msg.getValue());
+        Validator.assertNullOrUndefined(msg.getIsTemplate());
         done();
     });
 
