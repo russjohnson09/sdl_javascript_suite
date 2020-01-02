@@ -8,7 +8,6 @@ const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
 
-const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
 const assertNull = Validator.assertNull.bind(Validator);
 const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
@@ -90,21 +89,21 @@ describe('RegisterAppInterfaceTests', function () {
 
         // Valid Tests
         Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion);
-        assertEquals(Test.MATCH, Test.GENERAL_STRING, testName);
-        assertEquals(Test.MATCH, Test.GENERAL_STRING, testNgnName);
-        assertEquals(Test.MATCH, Test.GENERAL_APP_ID, testAppId);
-        assertEquals(Test.MATCH, Test.GENERAL_FULL_APP_ID, testFullAppId);
-        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
-        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
-        assertEquals(Test.MATCH, Test.GENERAL_STRING, testHashId);
+        assertEquals(Test.GENERAL_STRING, testName);
+        assertEquals(Test.GENERAL_STRING, testNgnName);
+        assertEquals(Test.GENERAL_APP_ID, testAppId);
+        assertEquals(Test.GENERAL_FULL_APP_ID, testFullAppId);
+        assertEquals(Test.GENERAL_LANGUAGE, testLang);
+        assertEquals(Test.GENERAL_LANGUAGE, testHmiLang);
+        assertEquals(Test.GENERAL_STRING, testHashId);
         Validator.validateTtsChunks(Test.GENERAL_TTSCHUNK_LIST, testTts);
 
-        assertEquals(Test.MATCH, Test.GENERAL_STRING_LIST, testSynonyms);
-        assertEquals(Test.MATCH, Test.GENERAL_APPHMITYPE_LIST, testApps);
-        assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testMedia);
-        assertTrue(Test.TRUE, Validator.validateDeviceInfo(Test.GENERAL_DEVICEINFO, testDeviceInfo));
-        assertTrue(Test.TRUE, Validator.validateTemplateColorScheme(Test.GENERAL_DAYCOLORSCHEME, testDayColorScheme));
-        assertTrue(Test.TRUE, Validator.validateTemplateColorScheme(Test.GENERAL_NIGHTCOLORSCHEME, testNightColorScheme));
+        assertEquals(Test.GENERAL_STRING_LIST, testSynonyms);
+        assertEquals(Test.GENERAL_APPHMITYPE_LIST, testApps);
+        assertEquals(Test.GENERAL_BOOLEAN, testMedia);
+        Validator.validateDeviceInfo(Test.GENERAL_DEVICEINFO, testDeviceInfo);
+        Validator.validateTemplateColorScheme(Test.GENERAL_DAYCOLORSCHEME, testDayColorScheme);
+        Validator.validateTemplateColorScheme(Test.GENERAL_NIGHTCOLORSCHEME, testNightColorScheme);
 
         // Invalid/Null Tests
         rpcMessage = new RegisterAppInterface();

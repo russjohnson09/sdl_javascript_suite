@@ -32,11 +32,11 @@ exports.tests = function () {
         if (msg instanceof RpcRequest) {
             const correlationId = msg.getCorrelationId();
             assertNotNullUndefined(correlationId, 'Correlation ID should be defined.');
-            assertEquals('Correlation ID doesn\'t match expected ID.', CORR_ID, correlationId);
+            assertEquals(CORR_ID, correlationId, 'Correlation ID doesn\'t match expected ID.');
         } else if (msg instanceof RpcResponse) {
             const correlationId = msg.getCorrelationId();
             assertNotNullUndefined(correlationId, 'Correlation ID should be defined.');
-            assertEquals('Correlation ID doesn\'t match expected ID.', CORR_ID, correlationId);
+            assertEquals(CORR_ID, correlationId, 'Correlation ID doesn\'t match expected ID.');
         }
         done();
     });

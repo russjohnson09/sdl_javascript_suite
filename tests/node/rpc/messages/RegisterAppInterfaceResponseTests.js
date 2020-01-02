@@ -7,9 +7,7 @@ const BaseRpcTests = require('./BaseRpcTests');
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
-const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNull = Validator.assertNull.bind(Validator);
 const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
 const assertNotNull = Validator.assertNotNull.bind(Validator);
 
@@ -101,11 +99,11 @@ describe('RegisterAppInterfaceResponseTests', function () {
         const testIconResumed =  msg.getIconResumed();
 
         // Valid Tests
-        assertEquals(Test.MATCH, Test.GENERAL_INTEGER_LIST, testSupportedDiagModes);
-        assertEquals(Test.MATCH, Test.GENERAL_PRERECORDEDSPEECH_LIST, testPrerecordedSpeech);
-        assertEquals(Test.MATCH, Test.GENERAL_VRCAPABILITIES_LIST, testVrCapabilities);
-        assertEquals(Test.MATCH, Test.GENERAL_SPEECHCAPABILITIES_LIST, testSpeechCapabilities);
-        assertEquals(Test.MATCH, Test.GENERAL_HMIZONECAPABILITIES_LIST, testHmiZoneCapabilities);
+        assertEquals(Test.GENERAL_INTEGER_LIST, testSupportedDiagModes);
+        assertEquals(Test.GENERAL_PRERECORDEDSPEECH_LIST, testPrerecordedSpeech);
+        assertEquals(Test.GENERAL_VRCAPABILITIES_LIST, testVrCapabilities);
+        assertEquals(Test.GENERAL_SPEECHCAPABILITIES_LIST, testSpeechCapabilities);
+        assertEquals(Test.GENERAL_HMIZONECAPABILITIES_LIST, testHmiZoneCapabilities);
         Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities);
 
 
@@ -113,12 +111,12 @@ describe('RegisterAppInterfaceResponseTests', function () {
         Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType);
         Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc);
         Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc);
-        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testHmiLang);
-        assertEquals(Test.MATCH, Test.GENERAL_LANGUAGE, testLang);
+        assertEquals(Test.GENERAL_LANGUAGE, testHmiLang);
+        assertEquals(Test.GENERAL_LANGUAGE, testLang);
         Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testMsgVersion);
         Validator.validateAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST, testAptc);
         Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream);
-        assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, testIconResumed);
+        assertEquals(Test.GENERAL_BOOLEAN, testIconResumed);
 
         // Invalid/Null Tests
         msg = new RegisterAppInterfaceResponse();

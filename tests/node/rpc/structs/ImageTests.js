@@ -27,9 +27,9 @@ describe('ImageTests', function () {
         const isTemplate = msg.getIsTemplate();
 
         // Valid Tests
-        assertEquals(Test.MATCH, Test.GENERAL_IMAGETYPE, imageType);
-        assertEquals(Test.MATCH, Test.GENERAL_STRING, value);
-        assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, isTemplate);
+        assertEquals(Test.GENERAL_IMAGETYPE, imageType);
+        assertEquals(Test.GENERAL_STRING, value);
+        assertEquals(Test.GENERAL_BOOLEAN, isTemplate);
 
         // Invalid/Null Tests
         msg = new Image();

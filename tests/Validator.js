@@ -293,7 +293,7 @@ class Validator {
 
 
     static validateDeviceInfo (item1, item2) {
-        if (item1 === null) {
+        if (item1 === null || item2 === null) {
             expect(item1).to.equal(item2);
             return true;
         }
@@ -309,66 +309,31 @@ class Validator {
     }
 
     static validateTemplateColorScheme (item1, item2) {
-        if (item1 === null) {
-            return item2 === null;
-        }
-        if (item2 === null) {
-            return item1 === null;
+        if (item1 === null || item2 === null) {
+            expect(item1).to.equal(item2);
+            return true;
         }
 
         expect(item1.getPrimaryColor().getRedValue()).to.be.equal(item2.getPrimaryColor().getRedValue());
-        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
-        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
-        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
-        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
-        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
+        expect(item1.getPrimaryColor().getGreenValue()).to.be.equal(item2.getPrimaryColor().getGreenValue());
+        expect(item1.getPrimaryColor().getBlueValue()).to.be.equal(item2.getPrimaryColor().getBlueValue());
 
+        expect(item1.getSecondaryColor().getRedValue()).to.be.equal(item2.getSecondaryColor().getRedValue());
+        expect(item1.getSecondaryColor().getGreenValue()).to.be.equal(item2.getSecondaryColor().getGreenValue());
+        expect(item1.getSecondaryColor().getBlueValue()).to.be.equal(item2.getSecondaryColor().getBlueValue());
 
-        if (item1.getPrimaryColor().getRedValue() !== item2.getPrimaryColor().getRedValue()
-                || item1.getPrimaryColor().getGreenValue() !== item2.getPrimaryColor().getGreenValue()
-                || item1.getPrimaryColor().getBlueValue() !== item2.getPrimaryColor().getBlueValue()
-                || item1.getSecondaryColor().getRedValue() !== item2.getSecondaryColor().getRedValue()
-                || item1.getSecondaryColor().getGreenValue() !== item2.getSecondaryColor().getGreenValue()
-                || item1.getSecondaryColor().getBlueValue() !== item2.getSecondaryColor().getBlueValue()
-                || item1.getBackgroundColor().getRedValue() !== item2.getBackgroundColor().getRedValue()
-                || item1.getBackgroundColor().getGreenValue() !== item2.getBackgroundColor().getGreenValue()
-                || item1.getBackgroundColor().getBlueValue() !== item2.getBackgroundColor().getBlueValue()) {
-            return false;
-        }
+        expect(item1.getBackgroundColor().getRedValue()).to.be.equal(item2.getBackgroundColor().getRedValue());
+        expect(item1.getBackgroundColor().getGreenValue()).to.be.equal(item2.getBackgroundColor().getGreenValue());
+        expect(item1.getBackgroundColor().getBlueValue()).to.be.equal(item2.getBackgroundColor().getBlueValue());
 
         return true;
     }
 
-
-
-
-    static assertTrue () {
-        const args = arguments;
-        let val1, msg;
-        if (args.length === 1) {
-            val1 = args[0];
-        } else if (args.length === 2) {
-            msg = args[0];
-            val1 = args[1];
-        } else {
-            throw new Error('Bad arguments');
-        }
-        expect(val1, msg).to.be.true;
+    static assertTrue (val, msg) {
+        expect(val, msg).to.be.true;
     }
 
-    static assertEquals () {
-        const args = arguments;
-        let val1, val2, msg;
-        if (args.length === 2) {
-            val1 = args[0];
-            val2 = args[1];
-        } else if (args.length === 3) {
-            msg = args[0];
-            val1 = args[1];
-            val2 = args[2];
-        } else {
-            throw new Error('Bad arguments');
-        }
+    static assertEquals (val1, val2, msg) {
         expect(val1, msg).to.be.deep.equal(val2);
     }
 
@@ -399,7 +364,7 @@ class Validator {
     }
 
     static testNullBase (functionName, messageType, msg) {
-        Validator.assertNotNull('RPCMessage was null.', msg);
+        Validator.assertNotNull(msg, 'RPCMessage was null.');
         let correlationId;
         if (msg instanceof RpcRequest) {
             correlationId = msg.getCorrelationId();
@@ -408,16 +373,16 @@ class Validator {
             correlationId = msg.getCorrelationId();
             Validator.assertNullOrUndefined(correlationId, 'Correlation ID of the RPC message was not null.');
         }
-        Validator.assertNotNull('Message type of the RPC message was null.', msg.getRPCType());
+        Validator.assertNotNull(msg.getRPCType(), 'Message type of the RPC message was null.');
 
-        Validator.assertEquals('Message type didn\'t match expected message type.', messageType, msg.getRPCType());
+        Validator.assertEquals(messageType, msg.getRPCType(), 'Message type didn\'t match expected message type.');
 
-        Validator.assertNotNull('Command type of the RPC message was null.', msg.getFunctionName());
-        Validator.assertEquals('Command type didn\'t match expected command type.', functionName, msg.getFunctionName());
+        Validator.assertNotNull(msg.getFunctionName(), 'Command type of the RPC message was null.');
+        Validator.assertEquals(functionName, msg.getFunctionName(), 'Command type didn\'t match expected command type.');
 
 
         try {
-            Validator.assertTrue('Parameters weren\'t initialized, but the JSON contained 2 or more objects.', (msg.serializeJSON().length() === 1));
+            Validator.assertTrue((msg.serializeJSON().length() === 1), 'Parameters weren\'t initialized, but the JSON contained 2 or more objects.');
         } catch (error) {
             // do nothing
         }
