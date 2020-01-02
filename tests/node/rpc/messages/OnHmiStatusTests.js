@@ -7,14 +7,6 @@ const BaseRpcTests = require('./BaseRpcTests');
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
-
-const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
-const assertNotNull = Validator.assertNotNull.bind(Validator);
-const testNullBase = Validator.testNullBase.bind(Validator,
-    FunctionID.keyForValue(FunctionID.OnHMIStatus),
-    RpcType.NOTIFICATION);
-
 describe('OnHmiStatusTests', function () {
     before(function () {
         this.createMessage = function () {
@@ -58,22 +50,25 @@ describe('OnHmiStatusTests', function () {
         const testWindowID = rpcMessage.getWindowID();
 
         // Valid Tests
-        assertEquals(Test.GENERAL_AUDIOSTREAMINGSTATE, audioStreamingState);
-        assertEquals(Test.GENERAL_VIDEOSTREAMINGSTATE, videoStreamingState);
-        assertEquals(Test.GENERAL_HMILEVEL, hmiLevel);
-        assertEquals(Test.GENERAL_SYSTEMCONTEXT, context);
-        assertEquals(Test.GENERAL_INT, testWindowID);
+        Validator.assertEquals(Test.GENERAL_AUDIOSTREAMINGSTATE, audioStreamingState);
+        Validator.assertEquals(Test.GENERAL_VIDEOSTREAMINGSTATE, videoStreamingState);
+        Validator.assertEquals(Test.GENERAL_HMILEVEL, hmiLevel);
+        Validator.assertEquals(Test.GENERAL_SYSTEMCONTEXT, context);
+        Validator.assertEquals(Test.GENERAL_INT, testWindowID);
 
         // Invalid/Null Tests
         rpcMessage = new OnHmiStatus();
-        assertNotNull(rpcMessage);
-        testNullBase(rpcMessage);
+        Validator.assertNotNull(rpcMessage);
+        Validator.testNullBase(
+            FunctionID.keyForValue(FunctionID.OnHMIStatus),
+            RpcType.NOTIFICATION,
+            rpcMessage);
 
-        assertNullOrUndefined(rpcMessage.getAudioStreamingState());
-        assertNullOrUndefined(rpcMessage.getVideoStreamingState());
-        assertNullOrUndefined(rpcMessage.getHMILevel());
-        assertNullOrUndefined(rpcMessage.getSystemContext());
-        assertNullOrUndefined(rpcMessage.getWindowID());
+        Validator.assertNullOrUndefined(rpcMessage.getAudioStreamingState());
+        Validator.assertNullOrUndefined(rpcMessage.getVideoStreamingState());
+        Validator.assertNullOrUndefined(rpcMessage.getHMILevel());
+        Validator.assertNullOrUndefined(rpcMessage.getSystemContext());
+        Validator.assertNullOrUndefined(rpcMessage.getWindowID());
 
         done();
     });
