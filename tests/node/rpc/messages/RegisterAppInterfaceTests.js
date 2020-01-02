@@ -7,14 +7,6 @@ const BaseRpcTests = require('./BaseRpcTests');
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
-
-const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
-const assertNotNull = Validator.assertNotNull.bind(Validator);
-const testNullBase = Validator.testNullBase.bind(Validator, 
-    FunctionID.keyForValue(FunctionID.RegisterAppInterface), 
-    RpcType.REQUEST);
-
 describe('RegisterAppInterfaceTests', function () {
     before(function () {
         this.createMessage = function () {
@@ -88,18 +80,18 @@ describe('RegisterAppInterfaceTests', function () {
 
         // Valid Tests
         Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion);
-        assertEquals(Test.GENERAL_STRING, testName);
-        assertEquals(Test.GENERAL_STRING, testNgnName);
-        assertEquals(Test.GENERAL_APP_ID, testAppId);
-        assertEquals(Test.GENERAL_FULL_APP_ID, testFullAppId);
-        assertEquals(Test.GENERAL_LANGUAGE, testLang);
-        assertEquals(Test.GENERAL_LANGUAGE, testHmiLang);
-        assertEquals(Test.GENERAL_STRING, testHashId);
+        Validator.assertEquals(Test.GENERAL_STRING, testName);
+        Validator.assertEquals(Test.GENERAL_STRING, testNgnName);
+        Validator.assertEquals(Test.GENERAL_APP_ID, testAppId);
+        Validator.assertEquals(Test.GENERAL_FULL_APP_ID, testFullAppId);
+        Validator.assertEquals(Test.GENERAL_LANGUAGE, testLang);
+        Validator.assertEquals(Test.GENERAL_LANGUAGE, testHmiLang);
+        Validator.assertEquals(Test.GENERAL_STRING, testHashId);
         Validator.validateTtsChunks(Test.GENERAL_TTSCHUNK_LIST, testTts);
 
-        assertEquals(Test.GENERAL_STRING_LIST, testSynonyms);
-        assertEquals(Test.GENERAL_APPHMITYPE_LIST, testApps);
-        assertEquals(Test.GENERAL_BOOLEAN, testMedia);
+        Validator.assertEquals(Test.GENERAL_STRING_LIST, testSynonyms);
+        Validator.assertEquals(Test.GENERAL_APPHMITYPE_LIST, testApps);
+        Validator.assertEquals(Test.GENERAL_BOOLEAN, testMedia);
         Validator.validateDeviceInfo(Test.GENERAL_DEVICEINFO, testDeviceInfo);
         Validator.validateTemplateColorScheme(Test.GENERAL_DAYCOLORSCHEME, testDayColorScheme);
         Validator.validateTemplateColorScheme(Test.GENERAL_NIGHTCOLORSCHEME, testNightColorScheme);
@@ -108,24 +100,26 @@ describe('RegisterAppInterfaceTests', function () {
         rpcMessage = new RegisterAppInterface();
         // TODO correlationId should be set automatically during construction using a correlation id generator.
         rpcMessage.setCorrelationId(Test.GENERAL_INT);
-        assertNotNull(rpcMessage);
-        testNullBase(rpcMessage);
+        Validator.assertNotNull(rpcMessage);
+        Validator.testNullBase(FunctionID.keyForValue(FunctionID.RegisterAppInterface),
+            RpcType.REQUEST,
+            rpcMessage);
 
-        assertNullOrUndefined(rpcMessage.getSdlMsgVersion());
-        assertNullOrUndefined(rpcMessage.getAppName());
-        assertNullOrUndefined(rpcMessage.getNgnMediaScreenAppName());
-        assertNullOrUndefined(rpcMessage.getAppId());
-        assertNullOrUndefined(rpcMessage.getFullAppId());
-        assertNullOrUndefined(rpcMessage.getLanguageDesired());
-        assertNullOrUndefined(rpcMessage.getHmiDisplayLanguageDesired());
-        assertNullOrUndefined(rpcMessage.getHashID());
-        assertNullOrUndefined(rpcMessage.getTtsName());
-        assertNullOrUndefined(rpcMessage.getVrSynonyms());
-        assertNullOrUndefined(rpcMessage.getAppHmiType());
-        assertNullOrUndefined(rpcMessage.getIsMediaApplication());
-        assertNullOrUndefined(rpcMessage.getDeviceInfo());
-        assertNullOrUndefined(rpcMessage.getDayColorScheme());
-        assertNullOrUndefined(rpcMessage.getNightColorScheme());
+        Validator.assertNullOrUndefined(rpcMessage.getSdlMsgVersion());
+        Validator.assertNullOrUndefined(rpcMessage.getAppName());
+        Validator.assertNullOrUndefined(rpcMessage.getNgnMediaScreenAppName());
+        Validator.assertNullOrUndefined(rpcMessage.getAppId());
+        Validator.assertNullOrUndefined(rpcMessage.getFullAppId());
+        Validator.assertNullOrUndefined(rpcMessage.getLanguageDesired());
+        Validator.assertNullOrUndefined(rpcMessage.getHmiDisplayLanguageDesired());
+        Validator.assertNullOrUndefined(rpcMessage.getHashID());
+        Validator.assertNullOrUndefined(rpcMessage.getTtsName());
+        Validator.assertNullOrUndefined(rpcMessage.getVrSynonyms());
+        Validator.assertNullOrUndefined(rpcMessage.getAppHmiType());
+        Validator.assertNullOrUndefined(rpcMessage.getIsMediaApplication());
+        Validator.assertNullOrUndefined(rpcMessage.getDeviceInfo());
+        Validator.assertNullOrUndefined(rpcMessage.getDayColorScheme());
+        Validator.assertNullOrUndefined(rpcMessage.getNightColorScheme());
 
         done();
     });
