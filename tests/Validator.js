@@ -270,6 +270,24 @@ class Validator {
         return true;
     }
 
+
+    /**
+     * HMICapabilities equals validation.
+     * @param {HMICapabilities} item1
+     * @param {HMICapabilities} item2
+     */
+    static validateHMICapabilities (item1, item2) {
+        if (item1 === null || item2 === null) {
+            expect(item1).to.be.equal(item2);
+            return true;
+        }
+
+        expect(item1.getNavigation()).to.be.equal(item2.getNavigation());
+        expect(item1.getVideoStreaming()).to.be.equal(item2.getVideoStreaming());
+        expect(item1.getPhoneCall()).to.be.equal(item2.getPhoneCall());
+        return true;
+    }
+
     /**
      * ButtonCapabilities array equals validation.
      * @param {Array<ButtonCapabilities>} item1
