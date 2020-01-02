@@ -420,6 +420,10 @@ class Validator {
         expect(val, msg).to.be.not.null;
     }
 
+    static assertNull (val, msg) {
+        expect(val, msg).to.be.null;
+    }
+
     static assertNotNullUndefined (val, msg) {
         expect(val, msg).not.to.be.null.and.not.to.be.undefined;
     }
