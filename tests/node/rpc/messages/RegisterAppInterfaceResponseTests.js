@@ -120,7 +120,7 @@ describe('RegisterAppInterfaceResponseTests', function () {
 
         // Invalid/Null Tests
         msg = new RegisterAppInterfaceResponse();
-        assertNotNull(Test.NOT_NULL, msg);
+        assertNotNull(msg);
         testNullBase(msg);
 
         assertNullOrUndefined(msg.getSdlMsgVersion());

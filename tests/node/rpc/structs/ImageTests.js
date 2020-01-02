@@ -3,9 +3,7 @@ const Image = SDL.rpc.structs.Image;
 
 const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
-const assertTrue = Validator.assertTrue.bind(Validator);
 const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNull = Validator.assertNull.bind(Validator);
 const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
 const assertNotNull = Validator.assertNotNull.bind(Validator);
 
@@ -33,7 +31,7 @@ describe('ImageTests', function () {
 
         // Invalid/Null Tests
         msg = new Image();
-        assertNotNull(Test.NOT_NULL, msg);
+        assertNotNull(msg);
         assertNullOrUndefined(msg.getImageType());
         assertNullOrUndefined(msg.getValue());
         assertNullOrUndefined(msg.getIsTemplate());

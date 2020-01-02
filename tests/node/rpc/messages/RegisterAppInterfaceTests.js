@@ -109,7 +109,7 @@ describe('RegisterAppInterfaceTests', function () {
         rpcMessage = new RegisterAppInterface();
         // TODO correlationId should be set automatically during construction using a correlation id generator.
         rpcMessage.setCorrelationId(Test.GENERAL_INT);
-        assertNotNull(Test.NOT_NULL, rpcMessage);
+        assertNotNull(rpcMessage);
         testNullBase(rpcMessage);
 
         assertNullOrUndefined(rpcMessage.getSdlMsgVersion());
