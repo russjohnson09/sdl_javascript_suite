@@ -58,7 +58,7 @@ describe('OnHmiStatusTests', function () {
         const hmiLevel = rpcMessage.getHMILevel();
         const context = rpcMessage.getSystemContext();
         const testWindowID = rpcMessage.getWindowID();
-       
+
         // Valid Tests
         assertEquals(Test.MATCH, Test.GENERAL_AUDIOSTREAMINGSTATE, audioStreamingState);
         assertEquals(Test.MATCH, Test.GENERAL_VIDEOSTREAMINGSTATE, videoStreamingState);
@@ -71,11 +71,11 @@ describe('OnHmiStatusTests', function () {
         assertNotNull(Test.NOT_NULL, rpcMessage);
         testNullBase(rpcMessage);
 
-        assertNullOrUndefined(Test.NULL, rpcMessage.getAudioStreamingState());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getVideoStreamingState());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getHMILevel());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getSystemContext());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getWindowID());
+        assertNullOrUndefined(rpcMessage.getAudioStreamingState());
+        assertNullOrUndefined(rpcMessage.getVideoStreamingState());
+        assertNullOrUndefined(rpcMessage.getHMILevel());
+        assertNullOrUndefined(rpcMessage.getSystemContext());
+        assertNullOrUndefined(rpcMessage.getWindowID());
 
         done();
     });

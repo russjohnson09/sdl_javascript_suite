@@ -15,19 +15,19 @@ class Validator {
         let result;
         if (typeof obj === 'object') {
             if (typeof obj.getParameters === 'function') {
-                return this.getParametersJson(obj.getParameters());
+                return Validator.getParametersJson(obj.getParameters());
             } else {
                 if (Array.isArray(obj)) {
                     result = [];
                     for (const val of obj) {
-                        result.push(this.getParametersJson(val));
+                        result.push(Validator.getParametersJson(val));
                     }
                     return result;
                 } else {
                     result = {};
                     for (const key in obj) {
                         const val = obj[key];
-                        result[key] = this.getParametersJson(val);
+                        result[key] = Validator.getParametersJson(val);
                     }
                 }
             }
@@ -43,7 +43,7 @@ class Validator {
      * @param {Object} expectedParameters - json object of expected parameters
      */
     static validateJson (rpcMessage, expectedParameters) {
-        const parameters = this.getParametersJson(rpcMessage.getParameters());
+        const parameters = Validator.getParametersJson(rpcMessage.getParameters());
         expect(parameters).to.be.deep.equal(expectedParameters);
     }
 
@@ -83,10 +83,10 @@ class Validator {
         for (let index = 0; index < item1.length; index++) {
             const val1 = item1[index];
             const val2 = item2[index];
-            
+
             expect(val1.getImageTypeSupported()).to.be.deep.equal(val2.getImageTypeSupported());
             expect(val1.getImageFieldName()).to.be.equal(val2.getImageFieldName());
-            this.validateImageResolution(val1.getImageResolution(), val2.getImageResolution());
+            Validator.validateImageResolution(val1.getImageResolution(), val2.getImageResolution());
         }
 
 
@@ -171,20 +171,8 @@ class Validator {
 
 
 
-        this.validateImageResolution(item1.getResolution(), item2.getResolution());
-        this.validateTouchEventCapabilities(item1.getTouchEventAvailable(), item2.getTouchEventAvailable());
-
-        return true;
-
-        if(!( validateImageResolution(params1.getImageResolution(), params2.getImageResolution()) )){
-            log("validateScreenParams", "Image resolutions didn't match!");
-            return false;
-        }
-
-        if(!( validateTouchEventCapabilities(params1.getTouchEventAvailable(), params2.getTouchEventAvailable()) )){
-            log("validateScreenParams", "Touch event capabilities didn't match!");
-            return false;
-        }
+        Validator.validateImageResolution(item1.getResolution(), item2.getResolution());
+        Validator.validateTouchEventCapabilities(item1.getTouchEventAvailable(), item2.getTouchEventAvailable());
 
         return true;
     }
@@ -206,7 +194,7 @@ class Validator {
         expect(Array.isArray(item1.getTextFields())).to.be.true;
         expect(Array.isArray(item2.getTextFields())).to.be.true;
 
-        this.validateImageFields(item1.getImageFields(), item2.getImageFields());
+        Validator.validateImageFields(item1.getImageFields(), item2.getImageFields());
 
         const mediaClockFormats = item1.getMediaClockFormats();
         for (const clockFormat of mediaClockFormats) {
@@ -220,7 +208,7 @@ class Validator {
         expect(item1.getTemplatesAvailable()).to.be.equal(item2.getTemplatesAvailable());
         expect(item1.getNumCustomPresetsAvailable()).to.be.equal(item2.getNumCustomPresetsAvailable());
 
-        this.validateScreenParams(item1.getScreenParams(), item2.getScreenParams());
+        Validator.validateScreenParams(item1.getScreenParams(), item2.getScreenParams());
         return true;
     }
 
@@ -259,7 +247,7 @@ class Validator {
         for (let index = 0; index < item1.length; index++) {
             const val1 = item1[index];
             const val2 = item2[index];
-            
+
             expect(val1.getName()).to.be.equal(val2.getName());
             expect(val1.getUpDownAvailable()).to.be.equal(val2.getUpDownAvailable());
             expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable());
@@ -267,7 +255,6 @@ class Validator {
         }
     }
 
-    // assertTrue(Test.TRUE, Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities));
 
     static validateSoftButtonCapabilities (item1, item2) {
         if (item1 === null) {
@@ -282,7 +269,7 @@ class Validator {
         for (let index = 0; index < item1.length; index++) {
             const val1 = item1[index];
             const val2 = item2[index];
-            
+
             expect(val1.getImageSupported()).to.be.equal(val2.getImageSupported());
             expect(val1.getUpDownAvailable()).to.be.equal(val2.getImageSupported());
             expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable());
@@ -290,21 +277,16 @@ class Validator {
         }
     }
 
-    // assertTrue(Test.TRUE, Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities));
-    // assertTrue(Test.TRUE, Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType));
-    // assertTrue(Test.TRUE, Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc));
-    // assertTrue(Test.TRUE, Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc));
-
     static validateTtsChunks (list1, list2) {
         if (list1 === null || list2 === null) {
             expect(list1).to.equal(list2);
             return;
         }
 
-        let text1 = list1.map((val) => {
+        const text1 = list1.map((val) => {
             return val.getText();
         });
-        let text2 = list1.map((val) => {
+        const text2 = list1.map((val) => {
             return val.getText();
         });
 
@@ -402,18 +384,8 @@ class Validator {
         expect(val1, msg).to.be.null;
     }
 
-    static assertNullOrUndefined () {
-        const args = arguments;
-        let val1, msg;
-        if (args.length === 1) {
-            val1 = args[0];
-        } else if (args.length === 2) {
-            msg = args[0];
-            val1 = args[1];
-        } else {
-            throw new Error('Bad arguments');
-        }
-        expect(val1, msg).to.not.exist;
+    static assertNullOrUndefined (val, msg) {
+        expect(val, msg).to.not.exist;
     }
 
     static assertNotNull () {
@@ -450,29 +422,29 @@ class Validator {
 
 
     static testNullBase (functionName, messageType, msg) {
-        this.assertNotNull('RPCMessage was null.', msg);
+        Validator.assertNotNull('RPCMessage was null.', msg);
         let correlationId;
         if (msg instanceof RpcRequest) {
             correlationId = msg.getCorrelationId(); 
-            this.assertNotNull('Correlation ID of the RPC message was null.', correlationId);
+            Validator.assertNotNull('Correlation ID of the RPC message was null.', correlationId);
         } else if (msg instanceof RpcResponse) {
             correlationId = msg.getCorrelationId();
-            this.assertNullOrUndefined('Correlation ID of the RPC message was not null.', correlationId);
+            Validator.assertNullOrUndefined(correlationId, 'Correlation ID of the RPC message was not null.');
         }
-        this.assertNotNull('Message type of the RPC message was null.', msg.getRPCType());
+        Validator.assertNotNull('Message type of the RPC message was null.', msg.getRPCType());
 
-        this.assertEquals('Message type didn\'t match expected message type.', messageType, msg.getRPCType());
+        Validator.assertEquals('Message type didn\'t match expected message type.', messageType, msg.getRPCType());
 
-        this.assertNotNull('Command type of the RPC message was null.', msg.getFunctionName());
-        this.assertEquals('Command type didn\'t match expected command type.', functionName, msg.getFunctionName());
+        Validator.assertNotNull('Command type of the RPC message was null.', msg.getFunctionName());
+        Validator.assertEquals('Command type didn\'t match expected command type.', functionName, msg.getFunctionName());
 
 
         try {
-            this.assertTrue('Parameters weren\'t initialized, but the JSON contained 2 or more objects.', (msg.serializeJSON().length() === 1));
+            Validator.assertTrue('Parameters weren\'t initialized, but the JSON contained 2 or more objects.', (msg.serializeJSON().length() === 1));
         } catch (error) {
-            //do nothing
+            // do nothing
         }
-    }  
+    }
 }
 
 

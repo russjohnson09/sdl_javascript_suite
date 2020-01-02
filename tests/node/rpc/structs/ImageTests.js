@@ -34,9 +34,9 @@ describe('ImageTests', function () {
         // Invalid/Null Tests
         msg = new Image();
         assertNotNull(Test.NOT_NULL, msg);
-        assertNullOrUndefined(Test.NULL, msg.getImageType());
-        assertNullOrUndefined(Test.NULL, msg.getValue());
-        assertNullOrUndefined(Test.NULL, msg.getIsTemplate());
+        assertNullOrUndefined(msg.getImageType());
+        assertNullOrUndefined(msg.getValue());
+        assertNullOrUndefined(msg.getIsTemplate());
         done();
     });
 

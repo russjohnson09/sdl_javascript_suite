@@ -113,21 +113,21 @@ describe('RegisterAppInterfaceTests', function () {
         assertNotNull(Test.NOT_NULL, rpcMessage);
         testNullBase(rpcMessage);
 
-        assertNullOrUndefined(Test.NULL, rpcMessage.getSdlMsgVersion());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getAppName());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getNgnMediaScreenAppName());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getAppId());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getFullAppId());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getLanguageDesired());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getHmiDisplayLanguageDesired());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getHashID());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getTtsName());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getVrSynonyms());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getAppHmiType());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getIsMediaApplication());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getDeviceInfo());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getDayColorScheme());
-        assertNullOrUndefined(Test.NULL, rpcMessage.getNightColorScheme());
+        assertNullOrUndefined(rpcMessage.getSdlMsgVersion());
+        assertNullOrUndefined(rpcMessage.getAppName());
+        assertNullOrUndefined(rpcMessage.getNgnMediaScreenAppName());
+        assertNullOrUndefined(rpcMessage.getAppId());
+        assertNullOrUndefined(rpcMessage.getFullAppId());
+        assertNullOrUndefined(rpcMessage.getLanguageDesired());
+        assertNullOrUndefined(rpcMessage.getHmiDisplayLanguageDesired());
+        assertNullOrUndefined(rpcMessage.getHashID());
+        assertNullOrUndefined(rpcMessage.getTtsName());
+        assertNullOrUndefined(rpcMessage.getVrSynonyms());
+        assertNullOrUndefined(rpcMessage.getAppHmiType());
+        assertNullOrUndefined(rpcMessage.getIsMediaApplication());
+        assertNullOrUndefined(rpcMessage.getDeviceInfo());
+        assertNullOrUndefined(rpcMessage.getDayColorScheme());
+        assertNullOrUndefined(rpcMessage.getNightColorScheme());
 
         done();
     });
