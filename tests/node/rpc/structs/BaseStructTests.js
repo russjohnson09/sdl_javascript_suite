@@ -1,4 +1,3 @@
-const SDL = require('./../../../../lib/js/dist/SDL.js');
 const Validator = require('./../../../Validator.js');
 
 exports.tests = function () {

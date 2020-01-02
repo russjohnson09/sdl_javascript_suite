@@ -1,4 +1,3 @@
-
 const SDL = require('./../../../../lib/js/dist/SDL');
 
 const AppHMIType = SDL.rpc.enums.AppHMIType;
