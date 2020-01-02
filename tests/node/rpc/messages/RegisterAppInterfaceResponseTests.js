@@ -96,25 +96,22 @@ describe('RegisterAppInterfaceResponseTests', function () {
         const testIconResumed =  msg.getIconResumed();
 
         // Valid Tests
-        Validator.assertEquals(Test.GENERAL_INTEGER_LIST, testSupportedDiagModes);
+        Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testMsgVersion);
+        Validator.assertEquals(Test.GENERAL_LANGUAGE, testLang);
+        Validator.assertEquals(Test.GENERAL_LANGUAGE, testHmiLang);
+        Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc);
+        Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities);
+        Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities);
+        Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc);
+        Validator.assertEquals(Test.GENERAL_HMIZONECAPABILITIES_LIST, testHmiZoneCapabilities);
+        Validator.assertEquals(Test.GENERAL_SPEECHCAPABILITIES_LIST, testSpeechCapabilities);
         Validator.assertEquals(Test.GENERAL_PRERECORDEDSPEECH_LIST, testPrerecordedSpeech);
         Validator.assertEquals(Test.GENERAL_VRCAPABILITIES_LIST, testVrCapabilities);
-        Validator.assertEquals(Test.GENERAL_SPEECHCAPABILITIES_LIST, testSpeechCapabilities);
-        Validator.assertEquals(Test.GENERAL_HMIZONECAPABILITIES_LIST, testHmiZoneCapabilities);
-        Validator.validateSoftButtonCapabilities(Test.GENERAL_SOFTBUTTONCAPABILITIES_LIST, testSoftButtonCapabilities);
-
-
-        Validator.validateButtonCapabilities(Test.GENERAL_BUTTONCAPABILITIES_LIST, testButtonCapabilities);
-        Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType);
-        Validator.validatePresetBankCapabilities(Test.GENERAL_PRESETBANKCAPABILITIES, testPbc);
-        Validator.validateDisplayCapabilities(Test.GENERAL_DISPLAYCAPABILITIES, testDc);
-        Validator.assertEquals(Test.GENERAL_LANGUAGE, testHmiLang);
-        Validator.assertEquals(Test.GENERAL_LANGUAGE, testLang);
-        Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testMsgVersion);
         Validator.validateAudioPassThruCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES_LIST, testAptc);
         Validator.validatePcmStreamCapabilities(Test.GENERAL_AUDIOPASSTHRUCAPABILITIES, testPcmStream);
- 
-        Validator.validateHMICapabilities(testHmiCapabilities, Test.GENERAL_HMICAPABILITIES);
+        Validator.validateVehicleType(Test.GENERAL_VEHICLETYPE, testVehicleType);
+        Validator.assertEquals(Test.GENERAL_INTEGER_LIST, testSupportedDiagModes);
+        Validator.validateHMICapabilities(Test.GENERAL_HMICAPABILITIES, testHmiCapabilities);
         Validator.assertEquals(Test.GENERAL_STRING, testSystemSoftwareVersion);
         Validator.assertEquals(Test.GENERAL_BOOLEAN, testIconResumed);
 
@@ -130,18 +127,21 @@ describe('RegisterAppInterfaceResponseTests', function () {
         Validator.assertNullOrUndefined(msg.getLanguage());
         Validator.assertNullOrUndefined(msg.getHmiDisplayLanguage());
         Validator.assertNullOrUndefined(msg.getDisplayCapabilities());
-        Validator.assertNullOrUndefined(msg.getPresetBankCapabilities());
-        Validator.assertNullOrUndefined(msg.getVehicleType());
         Validator.assertNullOrUndefined(msg.getButtonCapabilities());
         Validator.assertNullOrUndefined(msg.getSoftButtonCapabilities());
-        Validator.assertNullOrUndefined(msg.getAudioPassThruCapabilities());
-        Validator.assertNullOrUndefined(msg.getPcmStreamCapabilities());
+        Validator.assertNullOrUndefined(msg.getPresetBankCapabilities());
         Validator.assertNullOrUndefined(msg.getHmiZoneCapabilities());
         Validator.assertNullOrUndefined(msg.getSpeechCapabilities());
-        Validator.assertNullOrUndefined(msg.getVrCapabilities());
         Validator.assertNullOrUndefined(msg.getPrerecordedSpeech());
+        Validator.assertNullOrUndefined(msg.getVrCapabilities());
+        Validator.assertNullOrUndefined(msg.getAudioPassThruCapabilities());
+        Validator.assertNullOrUndefined(msg.getPcmStreamCapabilities());
+        Validator.assertNullOrUndefined(msg.getVehicleType());
         Validator.assertNullOrUndefined(msg.getSupportedDiagModes());
+        Validator.assertNullOrUndefined(msg.getHMICapabilities());
+        Validator.assertNullOrUndefined(msg.getSystemSoftwareVersion());
         Validator.assertNullOrUndefined(msg.getIconResumed());
+
 
         done();
     });
