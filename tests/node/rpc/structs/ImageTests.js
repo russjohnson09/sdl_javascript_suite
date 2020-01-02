@@ -37,8 +37,8 @@ describe('ImageTests', function () {
         // Invalid/Null Tests
         msg = new Image();
         Validator.assertNotNull(msg);
-        Validator.assertNullOrUndefined(msg.getImageType());
         Validator.assertNullOrUndefined(msg.getValue());
+        Validator.assertNullOrUndefined(msg.getImageType());
         Validator.assertNullOrUndefined(msg.getIsTemplate());
         done();
     });
