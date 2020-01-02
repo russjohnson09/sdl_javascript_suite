@@ -45,6 +45,8 @@ class Validator {
     static validateJson (rpcMessage, expectedParameters) {
         const parameters = Validator.getParametersJson(rpcMessage.getParameters());
         expect(parameters).to.be.deep.equal(expectedParameters);
+
+        return true;
     }
 
     /**
@@ -52,20 +54,16 @@ class Validator {
      * Checks major and minor versions match. patch versions can be different.
      * @param {SdlMsgVersion} item1 
      * @param {SdlMsgVersion} item2 
-     * @returns {Boolean} 
+     * @returns {Boolean}
      */
     static validateSdlMsgVersion (item1, item2) {
         if (item1 === null) {
-            return (item2 === null);
+            expect(item1).to.be.equal(item2);
+            return;
         }
-        if (item2 === null) {
-            return (item1 === null);
-        }
+        expect(item1.getMajorVersion()).to.be.equal(item2.getMajorVersion());
+        expect(item1.getMinorVersion()).to.be.equal(item2.getMinorVersion());
 
-        if (item1.getMajorVersion() !== item2.getMajorVersion() ||
-            item1.getMinorVersion() !== item2.getMinorVersion()) {
-            return false;
-        }
         return true;
     }
 
@@ -73,11 +71,10 @@ class Validator {
     static validateImageFields (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
         expect(Array.isArray(item1)).to.be.true;
         expect(Array.isArray(item2)).to.be.true;
-
         expect(item1.length).to.be.equal(item2.length);
 
         for (let index = 0; index < item1.length; index++) {
@@ -89,8 +86,6 @@ class Validator {
             Validator.validateImageResolution(val1.getImageResolution(), val2.getImageResolution());
         }
 
-
-
         return true;
     }
 
@@ -98,19 +93,20 @@ class Validator {
     static validatePcmStreamCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
 
         expect(item1.getAudioType()).to.be.equal(item2.getAudioType());
         expect(item1.getBitsPerSample()).to.be.equal(item2.getBitsPerSample());
         expect(item1.getSamplingRate()).to.be.equal(item2.getSamplingRate());
+        return true;
     }
 
 
     static validateImageResolution (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
 
         expect(item1).to.exist;
@@ -134,7 +130,6 @@ class Validator {
         for (let index = 0; index < item1.length; index++) {
             const val1 = item1[index];
             const val2 = item2[index];
-            
             expect(val1.getAudioType()).to.be.equal(val2.getAudioType());
             expect(val1.getBitsPerSample()).to.be.equal(val2.getBitsPerSample());
             expect(val1.getSamplingRate()).to.be.equal(val2.getSamplingRate());
@@ -144,10 +139,10 @@ class Validator {
     }
 
 
-    static validateTouchEventCapabilities(item1, item2) {
+    static validateTouchEventCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
 
         expect(item1).to.exist;
@@ -163,13 +158,11 @@ class Validator {
     static validateScreenParams (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
 
         expect(item1).to.exist;
         expect(item2).to.exist;
-
-
 
         Validator.validateImageResolution(item1.getResolution(), item2.getResolution());
         Validator.validateTouchEventCapabilities(item1.getTouchEventAvailable(), item2.getTouchEventAvailable());
@@ -178,10 +171,10 @@ class Validator {
     }
 
 
-    static validateDisplayCapabilities  (item1, item2) {
+    static validateDisplayCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
         expect(item1.getDisplayType()).to.be.equal(item2.getDisplayType());
 
@@ -215,29 +208,31 @@ class Validator {
     static validatePresetBankCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
 
         expect(item1.getOnScreenPresetsAvailable()).to.be.equal(item2.getOnScreenPresetsAvailable());
+        return true;
     }
 
     static validateVehicleType (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
 
         expect(item1.getMake()).to.be.equal(item2.getMake());
         expect(item1.getModel()).to.be.equal(item2.getModel());
         expect(item1.getTrim()).to.be.equal(item2.getTrim());
         expect(item1.getModelYear()).to.be.equal(item2.getModelYear());
+        return true;
     }
 
 
     static validateButtonCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
         expect(Array.isArray(item1)).to.be.true;
         expect(Array.isArray(item2)).to.be.true;
@@ -253,13 +248,14 @@ class Validator {
             expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable());
             expect(val1.getShortPressAvailable()).to.be.equal(val2.getShortPressAvailable());
         }
+        return true;
     }
 
 
     static validateSoftButtonCapabilities (item1, item2) {
         if (item1 === null) {
             expect(item1).to.be.equal(item2);
-            return;
+            return true;
         }
         expect(Array.isArray(item1)).to.be.true;
         expect(Array.isArray(item2)).to.be.true;
@@ -275,12 +271,13 @@ class Validator {
             expect(val1.getLongPressAvailable()).to.be.equal(val2.getLongPressAvailable());
             expect(val1.getShortPressAvailable()).to.be.equal(val2.getShortPressAvailable());
         }
+        return true;
     }
 
     static validateTtsChunks (list1, list2) {
         if (list1 === null || list2 === null) {
             expect(list1).to.equal(list2);
-            return;
+            return true;
         }
 
         const text1 = list1.map((val) => {
@@ -291,25 +288,22 @@ class Validator {
         });
 
         expect(text1).to.deep.equal(text2);
+        return true;
     }
 
 
     static validateDeviceInfo (item1, item2) {
         if (item1 === null) {
-            return item2 === null;
-        }
-        if (item2 === null) {
-            return item1 === null;
+            expect(item1).to.equal(item2);
+            return true;
         }
 
-        if (item1.getOs()                   !== item2.getOs()          ||
-                item1.getCarrier()              !== item2.getCarrier()     ||
-                item1.getHardware()             !== item2.getHardware()    ||
-                item1.getOsVersion()            !== item2.getOsVersion()   ||
-                item1.getFirmwareRev()          !== item2.getFirmwareRev() ||
-                item1.getMaxNumberRFCOMMPorts() !== item2.getMaxNumberRFCOMMPorts()) {
-            return false;
-        }
+        expect(item1.getOs()).to.be.equal(item2.getOs());
+        expect(item1.getCarrier()).to.be.equal(item2.getCarrier());
+        expect(item1.getHardware()).to.be.equal(item2.getHardware());
+        expect(item1.getOsVersion()).to.be.equal(item2.getOsVersion());
+        expect(item1.getFirmwareRev()).to.be.equal(item2.getFirmwareRev());
+        expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
 
         return true;
     }
@@ -321,6 +315,14 @@ class Validator {
         if (item2 === null) {
             return item1 === null;
         }
+
+        expect(item1.getPrimaryColor().getRedValue()).to.be.equal(item2.getPrimaryColor().getRedValue());
+        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
+        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
+        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
+        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
+        // expect(item1.getMaxNumberRFCOMMPorts()).to.be.equal(item2.getMaxNumberRFCOMMPorts());
+
 
         if (item1.getPrimaryColor().getRedValue() !== item2.getPrimaryColor().getRedValue()
                 || item1.getPrimaryColor().getGreenValue() !== item2.getPrimaryColor().getGreenValue()
@@ -388,45 +390,20 @@ class Validator {
         expect(val, msg).to.not.exist;
     }
 
-    static assertNotNull () {
-        const args = arguments;
-        let val1, msg;
-        if (args.length === 1) {
-            val1 = args[0];
-        } else if (args.length === 2) {
-            msg = args[0];
-            val1 = args[1];
-        } else {
-            throw new Error('Bad arguments');
-        }
-        expect(val1, msg).to.be.not.null;
+    static assertNotNull (val, msg) {
+        expect(val, msg).to.be.not.null;
     }
 
-    static validateText (text1, text2) {
-        return text1 === text2;
-    }
-
-
-    static assertNotNullUndefined () {
-        const args = arguments;
-        let val,msg;
-        if (args.length === 2) {
-            val = args[1];
-            msg = args[0];
-        } else {
-            val = args[0];
-        }
+    static assertNotNullUndefined (val, msg) {
         expect(val, msg).not.to.be.null.and.not.to.be.undefined;
     }
-
-
 
     static testNullBase (functionName, messageType, msg) {
         Validator.assertNotNull('RPCMessage was null.', msg);
         let correlationId;
         if (msg instanceof RpcRequest) {
-            correlationId = msg.getCorrelationId(); 
-            Validator.assertNotNull('Correlation ID of the RPC message was null.', correlationId);
+            correlationId = msg.getCorrelationId();
+            Validator.assertNotNull(correlationId, 'Correlation ID of the RPC message was null.');
         } else if (msg instanceof RpcResponse) {
             correlationId = msg.getCorrelationId();
             Validator.assertNullOrUndefined(correlationId, 'Correlation ID of the RPC message was not null.');

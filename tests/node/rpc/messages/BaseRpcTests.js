@@ -22,7 +22,7 @@ exports.tests = function () {
     });
 
     it('testCreation', function (done) {
-        assertNotNullUndefined('Object creation failed.', this.msg);
+        assertNotNullUndefined(this.msg, 'Object creation failed.');
         done();
     });
 
@@ -30,12 +30,12 @@ exports.tests = function () {
         const msg = this.msg;
         const CORR_ID = this.CORR_ID;
         if (msg instanceof RpcRequest) {
-            const correlationId = msg.getCorrelationId(); 
-            assertNotNullUndefined('Correlation ID should be defined.', correlationId);
+            const correlationId = msg.getCorrelationId();
+            assertNotNullUndefined(correlationId, 'Correlation ID should be defined.');
             assertEquals('Correlation ID doesn\'t match expected ID.', CORR_ID, correlationId);
         } else if (msg instanceof RpcResponse) {
             const correlationId = msg.getCorrelationId();
-            assertNotNullUndefined('Correlation ID should be defined.', correlationId);
+            assertNotNullUndefined(correlationId, 'Correlation ID should be defined.');
             assertEquals('Correlation ID doesn\'t match expected ID.', CORR_ID, correlationId);
         }
         done();

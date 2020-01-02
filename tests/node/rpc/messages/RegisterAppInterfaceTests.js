@@ -87,9 +87,9 @@ describe('RegisterAppInterfaceTests', function () {
         const testDayColorScheme = rpcMessage.getDayColorScheme();
         const testNightColorScheme = rpcMessage.getNightColorScheme();
 
-       
+
         // Valid Tests
-        assertTrue(Test.TRUE, Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion));
+        Validator.validateSdlMsgVersion(Test.GENERAL_SDLMSGVERSION, testVersion);
         assertEquals(Test.MATCH, Test.GENERAL_STRING, testName);
         assertEquals(Test.MATCH, Test.GENERAL_STRING, testNgnName);
         assertEquals(Test.MATCH, Test.GENERAL_APP_ID, testAppId);

@@ -25,12 +25,12 @@ describe('ImageTests', function () {
         const imageType = msg.getImageType();
         const value = msg.getValue();
         const isTemplate = msg.getIsTemplate();
-        
+
         // Valid Tests
         assertEquals(Test.MATCH, Test.GENERAL_IMAGETYPE, imageType);
         assertEquals(Test.MATCH, Test.GENERAL_STRING, value);
         assertEquals(Test.MATCH, Test.GENERAL_BOOLEAN, isTemplate);
-        
+
         // Invalid/Null Tests
         msg = new Image();
         assertNotNull(Test.NOT_NULL, msg);
