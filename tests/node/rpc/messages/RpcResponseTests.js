@@ -1,11 +1,9 @@
 const SDL = require('./../../../../lib/js/dist/SDL.js');
-const FunctionID = SDL.rpc.enums.FunctionID;
 const RpcType = SDL.rpc.enums.RpcType;
 const RpcResponse = SDL.rpc.RpcResponse;
 
 const BaseRpcTests = require('./BaseRpcTests');
 const Test = require('./../../../Test.js');
-const Validator = require('./../../../Validator.js');
 
 describe('RpcResponseTests', function () {
     before(function () {

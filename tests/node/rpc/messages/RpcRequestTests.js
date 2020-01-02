@@ -1,6 +1,4 @@
 const SDL = require('./../../../../lib/js/dist/SDL.js');
-const RegisterAppInterface = SDL.rpc.messages.RegisterAppInterface;
-const FunctionID = SDL.rpc.enums.FunctionID;
 const RpcType = SDL.rpc.enums.RpcType;
 const RpcRequest = SDL.rpc.RpcRequest;
 
