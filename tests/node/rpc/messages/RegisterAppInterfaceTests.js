@@ -9,7 +9,6 @@ const Validator = require('./../../../Validator.js');
 
 
 const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNull = Validator.assertNull.bind(Validator);
 const assertNullOrUndefined = Validator.assertNullOrUndefined.bind(Validator);
 const assertNotNull = Validator.assertNotNull.bind(Validator);
 const testNullBase = Validator.testNullBase.bind(Validator, 

@@ -8,14 +8,6 @@ const Test = require('./../../../Test.js');
 const Validator = require('./../../../Validator.js');
 
 
-const assertTrue = Validator.assertTrue.bind(Validator);
-const assertEquals = Validator.assertEquals.bind(Validator);
-const assertNull = Validator.assertNull.bind(Validator);
-const assertNotNull = Validator.assertNotNull.bind(Validator);
-const testNullBase = Validator.testNullBase.bind(Validator, 
-    FunctionID.keyForValue(FunctionID.RegisterAppInterface), 
-    RpcType.NOTIFICATION);
-
 describe('RpcResponseTests', function () {
     before(function () {
         this.createMessage = function () {
